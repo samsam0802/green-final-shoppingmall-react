@@ -1,5 +1,7 @@
 import { lazy, Suspense } from "react";
 import { createBrowserRouter } from "react-router-dom";
+import AdminIndex from "../pages/admin/AdminIndex";
+import adminRouter from "./adminRouter";
 
 const Main = lazy(() => import("../pages/user/MainPage"));
 const LoginPage = lazy(() => import("../pages/user/LoginPage"));
@@ -42,6 +44,15 @@ const root = createBrowserRouter([
         <ReviewAddPage />
       </Suspense>
     ),
+  },
+  {
+    path: "admin",
+    element: (
+      <Suspense fallback={Loading}>
+        <AdminIndex />
+      </Suspense>
+    ),
+    children: adminRouter(),
   },
 ]);
 
