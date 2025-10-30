@@ -19,12 +19,12 @@ const LoginPage = () => {
     navigate("/joinpage");
   };
 
-  const findId = () => {
-    console.log("아이디찾기 버튼이 눌렸습니다.");
+  const findIdBtn = () => {
+    navigate("/findId");
   };
 
-  const findPassword = () => {
-    console.log("비밀번호찾기 버튼이 눌렸습니다.");
+  const findPasswordBtn = () => {
+    navigate("/findpw");
   };
 
   const handleGuestSearch = () => {
@@ -166,14 +166,14 @@ const LoginPage = () => {
           {/* 아이디/비번/회원가입 링크 */}
           <div className="mt-6 flex items-center justify-between text-xs text-gray-500">
             <button
-              onClick={findId}
+              onClick={findIdBtn}
               className="hover:text-gray-900 cursor-pointer"
             >
               아이디찾기
             </button>
             <span className="text-gray-300">|</span>
             <button
-              onClick={findPassword}
+              onClick={findPasswordBtn}
               className="hover:text-gray-900 cursor-pointer"
             >
               비밀번호찾기

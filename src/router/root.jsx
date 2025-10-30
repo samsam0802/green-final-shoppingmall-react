@@ -6,6 +6,9 @@ import adminRouter from "./adminRouter";
 const Main = lazy(() => import("../pages/user/MainPage"));
 const LoginPage = lazy(() => import("../pages/user/LoginPage"));
 const SignPage = lazy(() => import("../pages/user/SignUpPage"));
+const FindIdPage = lazy(() => import("../pages/user/FindIdPage"));
+const FindPasswordPage = lazy(() => import("../pages/user/FindPasswordPage"));
+
 const ReviewPage = lazy(() =>
   import("../components/review/ReviewListComponent")
 );
@@ -15,6 +18,7 @@ const ReviewAddPage = lazy(() =>
 
 const ProductList = lazy(() => import("../pages/product/ProductListPage"));
 const ProductDetail = lazy(() => import("../pages/product/ProductDetailPage"));
+
 const Order = lazy(() => import("../pages/order/OrderPage"));
 const OrderComplete = lazy(() => import("../pages/order/OrderCompletePage"));
 const OrderHistory = lazy(() => import("../pages/order/OrderHistoryPage"));
@@ -49,6 +53,22 @@ const root = createBrowserRouter([
     element: (
       <Suspense fallback={Loading}>
         <SignPage />
+      </Suspense>
+    ),
+  },
+  {
+    path: "findid",
+    element: (
+      <Suspense fallback={Loading}>
+        <FindIdPage />
+      </Suspense>
+    ),
+  },
+  {
+    path: "findpw",
+    element: (
+      <Suspense fallback={Loading}>
+        <FindPasswordPage />
       </Suspense>
     ),
   },
