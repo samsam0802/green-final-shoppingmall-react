@@ -2,8 +2,9 @@ import React, { lazy, Suspense } from "react";
 
 const Loading = <div>Loading...</div>;
 const ProductSearch = lazy(() =>
-  import("../components/admin/products/ProductSearchPage")
+  import("../pages/admin/product/ProductSearchPage")
 );
+const ProductAdd = lazy(() => import("../pages/admin/product/ProductAddPage"));
 
 const adminRouter = () => {
   return [
@@ -15,10 +16,14 @@ const adminRouter = () => {
         </Suspense>
       ),
     },
-    // {
-    //   path: "",
-    //   element: <Navigate replace to="list" />,
-    // },
+    {
+      path: "addproduct",
+      element: (
+        <Suspense fallback={Loading}>
+          <ProductAdd />
+        </Suspense>
+      ),
+    },
   ];
 };
 
