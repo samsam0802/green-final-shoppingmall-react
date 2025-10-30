@@ -1,6 +1,6 @@
 import React from "react";
 
-const SocialLoginButtons = () => {
+const SocialLoginButtons = ({ className = "" }) => {
   const kakaologinbtn = () => {
     console.log("카카오버튼이 눌렸습니다.");
   };
@@ -14,26 +14,26 @@ const SocialLoginButtons = () => {
   };
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className={`space-y-3 ${className}`}>
       <button
-        className="p-3 rounded bg-yellow-400 font-bold"
+        className="w-full h-11 cursor-pointer rounded-md border border-black-500/50 bg-yellow-400/90 text-sm font-semibold text-black flex items-center gap-3 px-3 hover:bg-emerald-50"
         onClick={kakaologinbtn}
       >
-        카카오로 로그인 버튼
+        <span className="flex-1 text-center">카카오 로그인</span>
       </button>
 
       <button
-        className="p-3 rounded bg-emerald-500 text-white font-bold"
+        className="w-full h-11 cursor-pointer rounded-md border border-black-500/50 bg-emerald-500 text-sm font-semibold text-black flex items-center gap-3 px-3 hover:bg-emerald-50"
         onClick={naverloginbtn}
       >
-        네이버로 로그인 버튼
+        <span className="flex-1 text-center">네이버 로그인</span>
       </button>
 
       <button
-        className="p-3 rounded bg-blue-400 font-bold"
+        className="w-full h-11 cursor-pointer rounded-md border border-black-500/50 bg-blue-400 text-sm font-semibold text-black flex items-center gap-3 px-3 hover:bg-emerald-50"
         onClick={googleloginbtn}
       >
-        Google로 로그인 버튼
+        <span className="flex-1 text-center">Google 로그인</span>
       </button>
     </div>
   );

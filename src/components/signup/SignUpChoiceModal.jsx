@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function JoinChoiceModal({
   open,
@@ -6,14 +7,29 @@ export default function JoinChoiceModal({
   onNormalJoin,
   onSNS,
 }) {
+  const navigate = useNavigate();
+
   if (!open) return null;
+
+  // X 버튼 전용
+  const handleCloseAndBack = () => {
+    // 모달 닫는 로직을 부모가 넘겨줬다면 먼저 실행
+    if (onClose) {
+      onClose();
+    }
+    // 그리고 이전 페이지로
+    navigate(-1);
+  };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
+      {/* 배경 클릭: 그냥 닫기만 */}
       <div className="absolute inset-0 bg-black/40" onClick={onClose} />
+
       <div className="relative w-[560px] bg-white rounded-2xl shadow-xl p-8">
+        {/* X 버튼: 닫고 뒤로가기 */}
         <button
-          onClick={onClose}
+          onClick={handleCloseAndBack}
           className="absolute right-4 top-4 text-zinc-400 hover:text-black text-xl"
           aria-label="close"
         >

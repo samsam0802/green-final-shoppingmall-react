@@ -9,13 +9,18 @@ export default function HomeBar({ title = "" }) {
         <button
           type="button"
           onClick={() => navigate("/")}
-          className="inline-flex items-center gap-2 text-sm font-medium text-zinc-700 hover:text-black transition"
+          className="inline-flex items-center gap-2 text-sm font-medium text-zinc-700 hover:text-black transition cursor-pointer"
           aria-label="메인페이지로 가기"
         >
           <span className="text-lg leading-none">←</span>
           메인페이지로 가기
         </button>
-        <span className="text-sm text-zinc-500">고객센터</span>
+        <span
+          className="text-sm text-zinc-500 cursor-pointer"
+          onClick={() => alert("현재 구현중 입니다")}
+        >
+          고객센터
+        </span>
       </div>
     </div>
   );
