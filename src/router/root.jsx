@@ -22,6 +22,9 @@ const Cart = lazy(() => import("../pages/cart/CartPage"));
 const AdminOrdMgrPage = lazy(() =>
   import("../components/admin/order/AdminOrderMgrComponent")
 );
+const AdminUserInfoMgrPage = lazy(() =>
+  import("../components/admin/user/UserInfoMgr")
+);
 const Loading = <div>Loading...</div>;
 
 const root = createBrowserRouter([
@@ -114,7 +117,7 @@ const root = createBrowserRouter([
     ),
   },
   {
-    path: "adminordmgr",
+    path: "adminord",
     element: (
       <Suspense fallback={Loading}>
         <AdminOrdMgrPage />
@@ -126,6 +129,15 @@ const root = createBrowserRouter([
     element: (
       <Suspense fallback={Loading}>
         <AdminIndex />
+      </Suspense>
+    ),
+    children: adminRouter(),
+  },
+  {
+    path: "adminuser",
+    element: (
+      <Suspense fallback={Loading}>
+        <AdminUserInfoMgrPage />
       </Suspense>
     ),
     children: adminRouter(),
