@@ -1,5 +1,5 @@
 import React from "react";
-import SocialLoginButtons from "../../components/SocialLoginButtons";
+import SocialLoginButtons from "../../components/signup/SocialLoginButtons";
 import { useNavigate } from "react-router-dom";
 import HomeBar from "../../layouts/mainpage/HomeBar";
 
