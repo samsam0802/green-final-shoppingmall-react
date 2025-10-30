@@ -1,6 +1,6 @@
 import React from "react";
-import Header from "../../layout/Header";
-import NavBar from "../../layout/NavBar";
+import Header from "../../layouts/mainpage/Header";
+import NavBar from "../../layouts/mainpage/NavBar";
 
 export default function MainPage() {
   return (

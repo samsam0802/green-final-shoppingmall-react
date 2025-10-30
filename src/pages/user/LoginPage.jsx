@@ -1,7 +1,7 @@
 import React from "react";
 import SocialLoginButtons from "../../components/SocialLoginButtons";
 import { useNavigate } from "react-router-dom";
-import HomeBar from "../../layout/HomeBar";
+import HomeBar from "../../layouts/mainpage/HomeBar";
 
 const LoginPage = () => {
   const navigate = useNavigate();

@@ -4,7 +4,7 @@ import AgreementStep from "../../components/signup/AgreementStep";
 import InfoStep from "../../components/signup/InfoStep";
 import SuccessStep from "../../components/signup/SuccessStep";
 import JoinChoiceModal from "../../components/signup/JoinChoiceModal";
-import HomeBar from "../../layout/HomeBar";
+import HomeBar from "../../layouts/mainpage/HomeBar";
 
 export default function JoinPage() {
   const [step, setStep] = useState(1);

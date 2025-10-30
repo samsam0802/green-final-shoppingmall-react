@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import AdminSideBar from "./nav/AdminSideBar";
+import AdminSideBar from "./AdminSideBar";
 
 const AdminLayout = ({ children }) => {
   const [activeTab, setActiveTab] = useState("product-inquiry"); // 기본 선택 탭
