@@ -10,6 +10,12 @@ const ReviewAddPage = lazy(() =>
   import("../components/ReviewActionsComponent")
 );
 
+const ProductList = lazy(() => import("../pages/product/ProductListPage"));
+const ProductDetail = lazy(() => import("../pages/product/ProductDetailPage"));
+const Order = lazy(() => import("../pages/order/OrderPage"));
+const OrderComplete = lazy(() => import("../pages/order/OrderCompletePage"));
+const OrderHistory = lazy(() => import("../pages/order/OrderHistoryPage"));
+const Cart = lazy(() => import("../pages/cart/CartPage"));
 const Loading = <div>Loading...</div>;
 
 const root = createBrowserRouter([
@@ -26,6 +32,54 @@ const root = createBrowserRouter([
     element: (
       <Suspense fallback={Loading}>
         <LoginPage />
+      </Suspense>
+    ),
+  },
+  {
+    path: "product/list",
+    element: (
+      <Suspense fallback={Loading}>
+        <ProductList />
+      </Suspense>
+    ),
+  },
+  {
+    path: "product/detail/:id",
+    element: (
+      <Suspense fallback={Loading}>
+        <ProductDetail />
+      </Suspense>
+    ),
+  },
+  {
+    path: "order",
+    element: (
+      <Suspense fallback={Loading}>
+        <Order />
+      </Suspense>
+    ),
+  },
+  {
+    path: "order/complete",
+    element: (
+      <Suspense fallback={Loading}>
+        <OrderComplete />
+      </Suspense>
+    ),
+  },
+  {
+    path: "order/history",
+    element: (
+      <Suspense fallback={Loading}>
+        <OrderHistory />
+      </Suspense>
+    ),
+  },
+  {
+    path: "cart",
+    element: (
+      <Suspense fallback={Loading}>
+        <Cart />
       </Suspense>
     ),
   },
