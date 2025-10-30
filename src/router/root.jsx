@@ -6,9 +6,11 @@ import adminRouter from "./adminRouter";
 const Main = lazy(() => import("../pages/user/MainPage"));
 const LoginPage = lazy(() => import("../pages/user/LoginPage"));
 const SignPage = lazy(() => import("../pages/user/SignUpPage"));
-const ReviewPage = lazy(() => import("../components/ReviewListComponent"));
+const ReviewPage = lazy(() =>
+  import("../components/review/ReviewListComponent")
+);
 const ReviewAddPage = lazy(() =>
-  import("../components/ReviewActionsComponent")
+  import("../components/review/ReviewActionsComponent")
 );
 
 const ProductList = lazy(() => import("../pages/product/ProductListPage"));
@@ -18,7 +20,7 @@ const OrderComplete = lazy(() => import("../pages/order/OrderCompletePage"));
 const OrderHistory = lazy(() => import("../pages/order/OrderHistoryPage"));
 const Cart = lazy(() => import("../pages/cart/CartPage"));
 const AdminOrdMgrPage = lazy(() =>
-  import("../components/AdminOrderMgrComponent")
+  import("../components/admin/order/AdminOrderMgrComponent")
 );
 const Loading = <div>Loading...</div>;
 

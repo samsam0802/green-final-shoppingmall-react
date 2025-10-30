@@ -3,7 +3,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import AgreementStep from "../../components/signup/AgreementStep";
 import InfoStep from "../../components/signup/InfoStep";
 import SuccessStep from "../../components/signup/SuccessStep";
-import JoinChoiceModal from "../../components/signup/JoinChoiceModal";
+import SignUpChoiceModal from "../../components/signup/SignUpChoiceModal";
 import HomeBar from "../../layouts/mainpage/HomeBar";
 
 export default function JoinPage() {
@@ -77,7 +77,7 @@ export default function JoinPage() {
 
       {/* 가입 방식 선택 모달 (열려 있을 때만 표시) */}
       {modalOpen && (
-        <JoinChoiceModal
+        <SignUpChoiceModal
           open
           onClose={() => setModalOpen(false)}
           onNormalJoin={handleNormalJoin}
