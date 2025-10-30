@@ -5,6 +5,7 @@ import adminRouter from "./adminRouter";
 
 const Main = lazy(() => import("../pages/user/MainPage"));
 const LoginPage = lazy(() => import("../pages/user/LoginPage"));
+const SignPage = lazy(() => import("../pages/user/SignUpPage"));
 const ReviewPage = lazy(() => import("../components/ReviewListComponent"));
 const ReviewAddPage = lazy(() =>
   import("../components/ReviewActionsComponent")
@@ -32,6 +33,14 @@ const root = createBrowserRouter([
     element: (
       <Suspense fallback={Loading}>
         <LoginPage />
+      </Suspense>
+    ),
+  },
+  {
+    path: "joinpage",
+    element: (
+      <Suspense fallback={Loading}>
+        <SignPage />
       </Suspense>
     ),
   },

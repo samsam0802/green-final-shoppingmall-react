@@ -1,0 +1,35 @@
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import Stepper from "./Stepper";
+
+export default function SuccessStep() {
+  const navigate = useNavigate();
+  return (
+    <div className="space-y-6 text-center">
+      <Stepper step={3} />
+      <div className="py-16">
+        <div className="mx-auto mb-4 size-16 rounded-full bg-emerald-500 text-white flex items-center justify-center text-3xl">
+          ✓
+        </div>
+        <h2 className="text-2xl font-bold">회원가입이 완료되었습니다</h2>
+        <p className="text-sm text-zinc-500 mt-2">
+          이제 다양한 혜택을 만나보세요.
+        </p>
+        <div className="mt-8 flex justify-center gap-3">
+          <button
+            onClick={() => navigate("/")}
+            className="px-6 h-11 rounded-md border text-sm font-semibold hover:bg-zinc-50"
+          >
+            홈으로
+          </button>
+          <button
+            onClick={() => navigate("/loginpage")}
+            className="px-6 h-11 rounded-md bg-zinc-900 text-white text-sm font-semibold hover:opacity-90"
+          >
+            로그인하기
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
