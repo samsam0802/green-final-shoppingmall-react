@@ -17,6 +17,9 @@ const Order = lazy(() => import("../pages/order/OrderPage"));
 const OrderComplete = lazy(() => import("../pages/order/OrderCompletePage"));
 const OrderHistory = lazy(() => import("../pages/order/OrderHistoryPage"));
 const Cart = lazy(() => import("../pages/cart/CartPage"));
+const AdminOrdMgrPage = lazy(() =>
+  import("../components/AdminOrderMgrComponent")
+);
 const Loading = <div>Loading...</div>;
 
 const root = createBrowserRouter([
@@ -105,6 +108,14 @@ const root = createBrowserRouter([
     element: (
       <Suspense fallback={Loading}>
         <ReviewAddPage />
+      </Suspense>
+    ),
+  },
+  {
+    path: "adminordmgr",
+    element: (
+      <Suspense fallback={Loading}>
+        <AdminOrdMgrPage />
       </Suspense>
     ),
   },
