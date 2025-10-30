@@ -1,7 +1,6 @@
 import React from "react";
 import products from "../../data/products";
 import ProductCard from "../../components/product/ProductCard";
-import ProductCategoryHeader from "../../components/product/ProductCategoryHeader"; // ✅ 추가
 import ProductSearchBar from "../../components/product/ProductSearchBar";
 import ProductSortBar from "../../components/product/ProductSortBar";
 import Pagination from "../../components/product/Pagination";
@@ -11,14 +10,11 @@ const ProductListComponent = () => {
   const navigate = useNavigate();
 
   const handleClickCart = () => {
-    navigate("../../cart");
+    navigate("/cart");
   };
 
   return (
     <div>
-      {/* ✅ 상단 카테고리 메뉴 */}
-      <ProductCategoryHeader />
-
       <div className="max-w-6xl mx-auto p-8">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-bold">상품 목록</h1>

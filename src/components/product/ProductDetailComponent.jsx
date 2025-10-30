@@ -16,8 +16,8 @@ const ProductDetailComponent = () => {
   const navigate = useNavigate();
   const product = products.find((i) => i.id == id);
 
-  const handleClickList = () => navigate({ pathname: "../product/list" });
-  const handleClickCheckout = () => navigate({ pathname: "../order" });
+  const handleClickList = () => navigate({ pathname: "/product/list" });
+  const handleClickCheckout = () => navigate({ pathname: "/order" });
 
   return (
     <div className="p-8 max-w-4xl mx-auto">
