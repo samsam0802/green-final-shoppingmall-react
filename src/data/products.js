@@ -1,0 +1,88 @@
+const products = [
+  {
+    id: 1,
+    name: "라운드랩 자작나무 수분 크림",
+    price: 18900,
+    category: "스킨케어",
+    image: "https://via.placeholder.com/300x300?text=자작나무+크림",
+  },
+  {
+    id: 2,
+    name: "토리든 다이브인 세럼",
+    price: 13900,
+    category: "스킨케어",
+    image: "https://via.placeholder.com/300x300?text=다이브인+세럼",
+  },
+  {
+    id: 3,
+    name: "닥터지 그린마일드 선크림",
+    price: 17900,
+    category: "선케어",
+    image: "https://via.placeholder.com/300x300?text=그린마일드+선크림",
+  },
+  {
+    id: 4,
+    name: "메디힐 티트리 마스크팩 (10매)",
+    price: 9900,
+    category: "마스크팩",
+    image: "https://via.placeholder.com/300x300?text=티트리+마스크팩",
+  },
+  {
+    id: 5,
+    name: "에스트라 아토베리어 로션",
+    price: 25900,
+    category: "스킨케어",
+    image: "https://via.placeholder.com/300x300?text=아토베리어+로션",
+  },
+  {
+    id: 6,
+    name: "페리페라 잉크 무드 글루틴 틴트",
+    price: 9900,
+    category: "메이크업",
+    image: "https://via.placeholder.com/300x300?text=잉크+틴트",
+  },
+  {
+    id: 7,
+    name: "롬앤 베러댄치크 블러셔",
+    price: 12900,
+    category: "메이크업",
+    image: "https://via.placeholder.com/300x300?text=롬앤+블러셔",
+  },
+  {
+    id: 8,
+    name: "클리오 킬래쉬 수퍼프루프 마스카라",
+    price: 14900,
+    category: "메이크업",
+    image: "https://via.placeholder.com/300x300?text=킬래쉬+마스카라",
+  },
+  {
+    id: 9,
+    name: "이니스프리 블루벨 핸드크림",
+    price: 4500,
+    category: "바디케어",
+    image: "https://via.placeholder.com/300x300?text=핸드크림",
+  },
+  {
+    id: 10,
+    name: "해피바스 퍼퓸 샤워젤",
+    price: 8900,
+    category: "바디케어",
+    image: "https://via.placeholder.com/300x300?text=샤워젤",
+  },
+  {
+    id: 11,
+    name: "려 자양윤모 샴푸",
+    price: 10900,
+    category: "헤어케어",
+    image: "https://via.placeholder.com/300x300?text=자양윤모+샴푸",
+  },
+  {
+    id: 12,
+    name: "미쟝센 퍼펙트 세럼 오리지널",
+    price: 13900,
+    category: "헤어케어",
+    image: "https://via.placeholder.com/300x300?text=퍼펙트+세럼",
+  },
+];
+
+export default products;
