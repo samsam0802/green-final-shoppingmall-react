@@ -42,9 +42,24 @@ export default function BasicInfo() {
           {/* 상품명 Input */}
           <input
             type="text"
-            defaultValue="HTML 사용가능" // 이미지에 보이는 예시 값
+            defaultValue="" // 이미지에 보이는 예시 값
             className="border border-gray-300 rounded-sm p-1 w-full max-w-lg focus:ring-blue-500 focus:border-blue-500"
             aria-label="상품명"
+          />
+          {/* 글자수 표시 */}
+          <span className="text-xs text-gray-500">0 / 255</span>
+        </div>
+      </InfoRow>
+
+      {/* 2. 상품명 입력 필드 */}
+      <InfoRow label="검색어">
+        <div className="flex items-center space-x-2">
+          {/* 검색어 Input */}
+          <input
+            type="text"
+            defaultValue=""
+            className="border border-gray-300 rounded-sm p-1 w-full max-w-lg focus:ring-blue-500 focus:border-blue-500"
+            aria-label="검색어"
           />
           {/* 글자수 표시 */}
           <span className="text-xs text-gray-500">0 / 255</span>

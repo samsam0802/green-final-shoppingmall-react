@@ -17,7 +17,8 @@ const ProductSearchFilter = () => {
         <select className="border border-gray-300 p-1.5 text-sm rounded focus:ring-blue-500 focus:border-blue-500">
           <option>전체</option>
           <option>상품명</option>
-          <option>상품코드</option>
+          <option>검색어</option>
+          <option>브랜드</option>
         </select>
         <input
           type="text"
@@ -28,14 +29,16 @@ const ProductSearchFilter = () => {
 
       {/* 카테고리 */}
       <InputRow label="카테고리">
-        {["카테고리"].map((label) => (
-          <select
-            key={label}
-            className="border border-gray-300 p-1.5 text-sm rounded focus:ring-blue-500 focus:border-blue-500"
-          >
-            <option>{label}</option>
-          </select>
-        ))}
+        {["1차 카테고리", "2차 카테고리", "3차 카테고리", "4차 카테고리"].map(
+          (label) => (
+            <select
+              key={label}
+              className="border border-gray-300 p-1.5 text-sm rounded focus:ring-blue-500 focus:border-blue-500"
+            >
+              <option>{label}</option>
+            </select>
+          )
+        )}
         <div className="flex items-center space-x-4 ml-4"></div>
       </InputRow>
 

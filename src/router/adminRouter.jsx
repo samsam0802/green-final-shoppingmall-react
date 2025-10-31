@@ -17,7 +17,7 @@ const adminRouter = () => {
       ),
     },
     {
-      path: "addproduct",
+      path: "product/add",
       element: (
         <Suspense fallback={Loading}>
           <ProductAdd />

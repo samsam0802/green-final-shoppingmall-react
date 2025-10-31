@@ -6,6 +6,7 @@ import SalesInfo from "../../../components/admin/product/SalesInfo";
 import ProductImageRegister from "../../../components/admin/product/ProductImageRegister";
 import DeliveryCharge from "../../../components/admin/product/DeliveryCharge";
 import ProductEventRegister from "../../../components/admin/product/ProductEventRegister";
+import OptionRegistration from "../../../components/admin/product/OptionRegistration";
 
 const ProductAddPage = () => {
   return (
@@ -18,6 +19,7 @@ const ProductAddPage = () => {
       <ProductImageRegister />
       <DeliveryCharge />
       <ProductEventRegister />
+      <OptionRegistration />
     </div>
   );
 };

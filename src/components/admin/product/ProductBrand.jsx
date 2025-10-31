@@ -214,12 +214,12 @@ export default function ProductBrand() {
 
   return (
     <div className="p-4 border border-gray-200 bg-white shadow-lg max-w-4xl mx-auto">
-      {/* 브랜드/지역 헤더 */}
+      {/* 브랜드 헤더 */}
       <div
         className="flex justify-between items-center p-3 bg-gray-50 border-b cursor-pointer"
         onClick={toggleOpen}
       >
-        <h2 className="text-lg font-semibold text-gray-700">브랜드/지역</h2>
+        <h2 className="text-lg font-semibold text-gray-700">브랜드</h2>
         <div className="flex items-center space-x-2">
           <span className="text-sm text-gray-500">열기 고정</span>
           <button className="text-gray-500 hover:text-gray-700">
