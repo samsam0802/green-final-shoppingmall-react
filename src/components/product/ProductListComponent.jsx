@@ -1,42 +1,51 @@
-import React from "react";
+import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 import products from "../../data/products";
 import ProductCard from "../../components/product/ProductCard";
-import ProductSearchBar from "../../components/product/ProductSearchBar";
-import ProductSortBar from "../../components/product/ProductSortBar";
-import Pagination from "../../components/product/Pagination";
-import { useNavigate } from "react-router-dom";
+import ProductFilterBar from "../../components/filter/ProductFilterBar";
 
 const ProductListComponent = () => {
-  const navigate = useNavigate();
+  const { main, sub } = useParams();
+  const [filters, setFilters] = useState({});
 
-  const handleClickCart = () => {
-    navigate("/cart");
-  };
+  // sub = "skin-toner" 형태 → 다시 "스킨/토너" 로 변환
+  const subName = sub.replace(/-/g, "/");
+
+  const decodedSub = decodeURIComponent(subName);
+
+  // 해당 카테고리 상품만 가져오기
+  const categoryProducts = products.filter(
+    (p) => p.categoryMain === main && p.categorySub === decodedSub
+  );
+
+  // ✅ 옵션 자동 생성
+  const brandOptions = [...new Set(categoryProducts.map((p) => p.brand))];
+  const sizeOptions = [...new Set(categoryProducts.flatMap((p) => p.sizes))];
+
+  // ✅ 필터 적용
+  const filteredProducts = categoryProducts.filter((p) => {
+    if (filters.brand && p.brand !== filters.brand) return false;
+    if (filters.size && !p.sizes.includes(filters.size)) return false;
+    return true;
+  });
 
   return (
-    <div>
-      <div className="max-w-6xl mx-auto p-8">
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-bold">상품 목록</h1>
-          <button
-            className="border px-4 py-2 rounded bg-gray-100 hover:bg-gray-200"
-            onClick={handleClickCart}
-          >
-            장바구니
-          </button>
-        </div>
+    <div className="max-w-6xl mx-auto p-8">
+      <h1 className="text-2xl font-bold mb-6">
+        {main} &gt; {decodedSub}
+      </h1>
 
-        <ProductSearchBar />
+      <ProductFilterBar
+        filters={filters}
+        setFilters={setFilters}
+        brandOptions={brandOptions}
+        sizeOptions={sizeOptions}
+      />
 
-        <ProductSortBar />
-
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
-          {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
-
-        <Pagination />
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
+        {filteredProducts.map((product) => (
+          <ProductCard product={product} />
+        ))}
       </div>
     </div>
   );

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import OrderHistoryComponent from "../../components/order/OrderHistoryComponent";
 
-const OrderHistoryPage = () => {
+const MyPageOrderHistoryPage = () => {
   return <OrderHistoryComponent />;
 };
 
-export default OrderHistoryPage;
+export default MyPageOrderHistoryPage;

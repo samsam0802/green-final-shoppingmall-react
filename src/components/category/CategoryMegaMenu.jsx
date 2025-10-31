@@ -7,8 +7,9 @@ const CategoryMegaMenu = ({ isOpen }) => {
 
   if (!isOpen) return null;
 
-  const handleClickList = () => {
-    navigate({ pathname: "/product/list" });
+  const handleCategorySelect = (main, sub) => {
+    const subSlug = sub.replace(/\//g, "-");
+    navigate(`/category/${main}/${subSlug}`);
   };
 
   return (
@@ -37,22 +38,22 @@ const CategoryMegaMenu = ({ isOpen }) => {
             <CategoryColumn
               title="스킨케어"
               items={["스킨/토너", "세럼", "크림", "패드", "선케어"]}
-              onItemClick={handleClickList}
+              onItemClick={(sub) => handleCategorySelect(activeTab, sub)}
             />
             <CategoryColumn
               title="메이크업"
               items={["립", "아이", "베이스", "네일"]}
-              onItemClick={handleClickList}
+              onItemClick={(sub) => handleCategorySelect(activeTab, sub)}
             />
             <CategoryColumn
               title="바디케어"
               items={["바디워시", "바디로션", "핸드크림"]}
-              onItemClick={handleClickList}
+              onItemClick={(sub) => handleCategorySelect(activeTab, sub)}
             />
             <CategoryColumn
               title="헤어케어"
               items={["샴푸", "트리트먼트", "헤어오일"]}
-              onItemClick={handleClickList}
+              onItemClick={(sub) => handleCategorySelect(activeTab, sub)}
             />
           </>
         )}
@@ -62,22 +63,22 @@ const CategoryMegaMenu = ({ isOpen }) => {
             <CategoryColumn
               title="상의"
               items={["반팔", "긴팔", "셔츠", "후드", "니트"]}
-              onItemClick={handleClickList}
+              onItemClick={(sub) => handleCategorySelect(activeTab, sub)}
             />
             <CategoryColumn
               title="하의"
               items={["청바지", "슬랙스", "조거팬츠", "반바지"]}
-              onItemClick={handleClickList}
+              onItemClick={(sub) => handleCategorySelect(activeTab, sub)}
             />
             <CategoryColumn
               title="아우터"
               items={["자켓", "패딩", "가디건", "코트"]}
-              onItemClick={handleClickList}
+              onItemClick={(sub) => handleCategorySelect(activeTab, sub)}
             />
             <CategoryColumn
               title="원피스"
               items={["미니", "롱", "정장 원피스"]}
-              onItemClick={handleClickList}
+              onItemClick={(sub) => handleCategorySelect(activeTab, sub)}
             />
           </>
         )}
@@ -87,22 +88,22 @@ const CategoryMegaMenu = ({ isOpen }) => {
             <CategoryColumn
               title="캡/볼캡"
               items={["베이직 캡", "로고 캡"]}
-              onItemClick={handleClickList}
+              onItemClick={(sub) => handleCategorySelect(activeTab, sub)}
             />
             <CategoryColumn
               title="비니"
               items={["니트 비니", "울 비니"]}
-              onItemClick={handleClickList}
+              onItemClick={(sub) => handleCategorySelect(activeTab, sub)}
             />
             <CategoryColumn
               title="버킷햇"
               items={["면", "패브릭", "촘촘 버킷햇"]}
-              onItemClick={handleClickList}
+              onItemClick={(sub) => handleCategorySelect(activeTab, sub)}
             />
             <CategoryColumn
               title="기타"
               items={["헤어밴드", "머플러와 함께"]}
-              onItemClick={handleClickList}
+              onItemClick={(sub) => handleCategorySelect(activeTab, sub)}
             />
           </>
         )}
@@ -112,22 +113,22 @@ const CategoryMegaMenu = ({ isOpen }) => {
             <CategoryColumn
               title="운동화"
               items={["러닝화", "테니스화", "캔버스 스니커즈"]}
-              onItemClick={handleClickList}
+              onItemClick={(sub) => handleCategorySelect(activeTab, sub)}
             />
             <CategoryColumn
               title="구두"
               items={["로퍼", "옥스퍼드", "더비슈즈"]}
-              onItemClick={handleClickList}
+              onItemClick={(sub) => handleCategorySelect(activeTab, sub)}
             />
             <CategoryColumn
               title="샌들/슬리퍼"
               items={["쿠션 슬라이드", "리조트 샌들"]}
-              onItemClick={handleClickList}
+              onItemClick={(sub) => handleCategorySelect(activeTab, sub)}
             />
             <CategoryColumn
               title="부츠"
               items={["첼시 부츠", "워커", "롱부츠"]}
-              onItemClick={handleClickList}
+              onItemClick={(sub) => handleCategorySelect(activeTab, sub)}
             />
           </>
         )}
@@ -135,6 +136,8 @@ const CategoryMegaMenu = ({ isOpen }) => {
     </div>
   );
 };
+
+const makeSlug = (str) => str.replace(/\//g, "-");
 
 const CategoryColumn = ({ title, items, onItemClick }) => (
   <div>
@@ -144,7 +147,7 @@ const CategoryColumn = ({ title, items, onItemClick }) => (
         <li
           key={item}
           className="hover:text-black cursor-pointer"
-          onClick={onItemClick}
+          onClick={() => onItemClick(makeSlug(item))}
         >
           {item}
         </li>
