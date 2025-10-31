@@ -8,6 +8,9 @@ const ProductAdd = lazy(() => import("../pages/admin/product/ProductAddPage"));
 const RestockNoti = lazy(() =>
   import("../pages/admin/restock/RestockNotiPage")
 );
+const SalesStatistics = lazy(() =>
+  import("../pages/admin/statistics/SalesStatisticsPage")
+);
 
 const adminRouter = () => {
   return [
@@ -32,6 +35,14 @@ const adminRouter = () => {
       element: (
         <Suspense fallback={Loading}>
           <RestockNoti />
+        </Suspense>
+      ),
+    },
+    {
+      path: "statistics",
+      element: (
+        <Suspense fallback={Loading}>
+          <SalesStatistics />
         </Suspense>
       ),
     },
