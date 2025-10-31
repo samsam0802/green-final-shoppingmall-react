@@ -1,6 +1,6 @@
 import React from "react";
 
-const UserListTable = () => {
+const UserInfoResultTable = () => {
   const headers = [
     "번호",
     "아이디",
@@ -40,10 +40,12 @@ const UserListTable = () => {
     },
   ];
 
+  const gradeOptions = ["일반", "매니저", "관리자"];
+
   return (
     <div className="border border-gray-300 bg-white mt-6 mx-auto w-full">
       {/* 상단 영역 */}
-      <div className="bg-gray-50 p-3 border-b border-gray-300 flex justify-between items-center">
+      <div className="p-3 border-b border-gray-300 flex justify-between items-center">
         <span>총 {dummyData.length}명의 회원이 검색되었습니다.</span>
         <div className="flex items-center gap-2">
           <button className="bg-blue-600 text-white px-4 py-2 text-sm font-medium">
@@ -61,13 +63,13 @@ const UserListTable = () => {
       {/* 테이블 영역 */}
       <div className="overflow-x-auto">
         <table className="w-full border-collapse text-center text-sm">
-          <thead className="bg-gray-100">
+          <thead>
             <tr>
               {headers.map((h, i) => (
                 <th
                   key={i}
                   className={`py-[6px] px-2 border-b border-r border-gray-300 text-gray-700 font-semibold ${
-                    i === headers.length - 1 ? "border-r-0" : ""
+                    i === headers.length - 1 && "border-r-0"
                   }`}
                 >
                   {h}
@@ -75,51 +77,85 @@ const UserListTable = () => {
               ))}
             </tr>
           </thead>
+
           <tbody>
-            {dummyData.map((user, idx) => (
-              <tr key={idx}>
-                {[
-                  user.id,
-                  user.username,
-                  user.nickname,
-                  `${user.email} / ${user.phone}`,
-                  user.grade,
-                  user.joinDate,
-                ].map((val, i) => (
+            {dummyData.map((user, idx) => {
+              const notLast = idx !== dummyData.length - 1;
+              return (
+                <tr key={user.id}>
                   <td
-                    key={i}
                     className={`py-[6px] px-2 border-r border-gray-300 text-gray-700 ${
-                      i === headers.length - 1 ? "border-r-0" : ""
-                    } ${
-                      // 여기를 수정했습니다. 마지막 행일 경우 border-b를 적용하지 않습니다.
-                      idx !== dummyData.length - 1
-                        ? "border-b border-gray-300"
-                        : ""
+                      notLast && "border-b border-gray-300"
                     }`}
                   >
-                    {val}
+                    {user.id}
                   </td>
-                ))}
-              </tr>
-            ))}
+                  <td
+                    className={`py-[6px] px-2 border-r border-gray-300 text-gray-700 ${
+                      notLast && "border-b border-gray-300"
+                    }`}
+                  >
+                    {user.username}
+                  </td>
+                  <td
+                    className={`py-[6px] px-2 border-r border-gray-300 text-gray-700 ${
+                      notLast && "border-b border-gray-300"
+                    }`}
+                  >
+                    {user.nickname}
+                  </td>
+                  <td
+                    className={`py-[6px] px-2 border-r border-gray-300 text-gray-700 ${
+                      notLast && "border-b border-gray-300"
+                    }`}
+                  >
+                    {user.email} / {user.phone}
+                  </td>
+
+                  {/* 등급 */}
+                  <td
+                    className={`py-[6px] px-2 border-r border-gray-300 ${
+                      notLast && "border-b border-gray-300"
+                    }`}
+                  >
+                    <select
+                      defaultValue={user.grade}
+                      className="border border-gray-300 px-2 py-[2px] text-sm text-gray-700 outline-none"
+                    >
+                      {gradeOptions.map((opt) => (
+                        <option key={opt} value={opt}>
+                          {opt}
+                        </option>
+                      ))}
+                    </select>
+                  </td>
+
+                  {/* 가입일 */}
+                  <td
+                    className={`py-[6px] px-2 text-gray-700 ${
+                      notLast && "border-b border-gray-300"
+                    }`}
+                  >
+                    {user.joinDate}
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
 
-      {/* 하단 페이지네이션 중앙 */}
-      <div className="flex justify-center items-center gap-2 p-4 border-t border-gray-300 bg-gray-50">
-        <button className="px-3 py-1 border border-gray-300 rounded text-sm">
+      {/* 하단 페이지네이션 */}
+      <div className="flex justify-center items-center gap-2 p-4 border-t border-gray-300">
+        <button className="px-3 py-1 border border-gray-300 text-sm">
           이전
         </button>
         {Array.from({ length: 10 }, (_, i) => (
-          <button
-            key={i}
-            className="px-3 py-1 border border-gray-300 rounded text-sm"
-          >
+          <button key={i} className="px-3 py-1 border border-gray-300 text-sm">
             {i + 1}
           </button>
         ))}
-        <button className="px-3 py-1 border border-gray-300 rounded text-sm">
+        <button className="px-3 py-1 border border-gray-300 text-sm">
           다음
         </button>
       </div>
@@ -127,4 +163,4 @@ const UserListTable = () => {
   );
 };
 
-export default UserListTable;
+export default UserInfoResultTable;
