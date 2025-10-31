@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import CategoryMegaMenu from "../../components/category/CategoryMegaMenu";
+import { useNavigate } from "react-router-dom";
 
 export default function NavBar() {
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
 
   const menus = [
     "TitleName",
@@ -48,7 +50,12 @@ export default function NavBar() {
               0
             </span>
           </div>
-          <span className="opacity-70">💬</span>
+          <span
+            className=" cursor-pointer opacity-70"
+            onClick={() => navigate("/helpcenter")}
+          >
+            💬
+          </span>
         </div>
       </div>
       {/* ✅ 메가메뉴 표시 */}

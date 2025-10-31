@@ -30,7 +30,7 @@ const menuGroups = [
     items: [
       { to: "/mypage/inquiries", label: "내 문의내역" },
       //   { to: "/mypage/reviews", label: "상품후기" },
-      { to: "/mypage/helpcenster", label: "고객 센터" },
+      { to: "/helpcenter", label: "고객 센터" },
     ],
   },
 ];

@@ -26,7 +26,6 @@ const OrderHistory = lazy(() =>
 
 const mypageRouter = () => {
   return [
-    // /mypage → 기본으로 개인정보수정 보여줄거면 index로
     {
       index: true,
       element: (
