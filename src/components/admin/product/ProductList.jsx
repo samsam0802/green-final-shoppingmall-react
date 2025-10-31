@@ -160,6 +160,7 @@ const ProductList = () => {
                 </td>
                 <td className="px-2 py-2 text-sm space-y-0.5 w-20">
                   <ActionButton label="수정" />
+                  <ActionButton label="재입고알림" />
                 </td>
               </tr>
             ))}
