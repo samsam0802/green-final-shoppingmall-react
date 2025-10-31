@@ -2,12 +2,14 @@ import { lazy, Suspense } from "react";
 import { createBrowserRouter } from "react-router-dom";
 import AdminIndex from "../pages/admin/AdminIndex";
 import adminRouter from "./adminRouter";
+import mypageRouter from "./mypageRouter";
 
 const Main = lazy(() => import("../pages/user/MainPage"));
 const LoginPage = lazy(() => import("../pages/user/LoginPage"));
 const SignPage = lazy(() => import("../pages/user/SignUpPage"));
 const FindIdPage = lazy(() => import("../pages/user/FindIdPage"));
 const FindPasswordPage = lazy(() => import("../pages/user/FindPasswordPage"));
+const MyPageLayout = lazy(() => import("../layouts/mypage/MyPageLayout"));
 
 const ReviewPage = lazy(() =>
   import("../components/review/ReviewListComponent")
@@ -71,6 +73,15 @@ const root = createBrowserRouter([
         <FindPasswordPage />
       </Suspense>
     ),
+  },
+  {
+    path: "mypage",
+    element: (
+      <Suspense fallback={Loading}>
+        <MyPageLayout />
+      </Suspense>
+    ),
+    children: mypageRouter(),
   },
   {
     path: "product/list",
