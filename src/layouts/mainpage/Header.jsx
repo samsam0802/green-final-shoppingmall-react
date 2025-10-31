@@ -18,6 +18,10 @@ export default function Header() {
     navigate("/mypage");
   };
 
+  const cartHandleClick = () => {
+    navigate("/cart");
+  };
+
   return (
     <header className="bg-white border-b">
       {/* 상단 안내 라인 */}
@@ -58,6 +62,12 @@ export default function Header() {
             onClick={mypageHandleClick}
           >
             MYPAGE
+          </button>
+          <button
+            className="cursor-pointer opacity-60 hover:opacity-100 transition"
+            onClick={cartHandleClick}
+          >
+            CART
           </button>
         </div>
       </div>

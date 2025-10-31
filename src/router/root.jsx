@@ -23,9 +23,7 @@ const ProductDetail = lazy(() => import("../pages/product/ProductDetailPage"));
 
 const Order = lazy(() => import("../pages/order/OrderPage"));
 const OrderComplete = lazy(() => import("../pages/order/OrderCompletePage"));
-const OrderHistory = lazy(() =>
-  import("../pages/order/MyPageOrderHistoryPage")
-);
+
 const Cart = lazy(() => import("../pages/cart/CartPage"));
 
 const AdminOrdMgrPage = lazy(() =>
@@ -119,14 +117,6 @@ const root = createBrowserRouter([
     element: (
       <Suspense fallback={Loading}>
         <OrderComplete />
-      </Suspense>
-    ),
-  },
-  {
-    path: "mypage/orders",
-    element: (
-      <Suspense fallback={Loading}>
-        <OrderHistory />
       </Suspense>
     ),
   },
