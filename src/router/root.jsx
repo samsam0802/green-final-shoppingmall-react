@@ -27,12 +27,17 @@ const OrderHistory = lazy(() =>
   import("../pages/order/MyPageOrderHistoryPage")
 );
 const Cart = lazy(() => import("../pages/cart/CartPage"));
+
 const AdminOrdMgrPage = lazy(() =>
   import("../components/admin/order/AdminOrderMgrComponent")
 );
 const AdminUserInfoMgrPage = lazy(() =>
   import("../components/admin/user/UserInfoMgr")
 );
+const SecessionMemberMgrpage = lazy(() =>
+  import("../components/admin/user/SecessionMemberMgr")
+);
+
 const Loading = <div>Loading...</div>;
 
 const root = createBrowserRouter([
@@ -171,6 +176,15 @@ const root = createBrowserRouter([
     element: (
       <Suspense fallback={Loading}>
         <AdminUserInfoMgrPage />
+      </Suspense>
+    ),
+    children: adminRouter(),
+  },
+  {
+    path: "adminusersecession",
+    element: (
+      <Suspense fallback={Loading}>
+        <SecessionMemberMgrpage />
       </Suspense>
     ),
     children: adminRouter(),
