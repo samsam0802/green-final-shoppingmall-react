@@ -10,9 +10,6 @@ const AdminOrderMgrComponent = () => {
         <div className="space-x-2">
           <button className="bg-gray-100 px-3 py-1">엑셀 다운로드</button>
           <button className="bg-gray-100 px-3 py-1">프린트 설정</button>
-          <button className="bg-blue-600 text-white px-3 py-1">
-            출고 처리
-          </button>
         </div>
       </h2>
 
@@ -91,12 +88,14 @@ const AdminOrderMgrComponent = () => {
             주문상태(출고 후)
           </div>
           <div className="p-2 flex items-center flex-wrap flex-grow gap-x-3">
-            {["출고완료", "배송중", "배송완료"].map((label) => (
-              <label key={label} className="flex items-center select-none">
-                <span className="inline-block w-3.5 h-3.5 mr-1 border border-gray-400 rounded-sm bg-white align-middle"></span>
-                {label}
-              </label>
-            ))}
+            {["출고완료", "배송중", "배송완료", "반품신청", "반품완료"].map(
+              (label) => (
+                <label key={label} className="flex items-center select-none">
+                  <span className="inline-block w-3.5 h-3.5 mr-1 border border-gray-400 rounded-sm bg-white align-middle"></span>
+                  {label}
+                </label>
+              )
+            )}
             <div className="ml-3 flex items-center select-none">
               <span className="inline-block w-3.5 h-3.5 mr-1 border border-gray-400 rounded-sm bg-white align-middle"></span>
               전체
