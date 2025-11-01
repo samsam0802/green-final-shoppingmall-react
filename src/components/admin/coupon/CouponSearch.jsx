@@ -7,7 +7,7 @@ import {
   Calendar,
 } from "lucide-react";
 
-export default function CouponList() {
+export default function CouponSearch() {
   const [currentPage, setCurrentPage] = useState(1);
 
   const coupons = [
@@ -47,7 +47,9 @@ export default function CouponList() {
     <div className="w-full bg-white">
       {/* Header */}
       <div className="flex items-center gap-2 p-4 border-b">
-        <h1 className="text-lg font-semibold">쿠폰 리스트</h1>
+        <h1 className="text-lg font-semibold">
+          쿠폰 리스트 (다른 조건 빼고 심플하게 쿠폰이름으로만 검색할 수도 있음)
+        </h1>
         <button className="w-5 h-5 flex items-center justify-center border rounded text-xs">
           X
         </button>
@@ -123,25 +125,6 @@ export default function CouponList() {
                   <span className="text-sm">장바구니 쿠폰</span>
                 </label>
               </div>
-              <div className="flex items-center gap-2 ml-auto">
-                <span className="text-sm">쿠폰 사용범위</span>
-                <label className="flex items-center gap-2">
-                  <input type="checkbox" className="w-4 h-4" />
-                  <span className="text-sm">전체</span>
-                </label>
-                <label className="flex items-center gap-2">
-                  <input type="checkbox" className="w-4 h-4" />
-                  <span className="text-sm">PC</span>
-                </label>
-                <label className="flex items-center gap-2">
-                  <input type="checkbox" className="w-4 h-4" />
-                  <span className="text-sm">Mobile</span>
-                </label>
-                <label className="flex items-center gap-2">
-                  <input type="checkbox" className="w-4 h-4" />
-                  <span className="text-sm">App</span>
-                </label>
-              </div>
             </div>
           </div>
 
@@ -173,10 +156,6 @@ export default function CouponList() {
                   <input type="checkbox" className="w-4 h-4" />
                   <span className="text-sm">고객 다운로드</span>
                 </label>
-                <label className="flex items-center gap-2">
-                  <input type="checkbox" className="w-4 h-4" />
-                  <span className="text-sm">오프라인 생성발급</span>
-                </label>
               </div>
             </div>
           </div>
@@ -203,11 +182,11 @@ export default function CouponList() {
                 </label>
                 <label className="flex items-center gap-2">
                   <input type="checkbox" className="w-4 h-4" />
-                  <span className="text-sm">사용(발급준비)</span>
+                  <span className="text-sm">사용(발급불가)</span>
                 </label>
                 <label className="flex items-center gap-2">
                   <input type="checkbox" className="w-4 h-4" />
-                  <span className="text-sm">사용중지</span>
+                  <span className="text-sm">사용불가</span>
                 </label>
               </div>
             </div>
@@ -295,16 +274,10 @@ export default function CouponList() {
                       수정
                     </button>
                     <button className="px-3 py-1 text-xs bg-gray-600 text-white rounded hover:bg-gray-700">
-                      사제
-                    </button>
-                    <button className="px-3 py-1 text-xs bg-gray-600 text-white rounded hover:bg-gray-700">
-                      복사
+                      삭제
                     </button>
                     <button className="px-3 py-1 text-xs bg-gray-600 text-white rounded hover:bg-gray-700">
                       발급
-                    </button>
-                    <button className="px-3 py-1 text-xs bg-gray-600 text-white rounded hover:bg-gray-700">
-                      발급목록
                     </button>
                   </div>
                 </td>

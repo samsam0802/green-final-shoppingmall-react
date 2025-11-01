@@ -14,7 +14,9 @@ const SalesStatistics = lazy(() =>
 const CouponManagement = lazy(() =>
   import("../pages/admin/coupon/CouponManagementPage")
 );
-const CouponList = lazy(() => import("../pages/admin/coupon/CouponListPage"));
+const CouponSearchPage = lazy(() =>
+  import("../pages/admin/coupon/CouponSearchPage")
+);
 
 const adminRouter = () => {
   return [
@@ -59,10 +61,10 @@ const adminRouter = () => {
       ),
     },
     {
-      path: "coupon/list",
+      path: "coupon/search",
       element: (
         <Suspense fallback={Loading}>
-          <CouponList />
+          <CouponSearchPage />
         </Suspense>
       ),
     },
