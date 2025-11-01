@@ -8,6 +8,9 @@ export default function CouponManagement() {
     issue: true,
   });
 
+  const [issueType, setIssueType] = useState("download");
+  const [issueTarget, setIssueTarget] = useState("all");
+
   const toggleSection = (section) => {
     setSections((prev) => ({ ...prev, [section]: !prev[section] }));
   };
@@ -195,12 +198,19 @@ export default function CouponManagement() {
                   <span className="text-red-500 mr-1">*</span>
                   <span className="text-sm">할인 설정</span>
                 </div>
+                <div className="flex-1 p-4">
+                  <input
+                    type="number"
+                    className="w-full px-3 py-2 border rounded"
+                    placeholder=""
+                  />
+                </div>
                 <div className="flex-1 p-4 flex items-center gap-4">
                   <select className="px-3 py-2 border rounded">
-                    <option>날짜단</option>
+                    <option>일자리</option>
                   </select>
                   <select className="px-3 py-2 border rounded">
-                    <option>비율단</option>
+                    <option>반올림</option>
                   </select>
                 </div>
               </div>
@@ -284,7 +294,7 @@ export default function CouponManagement() {
               <div className="flex">
                 <div className="w-48 p-4 bg-gray-50 flex items-center">
                   <span className="text-red-500 mr-1">*</span>
-                  <span className="text-sm">할인 적용가능금액</span>
+                  <span className="text-sm">할인 적용가능상품</span>
                 </div>
                 <div className="flex-1 p-4 flex items-center gap-6">
                   <label className="flex items-center gap-2">
@@ -324,15 +334,6 @@ export default function CouponManagement() {
                     />
                     <span className="text-sm">상품</span>
                   </label>
-                  <label className="flex items-center gap-2">
-                    <input
-                      type="radio"
-                      name="applicableAmount"
-                      value="package"
-                      className="w-4 h-4"
-                    />
-                    <span className="text-sm">상품</span>
-                  </label>
                 </div>
               </div>
             </div>
@@ -367,7 +368,8 @@ export default function CouponManagement() {
                       type="radio"
                       name="issueType"
                       value="download"
-                      defaultChecked
+                      checked={issueType === "download"}
+                      onChange={(e) => setIssueType(e.target.value)}
                       className="w-4 h-4"
                     />
                     <span className="text-sm">관리자 수동 발급</span>
@@ -377,6 +379,8 @@ export default function CouponManagement() {
                       type="radio"
                       name="issueType"
                       value="auto"
+                      checked={issueType === "auto"}
+                      onChange={(e) => setIssueType(e.target.value)}
                       className="w-4 h-4"
                     />
                     <span className="text-sm">특정 조건 자동 발급</span>
@@ -386,21 +390,85 @@ export default function CouponManagement() {
                       type="radio"
                       name="issueType"
                       value="code"
+                      checked={issueType === "code"}
+                      onChange={(e) => setIssueType(e.target.value)}
                       className="w-4 h-4"
                     />
                     <span className="text-sm">고객 다운로드</span>
                   </label>
-                  <label className="flex items-center gap-2">
-                    <input
-                      type="radio"
-                      name="issueType"
-                      value="promotion"
-                      className="w-4 h-4"
-                    />
-                    <span className="text-sm">프로모션 생성발급</span>
-                  </label>
                 </div>
               </div>
+
+              {/* 특정 조건 자동 발급 설정 - 조건부 표시 */}
+              {issueType === "auto" && (
+                <div className="flex">
+                  <div className="w-48 p-4 bg-gray-50 flex items-center">
+                    <span className="text-red-500 mr-1">*</span>
+                    <span className="text-sm">특정 조건 자동 발급 설정</span>
+                  </div>
+                  <div className="flex-1 p-4 flex items-center gap-6">
+                    <label className="flex items-center gap-2">
+                      <input
+                        type="radio"
+                        name="autoCondition"
+                        value="signup"
+                        defaultChecked
+                        className="w-4 h-4"
+                      />
+                      <span className="text-sm">회원가입 완료시</span>
+                    </label>
+                    <label className="flex items-center gap-2">
+                      <input
+                        type="radio"
+                        name="autoCondition"
+                        value="groupChange"
+                        className="w-4 h-4"
+                      />
+                      <span className="text-sm">회원그룹 변경 시</span>
+                    </label>
+                    <label className="flex items-center gap-2">
+                      <input
+                        type="radio"
+                        name="autoCondition"
+                        value="birthday"
+                        className="w-4 h-4"
+                      />
+                      <span className="text-sm">생일</span>
+                    </label>
+                  </div>
+                </div>
+              )}
+
+              {/* 고객 다운로드 설정 - 조건부 표시 */}
+              {issueType === "code" && (
+                <div className="flex">
+                  <div className="w-48 p-4 bg-gray-50 flex items-center">
+                    <span className="text-red-500 mr-1">*</span>
+                    <span className="text-sm">고객 다운로드 설정</span>
+                  </div>
+                  <div className="flex-1 p-4 flex items-center gap-6">
+                    <label className="flex items-center gap-2">
+                      <input
+                        type="radio"
+                        name="downloadExposure"
+                        value="show"
+                        defaultChecked
+                        className="w-4 h-4"
+                      />
+                      <span className="text-sm">상품 상세에 쿠폰 노출</span>
+                    </label>
+                    <label className="flex items-center gap-2">
+                      <input
+                        type="radio"
+                        name="downloadExposure"
+                        value="hide"
+                        className="w-4 h-4"
+                      />
+                      <span className="text-sm">상품 상세에 쿠폰 미노출</span>
+                    </label>
+                  </div>
+                </div>
+              )}
 
               {/* 발급 대상 */}
               <div className="flex">
@@ -414,7 +482,8 @@ export default function CouponManagement() {
                       type="radio"
                       name="issueTarget"
                       value="all"
-                      defaultChecked
+                      checked={issueTarget === "all"}
+                      onChange={(e) => setIssueTarget(e.target.value)}
                       className="w-4 h-4"
                     />
                     <span className="text-sm">전체 회원</span>
@@ -424,12 +493,42 @@ export default function CouponManagement() {
                       type="radio"
                       name="issueTarget"
                       value="group"
+                      checked={issueTarget === "group"}
+                      onChange={(e) => setIssueTarget(e.target.value)}
                       className="w-4 h-4"
                     />
                     <span className="text-sm">회원 그룹</span>
                   </label>
                 </div>
               </div>
+
+              {/* 발행 그룹 설정 - 조건부 표시 */}
+              {issueTarget === "group" && (
+                <div className="flex">
+                  <div className="w-48 p-4 bg-gray-50 flex items-center">
+                    <span className="text-red-500 mr-1">*</span>
+                    <span className="text-sm">발행 그룹 설정</span>
+                  </div>
+                  <div className="flex-1 p-4 flex items-center gap-2">
+                    <label className="flex items-center gap-2">
+                      <input type="checkbox" className="w-4 h-4" />
+                      <span className="text-sm">일반회원</span>
+                    </label>
+                    <label className="flex items-center gap-2">
+                      <input type="checkbox" className="w-4 h-4" />
+                      <span className="text-sm">실버회원</span>
+                    </label>
+                    <label className="flex items-center gap-2">
+                      <input type="checkbox" className="w-4 h-4" />
+                      <span className="text-sm">골드회원</span>
+                    </label>
+                    <label className="flex items-center gap-2">
+                      <input type="checkbox" className="w-4 h-4" />
+                      <span className="text-sm">VIP회원</span>
+                    </label>
+                  </div>
+                </div>
+              )}
             </div>
           )}
         </div>
