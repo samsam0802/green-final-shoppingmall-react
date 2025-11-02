@@ -1,156 +1,149 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useRef } from "react";
+import { useParams, useNavigate, Link } from "react-router-dom";
+import products from "../../data/products";
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+
+import ProductDetailBuy from "./detail/ProductDetailBuy";
+import ProductDetailReview from "./detail/ProductDetailReview";
+import ProductDetailQnA from "./detail/ProductDetailQnA";
+import ProductDetailInfo from "./detail/ProductDetailInfo";
 
 export default function ProductDetailComponent() {
-  const [tab, setTab] = useState("info"); // info | buy | review | qna
-
+  const { id } = useParams();
+  const product = products.find((p) => p.id === Number(id));
   const navigate = useNavigate();
 
-  const handleOrderClick = () => {
-    navigate({ pathname: "/order" });
+  const [tab, setTab] = useState("info"); // info | buy | review | qna
+  const [liked, setLiked] = useState(false);
+  const [quantity, setQuantity] = useState(1);
+  const [selectedImage, setSelectedImage] = useState(product.image);
+  const [showShippingModal, setShowShippingModal] = useState(false);
+
+  const totalPrice = product.discountPrice * quantity;
+
+  // ✅ 섹션 위치 참조
+  const infoRef = useRef(null);
+  const buyRef = useRef(null);
+  const reviewRef = useRef(null);
+  const qnaRef = useRef(null);
+
+  const scrollTo = (ref) => {
+    window.scrollTo({
+      top: ref.current.offsetTop - 80,
+      behavior: "smooth",
+    });
   };
 
+  const handleClickOrder = () => {
+    navigate({pathname:"/order"})
+  }
+
   return (
-    <div className="max-w-7xl mx-auto px-8 mt-12">
-      {/* ===== 상단 상품 요약 영역 (이미 구현된 부분 그대로) ===== */}
+    <div className="max-w-7xl mx-auto px-8 mt-12 pb-32">
+
+      {/* ====== 경로 표시 ====== */}
+      <div className="text-sm text-gray-500 mb-6 flex gap-2">
+        <Link to="/" className="hover:underline">홈</Link> /
+        <span>{product.categoryMain}</span> /
+        <span>{product.categorySub}</span>
+      </div>
+
+      {/* ====== 상품 요약 영역 ====== */}
       <div className="grid grid-cols-2 gap-12 mb-16">
         <div>
-          <div className="w-full h-[480px] bg-gray-200 rounded-lg flex items-center justify-center text-gray-500 text-lg">
-            상품 이미지
-          </div>
+          <img
+            src={selectedImage}
+            className="w-full h-[480px] object-cover rounded-lg border"
+          />
           <div className="flex gap-3 mt-4">
-            <div className="w-20 h-20 bg-gray-200 rounded-md"></div>
-            <div className="w-20 h-20 bg-gray-200 rounded-md"></div>
-            <div className="w-20 h-20 bg-gray-200 rounded-md"></div>
+            {[product.image, ...(product.images || [])].map((img, idx) => (
+              <img
+                key={idx}
+                src={img}
+                className={`w-20 h-20 object-cover rounded-md cursor-pointer border ${
+                  selectedImage === img ? "border-black" : "border-gray-300"
+                }`}
+                onClick={() => setSelectedImage(img)}
+              />
+            ))}
           </div>
         </div>
 
-        <div className="space-y-6">
-          <div className="text-sm text-gray-500">브랜드명</div>
-          <h1 className="text-2xl font-bold leading-snug">상품명</h1>
-          <div className="text-3xl font-bold text-red-500">10,900원</div>
+        <div className="space-y-5">
+          <div className="text-sm text-gray-500">{product.brand}</div>
+          <h1 className="text-2xl font-bold">{product.name}</h1>
 
-          <div className="border rounded-md p-4 text-sm text-gray-600">
-            <span className="font-semibold text-gray-800">배송정보</span>
-            <br />
-            일반배송 / 평균 2~3일 소요
+          <div>
+            <p className="text-gray-400 line-through">
+              {product.originalPrice.toLocaleString()}원
+            </p>
+            <p className="text-3xl font-bold text-red-500">
+              {product.discountPrice.toLocaleString()}원
+              <span className="text-blue-500 text-lg ml-2">
+                {product.discountRate}%↓
+              </span>
+            </p>
           </div>
+
+          <button
+            className="text-sm text-gray-600 underline"
+            onClick={() => setShowShippingModal(true)}
+          >
+            배송비 안내
+          </button>
 
           <div className="flex items-center gap-3">
-            <button className="border px-3 py-1 rounded">-</button>
-            <span>1</span>
-            <button className="border px-3 py-1 rounded">+</button>
+            <button onClick={() => quantity > 1 && setQuantity(quantity - 1)} className="border px-3 py-1 rounded">-</button>
+            <span className="text-lg font-semibold">{quantity}</span>
+            <button onClick={() => setQuantity(quantity + 1)} className="border px-3 py-1 rounded">+</button>
           </div>
 
-          <div className="flex gap-3 pt-4">
-            <button className="flex-1 border py-3 rounded-md hover:bg-gray-100">
-              장바구니
+          <div className="text-lg font-semibold">
+            총 상품금액:{" "}
+            <span className="text-red-500 text-2xl">{totalPrice.toLocaleString()}원</span>
+          </div>
+
+          <div className="flex gap-3 pt-2">
+            <button className="flex-1 border py-3 rounded-md hover:bg-gray-100" onClick={()=>alert("장바구니에 담겼어요")}>장바구니</button>
+            <button className="flex-1 py-3 rounded-md text-white bg-red-500" onClick={handleClickOrder}>바로구매</button>
+            <button onClick={() => setLiked(!liked)} className="text-3xl ml-2">
+              {liked ? <AiFillHeart className="text-red-500" /> : <AiOutlineHeart className="text-gray-400" />}
             </button>
-            <button
-              className="flex-1 py-3 rounded-md text-white"
-              style={{ backgroundColor: "#FF4D59" }}
-              onClick={handleOrderClick}
+          </div>
+        </div>
+      </div>
+
+      {/* ==== 탭 메뉴 ==== */}
+      <div className="sticky top-0 bg-white z-10 border-b flex gap-10 text-lg font-semibold py-3 mt-10">
+        <button className={tab === "info" ? "text-black border-b-2" : "text-gray-500"} onClick={() => setTab("info")}>상품설명</button>
+        <button className={tab === "buy" ? "text-black border-b-2" : "text-gray-500"} onClick={() => setTab("buy")}>구매정보</button>
+        <button className={tab === "review" ? "text-black border-b-2" : "text-gray-500"} onClick={() => setTab("review")}>리뷰</button>
+        <button className={tab === "qna" ? "text-black border-b-2" : "text-gray-500"} onClick={() => setTab("qna")}>Q&A</button>
+      </div>
+
+      {/* ==== 탭 콘텐츠 영역 ==== */}
+      {tab === "info" && <ProductDetailInfo />}
+      {tab === "buy" && <ProductDetailBuy />}
+      {tab === "review" && <ProductDetailReview />}
+      {tab === "qna" && <ProductDetailQnA />}
+
+
+      {/* ===== 배송비 안내 모달 ===== */}
+      {showShippingModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+          <div className="bg-white p-6 rounded-lg w-96 shadow-xl">
+            <h3 className="font-bold text-lg mb-3">배송비 안내</h3>
+            <ul className="text-sm text-gray-700 space-y-2">
+              <li>기본 배송비: 2,500원</li>
+              <li>도서산간: +2,500원</li>
+              <li>제주지역: +2,500원</li>
+              <li>제주도서산간: +7,000원</li>
+            </ul>
+            <button className="mt-5 w-full py-2 border rounded-md hover:bg-gray-100"
+              onClick={() => setShowShippingModal(false)}
             >
-              구매하기
+              확인
             </button>
-          </div>
-        </div>
-      </div>
-
-      {/* ===== 탭 메뉴 ===== */}
-      <div className="border-b flex gap-10 text-sm font-medium">
-        <button
-          className={
-            tab === "info" ? "text-black border-b-2 pb-2" : "text-gray-500 pb-2"
-          }
-          onClick={() => setTab("info")}
-        >
-          상품설명
-        </button>
-        <button
-          className={
-            tab === "buy" ? "text-black border-b-2 pb-2" : "text-gray-500 pb-2"
-          }
-          onClick={() => setTab("buy")}
-        >
-          구매정보
-        </button>
-        <button
-          className={
-            tab === "review"
-              ? "text-black border-b-2 pb-2"
-              : "text-gray-500 pb-2"
-          }
-          onClick={() => setTab("review")}
-        >
-          리뷰
-        </button>
-        <button
-          className={
-            tab === "qna" ? "text-black border-b-2 pb-2" : "text-gray-500 pb-2"
-          }
-          onClick={() => setTab("qna")}
-        >
-          Q&A
-        </button>
-      </div>
-
-      {/* ===== 상품설명 탭 ===== */}
-      {tab === "info" && (
-        <div className="py-10">
-          <div className="w-full h-[800px] bg-gray-100 flex items-center justify-center text-gray-400">
-            상품 상세설명 이미지 영역
-          </div>
-        </div>
-      )}
-
-      {/* ===== 구매정보 탭 ===== */}
-      {tab === "buy" && (
-        <div className="py-10 space-y-6 text-sm text-gray-600">
-          <div className="border p-5 rounded">
-            <h3 className="font-semibold text-gray-800 mb-2">배송안내</h3>
-            일반배송 평균 2~3일 소요 / 2만원 이상 무료배송
-          </div>
-
-          <div className="border p-5 rounded">
-            <h3 className="font-semibold text-gray-800 mb-2">
-              교환 / 반품 안내
-            </h3>
-            단순 변심 시 배송비 발생할 수 있음
-          </div>
-        </div>
-      )}
-
-      {/* ===== 리뷰 탭 ===== */}
-      {tab === "review" && (
-        <div className="py-10">
-          <h3 className="text-xl font-bold mb-6">고객 리뷰</h3>
-
-          <div className="border p-4 rounded mb-6">
-            <span className="text-red-500 text-2xl font-bold">4.8</span>
-            <span className="text-gray-500 ml-2">(22,830)</span>
-          </div>
-
-          <div className="space-y-4">
-            <div className="border p-4 rounded text-sm">
-              ⭐⭐⭐⭐⭐ 매우 좋아요!
-            </div>
-            <div className="border p-4 rounded text-sm">⭐⭐⭐⭐ 무난해요.</div>
-          </div>
-        </div>
-      )}
-
-      {/* ===== Q&A 탭 ===== */}
-      {tab === "qna" && (
-        <div className="py-10 space-y-4 text-sm">
-          <div className="border p-4 rounded">
-            <div className="font-semibold">Q. 재입고 일정 있나요?</div>
-            <div className="mt-2 text-gray-500">A. 다음주 예상입니다.</div>
-          </div>
-
-          <div className="border p-4 rounded">
-            <div className="font-semibold">Q. 향이 강한 편인가요?</div>
-            <div className="mt-2 text-gray-500">A. 은은한 편입니다.</div>
           </div>
         </div>
       )}

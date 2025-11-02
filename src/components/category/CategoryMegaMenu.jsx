@@ -6,8 +6,9 @@ const CategoryMegaMenu = ({ isOpen }) => {
   if (!isOpen) return null;
 
   const handleCategorySelect = (main, sub) => {
-    const slug = encodeURIComponent(sub.replace(/\//g, "-"));
-    navigate(`/category/${main}/${slug}`);
+    const mainSlug = encodeURIComponent(main.replace(/\//g, "-"));
+    const subSlug = encodeURIComponent(sub.replace(/\//g, "-"));
+    navigate(`/category/${mainSlug}/${subSlug}`);
   };
 
   return (
@@ -23,31 +24,31 @@ const CategoryMegaMenu = ({ isOpen }) => {
             "미스트/오일",
             "스킨케어 세트",
           ]}
-          onItemClick={(sub) => handleCategorySelect("뷰티", sub)}
+          onItemClick={(sub) => handleCategorySelect("스킨케어", sub)}
         />
 
         <CategoryColumn
           title="메이크업"
           items={["립", "베이스메이크업", "아이메이크업", "네일"]}
-          onItemClick={(sub) => handleCategorySelect("뷰티", sub)}
+          onItemClick={(sub) => handleCategorySelect("메이크업", sub)}
         />
 
         <CategoryColumn
           title="헤어케어"
           items={["샴푸/린스", "트리트먼트/팩", "두피앰플/토닉"]}
-          onItemClick={(sub) => handleCategorySelect("뷰티", sub)}
+          onItemClick={(sub) => handleCategorySelect("헤어케어", sub)}
         />
 
         <CategoryColumn
           title="바디케어"
           items={["바디워시", "바디로션", "핸드크림"]}
-          onItemClick={(sub) => handleCategorySelect("뷰티", sub)}
+          onItemClick={(sub) => handleCategorySelect("바디케어", sub)}
         />
 
         <CategoryColumn
           title="향수/디퓨저"
           items={["향수", "미니/고체향수", "홈프래그런스"]}
-          onItemClick={(sub) => handleCategorySelect("뷰티", sub)}
+          onItemClick={(sub) => handleCategorySelect("향수/디퓨저", sub)}
         />
       </div>
     </div>
