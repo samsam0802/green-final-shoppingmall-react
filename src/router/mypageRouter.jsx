@@ -20,6 +20,9 @@ const MyPageCouponsPage = lazy(() =>
 const MyPageWithdrawPage = lazy(() =>
   import("../pages/mypage/MyPageWithdrawPage")
 );
+const OrderHistory = lazy(() =>
+  import("../pages/mypage/MyPageOrderHistoryPage")
+);
 
 const mypageRouter = () => {
   return [
@@ -77,6 +80,14 @@ const mypageRouter = () => {
       element: (
         <Suspense fallback={Loading}>
           <MyPageWithdrawPage />
+        </Suspense>
+      ),
+    },
+    {
+      path: "orders",
+      element: (
+        <Suspense fallback={Loading}>
+          <OrderHistory />
         </Suspense>
       ),
     },

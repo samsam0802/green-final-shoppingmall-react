@@ -3,61 +3,84 @@ import { Link, useLocation } from "react-router-dom";
 
 const OrderCompleteComponent = () => {
   const location = useLocation();
-  const orderData = location.state; // ✅ 결제 시 전달받은 주문 정보(임시)
+  const orderData = location.state;
 
-  // 테스트용: orderData 없을 경우 더미 데이터 사용
   const order = orderData || {
-    orderNumber: "20250204-1234567",
+    orderNumber: "20250204-9876543",
     receiver: "홍길동",
     address: "서울특별시 강남구 테헤란로 123",
     phone: "010-1234-5678",
     items: [
       {
         id: 1,
-        name: "오버핏 반팔티",
-        brand: "Musinsa Standard",
-        price: 19000,
+        name: "진정 수분 토너",
+        brand: "ROUND LAB",
+        price: 15000,
         qty: 1,
-        image: "/images/top1.jpg",
+        image: "/images/toner1.jpg",
+      },
+      {
+        id: 2,
+        name: "고보습 세럼 앰플",
+        brand: "COSRX",
+        price: 22000,
+        qty: 2,
+        image: "/images/serum1.jpg",
+      },
+      {
+        id: 3,
+        name: "저자극 크림",
+        brand: "LA ROCHE-POSAY",
+        price: 28900,
+        qty: 1,
+        image: "/images/cream1.jpg",
       },
     ],
-    totalPrice: 19000,
+    couponDiscount: 3000,
+    shippingFee: 2500,
+    couponName: "신규회원 20% 할인쿠폰",
   };
 
+  // ✅ 총 상품금액 계산
+  const productsTotal = order.items.reduce(
+    (sum, item) => sum + item.price * item.qty,
+    0
+  );
+
+  // ✅ 최종 결제 금액
+  const finalPayPrice = productsTotal - order.couponDiscount + order.shippingFee;
+
   return (
-    <div className="max-w-3xl mx-auto mt-14 p-6">
-      {/* 상단 완료 메시지 */}
+    <div className="max-w-3xl mx-auto mt-16 p-6 pb-24">
+
       <div className="text-center mb-10">
-        <h2 className="text-3xl font-bold">주문이 완료되었습니다 🎉</h2>
-        <p className="text-gray-600 mt-2">주문 번호: {order.orderNumber}</p>
+        <div className="text-5xl mb-4">🎉</div>
+        <h2 className="text-2xl font-bold">주문이 완료되었습니다</h2>
+        <p className="text-gray-600 mt-2 text-sm">소중한 결제가 정상 처리되었습니다.</p>
       </div>
 
       {/* 배송 정보 */}
-      <div className="border rounded-lg p-5 mb-8 bg-gray-50">
-        <h3 className="text-lg font-semibold mb-3">배송 정보</h3>
-        <p className="text-sm text-gray-600">받는 사람: {order.receiver}</p>
-        <p className="text-sm text-gray-600">주소: {order.address}</p>
-        <p className="text-sm text-gray-600">연락처: {order.phone}</p>
+      <div className="border rounded-lg p-6 mb-8">
+        <h3 className="text-lg font-semibold mb-4">배송 정보</h3>
+        <p className="text-sm text-gray-700">받는 사람: {order.receiver}</p>
+        <p className="text-sm text-gray-700 mt-1">주소: {order.address}</p>
+        <p className="text-sm text-gray-700 mt-1">연락처: {order.phone}</p>
       </div>
 
-      {/* 상품 목록 */}
-      <div className="border rounded-lg p-5 mb-8">
+      {/* 주문 상품 목록 */}
+      <div className="border rounded-lg p-6 mb-8">
         <h3 className="text-lg font-semibold mb-4">주문 상품</h3>
 
-        <div className="space-y-4">
+        <div className="space-y-5">
           {order.items.map((item) => (
-            <div key={item.id} className="flex gap-4 border-b pb-4">
-              <img
-                src={item.image}
-                alt={item.name}
-                className="w-20 h-20 object-cover rounded-md"
-              />
+            <div key={item.id} className="flex gap-4 pb-4 border-b last:border-b-0">
+              <img src={item.image} className="w-20 h-20 object-cover rounded-md border" />
               <div className="flex-1">
                 <p className="font-semibold">{item.name}</p>
-                <p className="text-sm text-gray-500">{item.brand}</p>
-                <p className="text-sm text-gray-600 mt-1">{item.qty}개</p>
+                <p className="text-gray-500 text-sm">{item.brand}</p>
+                <p className="text-sm text-gray-600 mt-1">수량: {item.qty}개</p>
               </div>
-              <p className="font-semibold">
+              <p className="font-semibold whitespace-nowrap">
                 {(item.price * item.qty).toLocaleString()}원
               </p>
             </div>
@@ -66,25 +89,32 @@ const OrderCompleteComponent = () => {
       </div>
 
       {/* 결제 금액 */}
-      <div className="border rounded-lg p-5 mb-8">
-        <div className="flex justify-between text-lg font-semibold">
-          <span>총 결제 금액</span>
-          <span>{order.totalPrice.toLocaleString()}원</span>
+      <div className="border rounded-lg p-6 mb-10 bg-gray-50 space-y-3 text-sm">
+        <div className="flex justify-between">
+          <span>상품 총금액</span>
+          <span>{productsTotal.toLocaleString()}원</span>
+        </div>
+        <div className="flex justify-between text-red-500">
+          <span>쿠폰 할인 ({order.couponName})</span>
+          <span>- {order.couponDiscount.toLocaleString()}원</span>
+        </div>
+        <div className="flex justify-between">
+          <span>배송비</span>
+          <span>+ {order.shippingFee.toLocaleString()}원</span>
+        </div>
+
+        <div className="border-t pt-3 flex justify-between font-semibold text-lg">
+          <span>최종 결제 금액</span>
+          <span className="text-red-600 text-xl">{finalPayPrice.toLocaleString()}원</span>
         </div>
       </div>
 
-      {/* 버튼 영역 */}
-      <div className="flex gap-4 justify-center">
-        <Link
-          to="/mypage/orders"
-          className="border px-6 py-3 rounded-md hover:bg-gray-100"
-        >
+      {/* 버튼 */}
+      <div className="flex gap-3 justify-center">
+        <Link to="/mypage/orders" className="border px-6 py-3 rounded-md hover:bg-gray-100">
           주문 내역 확인
         </Link>
-        <Link
-          to="/"
-          className="bg-black text-white px-6 py-3 rounded-md hover:bg-gray-800"
-        >
+        <Link to="/" className="bg-black text-white px-6 py-3 rounded-md hover:bg-gray-800">
           쇼핑 계속하기
         </Link>
       </div>

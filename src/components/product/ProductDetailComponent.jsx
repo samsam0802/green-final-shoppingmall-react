@@ -1,132 +1,152 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import products from "../../data/products";
-import { useNavigate, useParams } from "react-router-dom";
-import RestockAlertModal from "../../components/product/RestockAlertModal";
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 
-const ProductDetailComponent = () => {
-  const [isSoldOut, setIsSoldOut] = useState(false);
-  const [showAlertModal, setShowAlertModal] = useState(false);
-  const [count, setCount] = useState(1);
+import ProductDetailBuy from "./detail/ProductDetailBuy";
+import ProductDetailReview from "./detail/ProductDetailReview";
+import ProductDetailQnA from "./detail/ProductDetailQnA";
+import ProductDetailInfo from "./detail/ProductDetailInfo";
 
+export default function ProductDetailComponent() {
   const { id } = useParams();
+  const product = products.find((p) => p.id === Number(id));
   const navigate = useNavigate();
-  const product = products.find((i) => i.id == id);
 
-  if (!product)
-    return (
-      <div className="p-8 max-w-4xl mx-auto">상품을 찾을 수 없습니다.</div>
-    );
+  const [tab, setTab] = useState("info"); // info | buy | review | qna
+  const [liked, setLiked] = useState(false);
+  const [quantity, setQuantity] = useState(1);
+  const [selectedImage, setSelectedImage] = useState(product.image);
+  const [showShippingModal, setShowShippingModal] = useState(false);
 
-  const discountRate = product.originalPrice
-    ? Math.round((1 - product.price / product.originalPrice) * 100)
-    : 0;
+  const totalPrice = product.discountPrice * quantity;
 
-  const handleClickList = () => navigate(-1);
-  const handleClickCheckout = () => navigate("/order");
+  // ✅ 섹션 위치 참조
+  const infoRef = useRef(null);
+  const buyRef = useRef(null);
+  const reviewRef = useRef(null);
+  const qnaRef = useRef(null);
+
+  const scrollTo = (ref) => {
+    window.scrollTo({
+      top: ref.current.offsetTop - 80,
+      behavior: "smooth",
+    });
+  };
+
+  const handleClickOrder = () => {
+    navigate({pathname:"/order"})
+  }
 
   return (
-    <div className="p-8 max-w-4xl mx-auto">
-      {/* ✅ 카테고리 경로 */}
-      <div className="text-sm text-gray-400 mb-3">
-        {product.categoryMain} &gt; {product.categorySub}
+    <div className="max-w-7xl mx-auto px-8 mt-12 pb-32">
+
+      {/* ====== 경로 표시 ====== */}
+      <div className="text-sm text-gray-500 mb-6 flex gap-2">
+        <Link to="/" className="hover:underline">홈</Link> /
+        <span>{product.categoryMain}</span> /
+        <span>{product.categorySub}</span>
       </div>
 
-      <div className="flex gap-8">
-        {/* ✅ 이미지 */}
-        <img
-          src={product.image}
-          alt={product.name}
-          className="w-96 h-96 object-cover rounded-md border"
-        />
+      {/* ====== 상품 요약 영역 ====== */}
+      <div className="grid grid-cols-2 gap-12 mb-16">
+        <div>
+          <img
+            src={selectedImage}
+            className="w-full h-[480px] object-cover rounded-lg border"
+          />
+          <div className="flex gap-3 mt-4">
+            {[product.image, ...(product.images || [])].map((img, idx) => (
+              <img
+                key={idx}
+                src={img}
+                className={`w-20 h-20 object-cover rounded-md cursor-pointer border ${
+                  selectedImage === img ? "border-black" : "border-gray-300"
+                }`}
+                onClick={() => setSelectedImage(img)}
+              />
+            ))}
+          </div>
+        </div>
 
-        {/* ✅ 상품 정보 */}
-        <div className="flex-1">
-          {/* 브랜드 */}
-          <p className="text-sm text-gray-500">{product.brand}</p>
+        <div className="space-y-5">
+          <div className="text-sm text-gray-500">{product.brand}</div>
+          <h1 className="text-2xl font-bold">{product.name}</h1>
 
-          {/* 상품명 */}
-          <h1 className="text-2xl font-bold mt-1">{product.name}</h1>
-
-          {/* 가격 */}
-          <div className="mt-4">
-            {discountRate > 0 && (
-              <span className="text-red-500 text-lg font-bold mr-2">
-                {discountRate}%
+          <div>
+            <p className="text-gray-400 line-through">
+              {product.originalPrice.toLocaleString()}원
+            </p>
+            <p className="text-3xl font-bold text-red-500">
+              {product.discountPrice.toLocaleString()}원
+              <span className="text-blue-500 text-lg ml-2">
+                {product.discountRate}%↓
               </span>
-            )}
-            <span className="text-2xl font-bold">
-              {product.price.toLocaleString()}원
-            </span>
-            {product.originalPrice && (
-              <span className="text-gray-400 line-through ml-2 text-sm">
-                {product.originalPrice.toLocaleString()}원
-              </span>
-            )}
+            </p>
           </div>
 
-          {/* 적립 포인트 (예시용) */}
-          <p className="text-sm text-gray-500 mt-2">
-            구매 시 최대 {(product.price * 0.05).toLocaleString()}원 적립
-          </p>
-
-          {/* ✅ 수량 선택 */}
-          <div className="mt-6 flex items-center gap-3">
-            <button
-              className="border px-3 py-1 rounded-md"
-              onClick={() => count > 1 && setCount(count - 1)}
-            >
-              -
-            </button>
-            <span className="font-semibold">{count}</span>
-            <button
-              className="border px-3 py-1 rounded-md"
-              onClick={() => setCount(count + 1)}
-            >
-              +
-            </button>
-          </div>
-
-          {/* ✅ 버튼 영역 */}
-          <div className="flex gap-3 mt-8">
-            {isSoldOut ? (
-              <button
-                className="border bg-gray-400 text-white px-4 py-2 rounded-md hover:bg-gray-500 flex-1"
-                onClick={() => setShowAlertModal(true)}
-              >
-                재입고 알림 신청
-              </button>
-            ) : (
-              <>
-                <button className="border px-4 py-2 rounded-md flex-1">
-                  장바구니
-                </button>
-                <button
-                  className="bg-black text-white px-4 py-2 rounded-md flex-1"
-                  onClick={handleClickCheckout}
-                >
-                  구매하기
-                </button>
-              </>
-            )}
-          </div>
-
-          {/* 목록 */}
           <button
-            className="mt-4 text-gray-500 underline underline-offset-4 text-sm"
-            onClick={handleClickList}
+            className="text-sm text-gray-600 underline"
+            onClick={() => setShowShippingModal(true)}
           >
-            목록으로 돌아가기
+            배송비 안내
           </button>
+
+          <div className="flex items-center gap-3">
+            <button onClick={() => quantity > 1 && setQuantity(quantity - 1)} className="border px-3 py-1 rounded">-</button>
+            <span className="text-lg font-semibold">{quantity}</span>
+            <button onClick={() => setQuantity(quantity + 1)} className="border px-3 py-1 rounded">+</button>
+          </div>
+
+          <div className="text-lg font-semibold">
+            총 상품금액:{" "}
+            <span className="text-red-500 text-2xl">{totalPrice.toLocaleString()}원</span>
+          </div>
+
+          <div className="flex gap-3 pt-2">
+            <button className="flex-1 border py-3 rounded-md hover:bg-gray-100" onClick={()=>alert("장바구니에 담겼어요")}>장바구니</button>
+            <button className="flex-1 py-3 rounded-md text-white bg-red-500" onClick={handleClickOrder}>바로구매</button>
+            <button onClick={() => setLiked(!liked)} className="text-3xl ml-2">
+              {liked ? <AiFillHeart className="text-red-500" /> : <AiOutlineHeart className="text-gray-400" />}
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* ✅ 재입고 알림 모달 */}
-      <RestockAlertModal
-        isOpen={showAlertModal}
-        onClose={() => setShowAlertModal(false)}
-      />
+      {/* ==== 탭 메뉴 ==== */}
+      <div className="sticky top-0 bg-white z-10 border-b flex gap-10 text-lg font-semibold py-3 mt-10">
+        <button className={tab === "info" ? "text-black border-b-2" : "text-gray-500"} onClick={() => setTab("info")}>상품설명</button>
+        <button className={tab === "buy" ? "text-black border-b-2" : "text-gray-500"} onClick={() => setTab("buy")}>구매정보</button>
+        <button className={tab === "review" ? "text-black border-b-2" : "text-gray-500"} onClick={() => setTab("review")}>리뷰</button>
+        <button className={tab === "qna" ? "text-black border-b-2" : "text-gray-500"} onClick={() => setTab("qna")}>Q&A</button>
+      </div>
+
+      {/* ==== 탭 콘텐츠 영역 ==== */}
+      {tab === "info" && <ProductDetailInfo />}
+      {tab === "buy" && <ProductDetailBuy />}
+      {tab === "review" && <ProductDetailReview />}
+      {tab === "qna" && <ProductDetailQnA />}
+
+
+      {/* ===== 배송비 안내 모달 ===== */}
+      {showShippingModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+          <div className="bg-white p-6 rounded-lg w-96 shadow-xl">
+            <h3 className="font-bold text-lg mb-3">배송비 안내</h3>
+            <ul className="text-sm text-gray-700 space-y-2">
+              <li>기본 배송비: 2,500원</li>
+              <li>도서산간: +2,500원</li>
+              <li>제주지역: +2,500원</li>
+              <li>제주도서산간: +7,000원</li>
+            </ul>
+            <button className="mt-5 w-full py-2 border rounded-md hover:bg-gray-100"
+              onClick={() => setShowShippingModal(false)}
+            >
+              확인
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
-};
-
-export default ProductDetailComponent;
+}

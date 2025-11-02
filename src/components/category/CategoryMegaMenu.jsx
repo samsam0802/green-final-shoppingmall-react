@@ -1,143 +1,59 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 
 const CategoryMegaMenu = ({ isOpen }) => {
-  const [activeTab, setActiveTab] = useState("뷰티");
   const navigate = useNavigate();
-
   if (!isOpen) return null;
 
   const handleCategorySelect = (main, sub) => {
-    const subSlug = sub.replace(/\//g, "-");
-    navigate(`/category/${main}/${subSlug}`);
+    const mainSlug = encodeURIComponent(main.replace(/\//g, "-"));
+    const subSlug = encodeURIComponent(sub.replace(/\//g, "-"));
+    navigate(`/category/${mainSlug}/${subSlug}`);
   };
 
   return (
     <div className="absolute left-0 w-full bg-white border-t shadow-lg z-50 p-6">
-      {/* 상위 카테고리 탭 */}
-      <div className="flex gap-6 border-b pb-3 mb-4 text-sm font-medium">
-        {["뷰티", "의류", "모자", "신발"].map((tab) => (
-          <button
-            key={tab}
-            onClick={() => setActiveTab(tab)}
-            className={`
-              ${
-                activeTab === tab ? "text-black font-semibold" : "text-gray-500"
-              }
-            `}
-          >
-            {tab}
-          </button>
-        ))}
-      </div>
+      <div className="grid grid-cols-5 gap-8 text-sm text-gray-700">
+        <CategoryColumn
+          title="스킨케어"
+          items={[
+            "스킨/토너",
+            "에센스/세럼/앰플",
+            "크림",
+            "로션",
+            "미스트/오일",
+            "스킨케어 세트",
+          ]}
+          onItemClick={(sub) => handleCategorySelect("스킨케어", sub)}
+        />
 
-      {/* 카테고리별 내용 (내부는 와이어프레임 수준) */}
-      <div className="grid grid-cols-4 gap-8 text-sm text-gray-600">
-        {activeTab === "뷰티" && (
-          <>
-            <CategoryColumn
-              title="스킨케어"
-              items={["스킨/토너", "세럼", "크림", "패드", "선케어"]}
-              onItemClick={(sub) => handleCategorySelect(activeTab, sub)}
-            />
-            <CategoryColumn
-              title="메이크업"
-              items={["립", "아이", "베이스", "네일"]}
-              onItemClick={(sub) => handleCategorySelect(activeTab, sub)}
-            />
-            <CategoryColumn
-              title="바디케어"
-              items={["바디워시", "바디로션", "핸드크림"]}
-              onItemClick={(sub) => handleCategorySelect(activeTab, sub)}
-            />
-            <CategoryColumn
-              title="헤어케어"
-              items={["샴푸", "트리트먼트", "헤어오일"]}
-              onItemClick={(sub) => handleCategorySelect(activeTab, sub)}
-            />
-          </>
-        )}
+        <CategoryColumn
+          title="메이크업"
+          items={["립", "베이스메이크업", "아이메이크업", "네일"]}
+          onItemClick={(sub) => handleCategorySelect("메이크업", sub)}
+        />
 
-        {activeTab === "의류" && (
-          <>
-            <CategoryColumn
-              title="상의"
-              items={["반팔", "긴팔", "셔츠", "후드", "니트"]}
-              onItemClick={(sub) => handleCategorySelect(activeTab, sub)}
-            />
-            <CategoryColumn
-              title="하의"
-              items={["청바지", "슬랙스", "조거팬츠", "반바지"]}
-              onItemClick={(sub) => handleCategorySelect(activeTab, sub)}
-            />
-            <CategoryColumn
-              title="아우터"
-              items={["자켓", "패딩", "가디건", "코트"]}
-              onItemClick={(sub) => handleCategorySelect(activeTab, sub)}
-            />
-            <CategoryColumn
-              title="원피스"
-              items={["미니", "롱", "정장 원피스"]}
-              onItemClick={(sub) => handleCategorySelect(activeTab, sub)}
-            />
-          </>
-        )}
+        <CategoryColumn
+          title="헤어케어"
+          items={["샴푸/린스", "트리트먼트/팩", "두피앰플/토닉"]}
+          onItemClick={(sub) => handleCategorySelect("헤어케어", sub)}
+        />
 
-        {activeTab === "모자" && (
-          <>
-            <CategoryColumn
-              title="캡/볼캡"
-              items={["베이직 캡", "로고 캡"]}
-              onItemClick={(sub) => handleCategorySelect(activeTab, sub)}
-            />
-            <CategoryColumn
-              title="비니"
-              items={["니트 비니", "울 비니"]}
-              onItemClick={(sub) => handleCategorySelect(activeTab, sub)}
-            />
-            <CategoryColumn
-              title="버킷햇"
-              items={["면", "패브릭", "촘촘 버킷햇"]}
-              onItemClick={(sub) => handleCategorySelect(activeTab, sub)}
-            />
-            <CategoryColumn
-              title="기타"
-              items={["헤어밴드", "머플러와 함께"]}
-              onItemClick={(sub) => handleCategorySelect(activeTab, sub)}
-            />
-          </>
-        )}
+        <CategoryColumn
+          title="바디케어"
+          items={["바디워시", "바디로션", "핸드크림"]}
+          onItemClick={(sub) => handleCategorySelect("바디케어", sub)}
+        />
 
-        {activeTab === "신발" && (
-          <>
-            <CategoryColumn
-              title="운동화"
-              items={["러닝화", "테니스화", "캔버스 스니커즈"]}
-              onItemClick={(sub) => handleCategorySelect(activeTab, sub)}
-            />
-            <CategoryColumn
-              title="구두"
-              items={["로퍼", "옥스퍼드", "더비슈즈"]}
-              onItemClick={(sub) => handleCategorySelect(activeTab, sub)}
-            />
-            <CategoryColumn
-              title="샌들/슬리퍼"
-              items={["쿠션 슬라이드", "리조트 샌들"]}
-              onItemClick={(sub) => handleCategorySelect(activeTab, sub)}
-            />
-            <CategoryColumn
-              title="부츠"
-              items={["첼시 부츠", "워커", "롱부츠"]}
-              onItemClick={(sub) => handleCategorySelect(activeTab, sub)}
-            />
-          </>
-        )}
+        <CategoryColumn
+          title="향수/디퓨저"
+          items={["향수", "미니/고체향수", "홈프래그런스"]}
+          onItemClick={(sub) => handleCategorySelect("향수/디퓨저", sub)}
+        />
       </div>
     </div>
   );
 };
-
-const makeSlug = (str) => str.replace(/\//g, "-");
 
 const CategoryColumn = ({ title, items, onItemClick }) => (
   <div>
@@ -147,7 +63,7 @@ const CategoryColumn = ({ title, items, onItemClick }) => (
         <li
           key={item}
           className="hover:text-black cursor-pointer"
-          onClick={() => onItemClick(makeSlug(item))}
+          onClick={() => onItemClick(item)}
         >
           {item}
         </li>

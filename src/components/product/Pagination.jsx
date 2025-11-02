@@ -1,17 +1,33 @@
-import React from "react";
+const Pagination = ({ currentPage, totalPages, setCurrentPage }) => {
+  const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
 
-const Pagination = () => {
   return (
-    <div className="flex justify-center items-center mt-6 space-x-2">
-      <button className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">
+    <div className="flex justify-center items-center mt-8 space-x-2">
+      <button
+        className="px-3 py-1 border rounded disabled:opacity-50"
+        onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+        disabled={currentPage === 1}
+      >
         Prev
       </button>
-      {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((page) => (
-        <div className="px-4 py-2 rounded bg-gray-100 hover:bg-gray-200">
+
+      {pages.map((page) => (
+        <button
+          key={page}
+          onClick={() => setCurrentPage(page)}
+          className={`px-3 py-1 rounded border ${
+            page === currentPage ? "bg-black text-white border-black" : "hover:bg-gray-100"
+          }`}
+        >
           {page}
-        </div>
+        </button>
       ))}
-      <button className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">
+
+      <button
+        className="px-3 py-1 border rounded disabled:opacity-50"
+        onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
+        disabled={currentPage === totalPages}
+      >
         Next
       </button>
     </div>
