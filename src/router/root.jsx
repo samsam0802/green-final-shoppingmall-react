@@ -32,8 +32,8 @@ const AdminOrdMgrPage = lazy(() =>
 const AdminUserInfoMgrPage = lazy(() =>
   import("../components/admin/user/UserInfoMgr")
 );
-const SecessionMemberMgrpage = lazy(() =>
-  import("../components/admin/user/SecessionMemberMgr")
+const WithdrawalMemberMgrPage = lazy(() =>
+  import("../components/admin/user/WithdrawalMemberMgr")
 );
 
 const Loading = <div>Loading...</div>;
@@ -174,7 +174,7 @@ const root = createBrowserRouter([
     path: "adminusersecession",
     element: (
       <Suspense fallback={Loading}>
-        <SecessionMemberMgrpage />
+        <WithdrawalMemberMgrPage />
       </Suspense>
     ),
     children: adminRouter(),
