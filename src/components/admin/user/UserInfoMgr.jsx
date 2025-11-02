@@ -45,6 +45,19 @@ const UserInfoMgr = () => {
             <span>가입일</span>
             <input type="date" className="border border-gray-300 p-1" /> -
             <input type="date" className="border border-gray-300 p-1" />
+            {/* 기간 버튼들 (디자인용) */}
+            <div className="flex gap-1 ml-3">
+              {["오늘", "1주", "15일", "1개월", "3개월", "6개월"].map(
+                (label) => (
+                  <button
+                    key={label}
+                    className="border border-gray-300 bg-white px-2 py-1 text-gray-700"
+                  >
+                    {label}
+                  </button>
+                )
+              )}
+            </div>
           </div>
         </div>
 
@@ -90,7 +103,7 @@ const UserInfoMgr = () => {
           </div>
         </div>
 
-        {/* 리뷰수 */}
+        {/* 리뷰 수 */}
         <div className="flex border-b border-gray-300">
           <div className="w-40 bg-gray-50 border-r border-gray-300 text-gray-700 font-semibold flex items-center justify-center">
             리뷰 수
@@ -117,7 +130,7 @@ const UserInfoMgr = () => {
                 key={label}
                 className="flex items-center gap-1 text-gray-700 select-none"
               >
-                <span className="inline-block w-3.5 h-3.5 border border-gray-400 bg-white rounded-sm"></span>
+                <span className="inline-block w-3.5 h-3.5 border border-gray-400 bg-white"></span>
                 {label}
               </label>
             ))}
@@ -135,7 +148,7 @@ const UserInfoMgr = () => {
                 key={label}
                 className="flex items-center gap-1 text-gray-700 select-none"
               >
-                <span className="inline-block w-3.5 h-3.5 border border-gray-400 bg-white rounded-sm"></span>
+                <span className="inline-block w-3.5 h-3.5 border border-gray-400 bg-white"></span>
                 {label}
               </label>
             ))}
@@ -153,7 +166,7 @@ const UserInfoMgr = () => {
                 key={label}
                 className="flex items-center gap-1 text-gray-700 select-none"
               >
-                <span className="inline-block w-3.5 h-3.5 border border-gray-400 bg-white rounded-sm"></span>
+                <span className="inline-block w-3.5 h-3.5 border border-gray-400 bg-white"></span>
                 {label}
               </label>
             ))}
@@ -169,7 +182,7 @@ const UserInfoMgr = () => {
             <input type="date" className="border border-gray-300 p-1" /> -
             <input type="date" className="border border-gray-300 p-1" />
             <label className="flex items-center gap-1 ml-4 text-gray-700 select-none">
-              <span className="inline-block w-3.5 h-3.5 border border-gray-400 bg-white rounded-sm"></span>
+              <span className="inline-block w-3.5 h-3.5 border border-gray-400 bg-white"></span>
               연도 제외
             </label>
           </div>

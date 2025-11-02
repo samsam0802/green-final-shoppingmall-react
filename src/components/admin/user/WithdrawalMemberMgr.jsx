@@ -1,8 +1,8 @@
-import { useState } from "react";
+// import { useState } from "react";
 import WithdrawalMemberResultTable from "./WithdrawalMemberResultTable";
 
 const WithdrawalMemberMgr = () => {
-  const [activeTab, setActiveTab] = useState("list");
+  // const [activeTab, setActiveTab] = useState("list");
   const dateOptions = ["오늘", "1주", "15일", "1개월", "3개월", "6개월"];
 
   return (
