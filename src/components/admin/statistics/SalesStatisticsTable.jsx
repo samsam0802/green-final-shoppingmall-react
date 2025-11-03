@@ -5,7 +5,6 @@ const SalesStatisticsTable = () => {
   const months = Array.from({ length: 12 }, (_, i) => `${i + 1}월`);
 
   // 항목 구분 (매출액 상단)
-  // '되돌리기' 항목은 이전 요청에 따라 제외되었습니다.
   const mainCategories = ["결제금액", "상품", "배송비", "환불", "취소/반품"];
 
   // 항목 구분 (원가 및 이익)
@@ -17,9 +16,6 @@ const SalesStatisticsTable = () => {
     "매출이익[%]",
   ];
 
-  // 지점 구분 (온라인 쇼핑몰 가정에 따라 '계' 항목만 유지)
-  const subCategory = "계";
-
   // 테이블 헤더 렌더링
   const renderHeader = () => (
     <thead>
@@ -27,7 +23,7 @@ const SalesStatisticsTable = () => {
         {/* '구분' 셀 */}
         <th
           rowSpan="2"
-          className="min-w-[28] p-2 text-center border-r border-gray-300"
+          className="min-w-[70px] p-3 text-center border-r border-gray-300"
         >
           구분
         </th>
@@ -37,27 +33,18 @@ const SalesStatisticsTable = () => {
           <th
             key={month}
             colSpan="1"
-            className="min-w-[16] p-2 text-center border-r border-gray-300"
+            className="min-w-[80px] p-3 text-center border-r border-gray-300"
           >
             {month}
           </th>
         ))}
         {/* '합계' 셀 */}
-        <th rowSpan="2" className="min-w-[20] p-2 text-center">
+        <th
+          rowSpan="2"
+          className="min-w-[90px] p-3 text-center border-l border-gray-300"
+        >
           합계
         </th>
-      </tr>
-
-      {/* 월별 하위 지점 구분 셀 (모든 월에 '계'만 반복) */}
-      <tr className="bg-gray-50 border-b border-gray-300 text-gray-600 text-xs">
-        {months.map((month) => (
-          <th
-            key={`${month}-sub`}
-            className="p-1 text-center border-r border-gray-300"
-          >
-            {subCategory}
-          </th>
-        ))}
       </tr>
     </thead>
   );
@@ -66,6 +53,7 @@ const SalesStatisticsTable = () => {
   const renderBody = (categories, isPercentage = false) => (
     <React.Fragment>
       {categories.map((category) => {
+        // 매출액, 매출이익, 결제금액 항목을 강조
         const isHighlighted =
           category === "매출액" ||
           category === "매출이익[%]" ||
@@ -74,37 +62,28 @@ const SalesStatisticsTable = () => {
         return (
           <tr
             key={category}
-            className={`text-xs ${
-              isHighlighted ? "bg-yellow-50 font-bold" : "hover:bg-gray-50"
+            className={`text-sm border-b border-gray-200 transition-colors duration-150 ${
+              isHighlighted ? "bg-yellow-50 font-semibold" : "hover:bg-gray-50"
             }`}
           >
             <td
-              className={`p-2 text-center border-r border-gray-300 ${
+              className={`p-3 text-center border-r border-gray-300 ${
                 isHighlighted ? "text-gray-900" : "text-gray-600"
               }`}
             >
               {category}
-              {/* '결제금액' 옆의 물음표 아이콘 */}
-              {category === "결제금액" && (
-                <span
-                  className="ml-1 text-gray-400 cursor-help"
-                  title="결제금액 정보"
-                >
-                  ?
-                </span>
-              )}
             </td>
 
             {/* 월별 데이터 셀 (12개월) + 합계 셀 (총 13개) */}
             {Array.from({ length: 13 }).map((_, index) => (
               <td
                 key={index}
-                className={`p-2 text-right border-r border-gray-200 ${
-                  isPercentage ? "text-gray-500" : "text-gray-800"
-                }`}
+                className={`p-3 text-right border-r border-gray-200 ${
+                  isPercentage ? "text-blue-700" : "text-gray-800" // 이익률은 강조
+                } ${index === 12 ? "border-l border-gray-300 font-bold" : ""}`} // 합계 열 강조
               >
-                {/* 데이터가 들어갈 자리 */}
-                {isPercentage ? "0 [%]" : "0"}
+                {/* 실제 데이터가 들어갈 자리. 현재는 더미 데이터 '0' */}
+                {isPercentage ? "0.00 [%]" : "0"}
               </td>
             ))}
           </tr>
@@ -114,17 +93,29 @@ const SalesStatisticsTable = () => {
   );
 
   return (
-    <div className="p-4 bg-white shadow-lg rounded-lg">
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-bold text-gray-800">매출 통계 상세</h2>
-        <button className="flex items-center px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600 transition duration-150 text-sm">
-          <span className="mr-1">⬇️</span> 다운로드
-        </button>
+    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      {/* 헤더 부분 */}
+      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-6">
+        <div>
+          <h2 className="text-xl font-bold text-gray-800">
+            매출 통계 상세 테이블
+          </h2>
+          <p className="text-gray-600 text-sm mt-1">
+            월별, 항목별 상세 매출 및 이익 현황을 확인하세요.
+          </p>
+        </div>
+
+        {/* 다운로드 버튼 */}
+        <div className="mt-4 lg:mt-0">
+          <button className="flex items-center px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition duration-150 text-sm font-medium shadow-md">
+            <span className="mr-1">⬇️</span> 데이터 다운로드 (CSV)
+          </button>
+        </div>
       </div>
 
       {/* 가로 스크롤 영역 적용 */}
       <div className="overflow-x-auto">
-        <table className="divide-y divide-gray-200 border border-gray-300 whitespace-nowrap">
+        <table className="min-w-full divide-y divide-gray-300 border border-gray-300">
           {renderHeader()}
           <tbody className="divide-y divide-gray-200">
             {/* 매출액 상단 항목들 */}
