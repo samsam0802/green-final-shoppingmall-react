@@ -26,14 +26,16 @@ const ProductListComponent = () => {
     return true;
   });
 
+  console.log("filteredProducts", filteredProducts);
+
   filteredProducts = [...filteredProducts].sort((a, b) => {
     switch (sort) {
       case "낮은 가격순":
-        return a.price - b.price;
+        return a.discountPrice - b.discountPrice;
       case "할인율순":
         return (
-          (b.originalPrice - b.price) / b.originalPrice -
-          (a.originalPrice - a.price) / a.originalPrice
+          (b.originalPrice - b.discountPrice) / b.originalPrice -
+          (a.originalPrice - a.discountPrice) / a.originalPrice
         );
       default:
         return 0;

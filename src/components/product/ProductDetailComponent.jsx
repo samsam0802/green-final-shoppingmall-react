@@ -7,6 +7,7 @@ import ProductDetailBuy from "./detail/ProductDetailBuy";
 import ProductDetailReview from "./detail/ProductDetailReview";
 import ProductDetailQnA from "./detail/ProductDetailQnA";
 import ProductDetailInfo from "./detail/ProductDetailInfo";
+import RestockAlertModal from "./RestockAlertModal";
 
 export default function ProductDetailComponent() {
   const { id } = useParams();
@@ -17,17 +18,12 @@ export default function ProductDetailComponent() {
   const [selectedOption, setSelectedOption] = useState(null);
   const [openOptionList, setOpenOptionList] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
+  const [openRestockModal, setOpenRestockModal] = useState(false);
 
   // ✅ 탭 상태
   const [tab, setTab] = useState("info"); // info | buy | review | qna
 
-  const options = [
-    { id: 1, label: "19C 라이트" },
-    { id: 2, label: "19N 포슬린" },
-    { id: 3, label: "21C 라떼리" },
-    { id: 4, label: "21N 린넨" },
-    { id: 5, label: "23N 진저" },
-  ];
+  const options = product.options || [];
 
   const handleSelectOption = (op) => {
     setSelectedOption(op.label);
@@ -45,7 +41,7 @@ export default function ProductDetailComponent() {
           id: op.id,
           label: op.label,
           qty: 1,
-          price: product.discountPrice,
+          price: op.price,
         },
       ]);
     }
@@ -76,7 +72,7 @@ export default function ProductDetailComponent() {
           name: product.name + " - " + i.label,
           brand: product.brand,
           originalPrice: product.originalPrice,
-          salePrice: product.discountPrice,
+          salePrice: i.price,
           qty: i.qty,
           image: product.image,
         })),
@@ -132,14 +128,29 @@ export default function ProductDetailComponent() {
             {openOptionList && (
               <div className="border-t max-h-48 overflow-y-auto">
                 {options.map((op) => (
-                  <button
+                  <div
                     key={op.id}
-                    className="w-full text-left px-4 py-3 hover:bg-gray-100 flex gap-3 items-center"
-                    onClick={() => handleSelectOption(op)}
+                    className={`w-full px-4 py-3 flex justify-between items-center border-b ${
+                      op.stock === 0
+                        ? "text-gray-400 cursor-not-allowed"
+                        : "hover:bg-gray-100 cursor-pointer"
+                    }`}
+                    onClick={() => op.stock > 0 && handleSelectOption(op)}
                   >
-                    <span className="w-4 h-4 bg-[#e8d8c8] rounded-full" />
-                    {op.label}
-                  </button>
+                    <span>{op.label}</span>
+
+                    {op.stock === 0 && (
+                      <span
+                        className="text-[#ff5c00] text-xs underline cursor-pointer"
+                        onClick={(e) => {
+                          e.stopPropagation(); // ✅ 옵션 선택 방지
+                          setOpenRestockModal(true);
+                        }}
+                      >
+                        재입고 알림
+                      </span>
+                    )}
+                  </div>
                 ))}
               </div>
             )}
@@ -186,8 +197,12 @@ export default function ProductDetailComponent() {
           </div>
 
           {/* 버튼 */}
+
           <div className="flex gap-3 pt-4">
-            <button className="flex-1 py-3 rounded-md border border-[#111111] text-[#111111] hover:bg-gray-100">
+            <button
+              className="flex-1 py-3 rounded-md border border-[#111111] text-[#111111] hover:bg-gray-100"
+              onClick={() => alert("장바구니에 담겼습니다")}
+            >
               장바구니
             </button>
             <button
@@ -257,6 +272,11 @@ export default function ProductDetailComponent() {
       {tab === "buy" && <ProductDetailBuy product={product} />}
       {tab === "review" && <ProductDetailReview />}
       {tab === "qna" && <ProductDetailQnA />}
+
+      <RestockAlertModal
+        isOpen={openRestockModal}
+        onClose={() => setOpenRestockModal(false)}
+      />
     </div>
   );
 }

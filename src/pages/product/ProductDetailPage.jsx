@@ -8,7 +8,6 @@ const ProductDetailPage = () => {
   return (
     <>
       <Header />
-      <NavBar />
       <ProductDetailComponent />
     </>
   );
