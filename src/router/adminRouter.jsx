@@ -17,6 +17,10 @@ const CouponManagement = lazy(() =>
 const CouponSearchPage = lazy(() =>
   import("../pages/admin/coupon/CouponSearchPage")
 );
+const UserInfoMgr = lazy(() => import("../components/admin/user/UserInfoMgr"));
+const OrderMgr = lazy(() =>
+  import("../components/admin/order/AdminOrderMgrComponent")
+);
 
 const adminRouter = () => {
   return [
@@ -65,6 +69,22 @@ const adminRouter = () => {
       element: (
         <Suspense fallback={Loading}>
           <CouponSearchPage />
+        </Suspense>
+      ),
+    },
+    {
+      path: "user/search",
+      element: (
+        <Suspense fallback={Loading}>
+          <UserInfoMgr />
+        </Suspense>
+      ),
+    },
+    {
+      path: "order/search",
+      element: (
+        <Suspense fallback={Loading}>
+          <OrderMgr />
         </Suspense>
       ),
     },
