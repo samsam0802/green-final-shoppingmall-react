@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import CategoryMegaMenu from "../../components/category/CategoryMegaMenu";
+import { useNavigate } from "react-router-dom";
 
 export default function NavBar() {
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
 
   const menus = [
     "TitleName",
@@ -17,41 +19,43 @@ export default function NavBar() {
   ];
 
   return (
-    <nav className="bg-white border-b shadow-[0_1px_0_0_rgba(0,0,0,0.05)]">
-      <div className="max-w-7xl mx-auto flex items-center justify-between h-14 px-8">
-        <ul className="flex-1 flex justify-center items-center gap-9 text-[13px] font-semibold text-gray-800">
-          <button
-            className="font-semibold text-gray-700 hover:text-black"
-            onClick={() => setOpen(!open)}
-            type="button"
-          >
-            ☰ 카테고리
-          </button>
+    <nav className="bg-[#111111]">
+      <div className="max-w-7xl mx-auto h-12 flex items-center px-8 gap-8">
+        {/* ☰ 카테고리 */}
+        <button
+          type="button"
+          onClick={() => setOpen(!open)}
+          className="flex items-center gap-2 text-white font-semibold whitespace-nowrap"
+        >
+          {/* 햄버거 */}
+          <span className="flex flex-col gap-[3px]">
+            <span className="w-5 h-[2px] bg-white rounded" />
+            <span className="w-5 h-[2px] bg-white rounded" />
+            <span className="w-5 h-[2px] bg-white rounded" />
+          </span>
+          <span>카테고리</span>
+        </button>
+
+        {/* 메뉴들 */}
+        <ul className="flex items-center gap-7 text-[13px]">
           {menus.map((menu, idx) => (
-            <li key={idx}>
+            <li key={idx} className="shrink-0">
               <button
-                className="cursor-default hover:text-blue-600 hover:underline underline-offset-8 decoration-2 transition-colors"
+                className="inline-flex items-center gap-1 text-white/85 hover:text-white whitespace-nowrap transition-colors cursor-default"
                 aria-disabled
               >
-                {menu} <span className="text-gray-400">(미정)</span>
+                <span>{menu}</span>
+                <span className="text-white/40 text-[12px]">(미정)</span>
               </button>
             </li>
           ))}
         </ul>
 
-        <div className="flex items-center gap-5 text-gray-700">
-          <span className="opacity-70">🔍</span>
-          <span className="opacity-70">👕</span>
-          <div className="relative opacity-70">
-            <span>👜</span>
-            <span className="absolute -top-1.5 -right-2 text-[10px] bg-black text-white rounded-full w-4 h-4 flex items-center justify-center">
-              0
-            </span>
-          </div>
-          <span className="opacity-70">💬</span>
-        </div>
+        {/* 오른쪽 비워둠 (나중에 아이콘 넣을 자리) */}
+        <div className="ml-auto" />
       </div>
-      {/* ✅ 메가메뉴 표시 */}
+
+      {/* 메가메뉴 */}
       <CategoryMegaMenu isOpen={open} />
     </nav>
   );

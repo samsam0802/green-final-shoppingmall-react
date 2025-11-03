@@ -17,7 +17,7 @@ export default function HomeBar({ title = "" }) {
         </button>
         <span
           className="text-sm text-zinc-500 cursor-pointer"
-          onClick={() => alert("현재 구현중 입니다")}
+          onClick={() => navigate("/helpcenter")}
         >
           고객센터
         </span>
