@@ -26,13 +26,6 @@ const OrderComplete = lazy(() => import("../pages/order/OrderCompletePage"));
 
 const Cart = lazy(() => import("../pages/cart/CartPage"));
 
-const AdminOrdMgrPage = lazy(() =>
-  import("../components/admin/order/AdminOrderMgrComponent")
-);
-const AdminUserInfoMgrPage = lazy(() =>
-  import("../components/admin/user/UserInfoMgr")
-);
-
 const Helpcenter = lazy(() => import("../pages/helpcenter/HelpCenterPage"));
 const HelpNoticePage = lazy(() => import("../pages/helpcenter/HelpNoticePage"));
 const HelpInquiryPage = lazy(() =>
