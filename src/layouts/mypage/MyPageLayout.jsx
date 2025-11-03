@@ -1,6 +1,7 @@
 // src/layouts/mypage/MyPageLayout.jsx
 import React from "react";
 import { NavLink, Outlet } from "react-router-dom";
+import Header from "../mainpage/Header";
 
 const menuGroups = [
   {
@@ -39,6 +40,7 @@ const menuGroups = [
 export default function MyPageLayout() {
   return (
     <div className="min-h-screen bg-[#f4f5f7]">
+      <Header />
       {/* 전체 컨테이너 */}
       <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 flex flex-col gap-6 lg:flex-row">
         {/* ================= 모바일 / 태블릿 탭 ================= */}

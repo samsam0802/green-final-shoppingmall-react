@@ -37,6 +37,12 @@ const WithdrawalMemberMgrPage = lazy(() =>
 );
 
 const Helpcenter = lazy(() => import("../pages/helpcenter/HelpCenterPage"));
+const HelpNoticePage = lazy(() => import("../pages/helpcenter/HelpNoticePage"));
+const HelpInquiryPage = lazy(() =>
+  import("../pages/helpcenter/HelpInquiryPage")
+);
+const HelpFaqPage = lazy(() => import("../pages/helpcenter/HelpFaqPage"));
+
 const Loading = <div>Loading...</div>;
 
 const root = createBrowserRouter([
@@ -181,12 +187,13 @@ const root = createBrowserRouter([
     children: adminRouter(),
   },
   {
-    path: "helpcenter",
-    element: (
-      <Suspense fallback={Loading}>
-        <Helpcenter />
-      </Suspense>
-    ),
+    path: "/helpcenter",
+    element: <Helpcenter />,
+    children: [
+      { index: true, element: <HelpNoticePage /> }, // /helpcenter
+      { path: "faq", element: <HelpFaqPage /> }, // /helpcenter/faq
+      { path: "inquiry", element: <HelpInquiryPage /> }, // /helpcenter/inquiry
+    ],
   },
 ]);
 
