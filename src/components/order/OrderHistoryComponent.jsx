@@ -1,106 +1,100 @@
 import React, { useState } from "react";
 
 const OrderHistoryComponent = () => {
-  const [showEmpty] = useState(true); // 실제 기능 X, 와이어프레임용
+  // ✅ 우선 샘플 주문 내역
+  const sampleOrders = [
+    {
+      id: "20250205-123456",
+      date: "2025-02-05",
+      productName: "진정 수분 토너 - 21N 린넨",
+      qty: 2,
+      price: 30000,
+      status: "배송완료",
+    },
+    {
+      id: "20250204-654321",
+      date: "2025-02-04",
+      productName: "고보습 세럼 앰플 - 19C 라이트",
+      qty: 1,
+      price: 22000,
+      status: "배송중",
+    },
+  ];
+
+  const showEmpty = sampleOrders.length === 0;
 
   return (
-    <div className="max-w-5xl mx-auto p-8">
-      {/* 상단 고객 정보 / 포인트 (와이어프레임 간단 표시) */}
-      <div className="bg-lime-200 p-4 rounded mb-6">
-        <p className="font-semibold">BABYOLIVE 강*석님 반갑습니다.</p>
-        <p className="text-sm mt-1">쿠폰 0 장</p>
-      </div>
-
-      <h1 className="text-xl font-bold mb-4">주문/배송 조회</h1>
+    <div className="max-w-5xl mx-auto p-8 text-[#111111]">
+      <h1 className="text-2xl font-bold mb-8">주문 / 배송 조회</h1>
 
       {/* 주문 상태 요약 */}
-      <div className="grid grid-cols-5 text-center bg-gray-50 p-4 rounded-lg border mb-6">
+      <div className="grid grid-cols-5 text-center bg-white border rounded-lg py-4 mb-8">
         {["주문접수", "결제완료", "배송준비중", "배송중", "배송완료"].map(
-          (label) => (
-            <div key={label}>
+          (label, i) => (
+            <div key={label} className="py-2">
               <p className="text-xl font-bold">0</p>
-              <p className="text-sm text-gray-600">{label}</p>
+              <p className="text-sm text-gray-500">{label}</p>
             </div>
           )
         )}
       </div>
 
-      {/* 검색 조건 영역 */}
-      <div className="border rounded-lg p-6 mb-8 space-y-4 bg-white">
-        {/* 구매기간 선택 */}
-        <div>
-          <p className="font-semibold mb-2 text-sm">구매기간</p>
-          <div className="flex gap-3">
-            {["1개월", "3개월", "6개월", "12개월"].map((m, i) => (
-              <button
-                key={m}
-                className={`px-4 py-1.5 rounded border text-sm
-                  ${
-                    i === 0
-                      ? "bg-black text-white border-black"
-                      : "bg-white text-gray-600"
-                  }
-                `}
-                disabled // 기능 없음
-              >
-                {m}
-              </button>
-            ))}
-          </div>
+      {/* 검색 영역 */}
+      <div className="border rounded-lg p-6 mb-10 bg-white">
+        <p className="font-semibold text-sm mb-3">구매기간</p>
+        <div className="flex gap-3 mb-4">
+          {["1개월", "3개월", "6개월", "12개월"].map((m, i) => (
+            <button
+              key={m}
+              className={`px-4 py-2 rounded text-sm border ${
+                i === 0
+                  ? "bg-[#111111] text-white border-[#111111]"
+                  : "bg-white text-gray-600 border-gray-300"
+              }`}
+              disabled
+            >
+              {m}
+            </button>
+          ))}
         </div>
 
-        {/* 날짜 선택 (동작 없음) */}
-        <div className="flex items-center gap-2 text-sm">
-          <select className="border p-1 rounded" disabled>
-            <option>2025</option>
-          </select>
-          년
-          <select className="border p-1 rounded" disabled>
-            <option>09</option>
-          </select>
-          월
-          <select className="border p-1 rounded" disabled>
-            <option>29</option>
-          </select>
-          일 ~
-          <select className="border p-1 rounded" disabled>
-            <option>2025</option>
-          </select>
-          년
-          <select className="border p-1 rounded" disabled>
-            <option>10</option>
-          </select>
-          월
-          <select className="border p-1 rounded" disabled>
-            <option>29</option>
-          </select>
-          일
-          <button className="ml-4 bg-green-500 text-white px-4 py-1.5 rounded">
-            조회
-          </button>
-        </div>
-
-        <p className="text-xs text-gray-500 mt-2">
-          ※ 최근 1년 내역 조회 가능 (와이어프레임 설명 텍스트)
+        <p className="text-xs text-gray-400">
+          ※ 최근 1년 내 구매내역만 조회 가능합니다.
         </p>
       </div>
 
-      {/* 결과 테이블 */}
-      <table className="w-full text-center border-t border-b text-sm">
-        <thead className="bg-gray-100 h-10">
+      {/* 주문 내역 테이블 */}
+      <table className="w-full text-center border-t text-sm">
+        <thead className="bg-gray-50 h-12 border-b">
           <tr>
             <th>주문일자</th>
-            <th>상품</th>
+            <th>상품명</th>
             <th>수량</th>
-            <th>주문금액</th>
+            <th>결제금액</th>
             <th>상태</th>
           </tr>
         </thead>
+
+        {!showEmpty && (
+          <tbody>
+            {sampleOrders.map((order) => (
+              <tr key={order.id} className="h-14 border-b">
+                <td>{order.date}</td>
+                <td className="px-4">{order.productName}</td>
+                <td>{order.qty}</td>
+                <td className="font-semibold">
+                  {order.price.toLocaleString()}원
+                </td>
+                <td className="text-[#ff5c00] font-semibold">{order.status}</td>
+              </tr>
+            ))}
+          </tbody>
+        )}
       </table>
 
-      {/* 결과 없음 화면 */}
+      {/* 주문 내역 없을 때 */}
       {showEmpty && (
-        <div className="text-center py-16 text-gray-500">
+        <div className="text-center py-20 text-gray-500">
           <div className="text-3xl mb-3">⚠</div>
           <p>기간 내 주문내역이 없습니다.</p>
         </div>
