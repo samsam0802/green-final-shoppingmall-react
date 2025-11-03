@@ -149,27 +149,10 @@ const root = createBrowserRouter([
     ),
   },
   {
-    path: "adminord",
-    element: (
-      <Suspense fallback={Loading}>
-        <AdminOrdMgrPage />
-      </Suspense>
-    ),
-  },
-  {
     path: "admin",
     element: (
       <Suspense fallback={Loading}>
         <AdminIndex />
-      </Suspense>
-    ),
-    children: adminRouter(),
-  },
-  {
-    path: "adminuser",
-    element: (
-      <Suspense fallback={Loading}>
-        <AdminUserInfoMgrPage />
       </Suspense>
     ),
     children: adminRouter(),
