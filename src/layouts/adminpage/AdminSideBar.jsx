@@ -1,183 +1,275 @@
+import { Link } from "lucide-react";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+// 컴포넌트 외부에서 Arrow Up/Down 아이콘을 위한 TailwindCSS 클래스명을 정의합니다.
+const iconClass = "transform transition-transform duration-200";
 
 const AdminSideBar = ({ activeTab, onTabClick }) => {
-  const [expandedMenus, setExpandedMenus] = useState(["products"]); // 기본으로 상품 관리 메뉴 펼침
+  const navigate = useNavigate();
 
-  const menuItems = [
-    {
-      id: "products",
-      label: "상품 관리",
-      subItems: [
-        {
-          id: "product-inquiry",
-          label: "상품조회",
-          href: "#/products/inquiry",
-        },
-        {
-          id: "product-registration",
-          label: "상품등록",
-          href: "#/products/registration",
-        },
-        {
-          id: "restock-notification",
-          label: "재입고 알림",
-          href: "#/products/restock",
-        },
-      ],
-    },
-    {
-      id: "transactions",
-      label: "거래내역 관리",
-      subItems: [
-        {
-          id: "order-inquiry",
-          label: "주문조회",
-          href: "#/transactions/orders",
-        },
-      ],
-    },
-    {
-      id: "statistics",
-      label: "통계",
-      subItems: [
-        {
-          id: "sales-statistics",
-          label: "판매 통계",
-          href: "#/statistics/sales",
-        },
-      ],
-    },
-    {
-      id: "events",
-      label: "이벤트 관리",
-      subItems: [
-        {
-          id: "discount-events",
-          label: "할인 이벤트",
-          href: "#/events/discount",
-        },
-      ],
-    },
-    {
-      id: "promotions",
-      label: "프로모션 관리",
-      subItems: [
-        { id: "discount-codes", label: "할인코드", href: "#/promotions/codes" },
-      ],
-    },
-    {
-      id: "members",
-      label: "회원 관리",
-      subItems: [
-        { id: "member-inquiry", label: "회원 조회", href: "#/members/inquiry" },
-        {
-          id: "dormant-members",
-          label: "휴먼 회원 조회",
-          href: "#/members/dormant",
-        },
-        {
-          id: "withdrawn-members",
-          label: "탈퇴 회원 조회",
-          href: "#/members/withdrawn",
-        },
-      ],
-    },
-    {
-      id: "email",
-      label: "이메일 발송",
-      subItems: [
-        {
-          id: "email-management",
-          label: "이메일 발송 관리",
-          href: "#/email/management",
-        },
-        { id: "bulk-email", label: "이메일 대량 발송", href: "#/email/bulk" },
-      ],
-    },
-    {
-      id: "message",
-      label: "메시지 발송",
-      subItems: [
-        { id: "sms-management", label: "SMS 발송 관리", href: "#/message/sms" },
-        { id: "bulk-sms", label: "SMS 대량 발송", href: "#/message/bulk-sms" },
-      ],
-    },
-  ];
+  // 어떤 메뉴 그룹이 펼쳐져 있는지 관리하는 상태
+  const [expandedMenus, setExpandedMenus] = useState(["products"]); // '상품 관리' 기본 펼침
 
+  // 메뉴 그룹의 펼침/접힘을 토글하는 함수
   const toggleMenu = (menuId) => {
-    setExpandedMenus((prev) =>
-      prev.includes(menuId)
-        ? prev.filter((id) => id !== menuId)
-        : [...prev, menuId]
+    setExpandedMenus(
+      (prev) =>
+        prev.includes(menuId)
+          ? prev.filter((id) => id !== menuId) // 이미 펼쳐져 있으면 제거 (접기)
+          : [...prev, menuId] // 없으면 추가 (펼치기)
     );
   };
 
-  const handleMenuClick = (itemId, href, hasSubItems = false) => {
-    if (hasSubItems) {
-      toggleMenu(itemId);
-    } else {
-      onTabClick(itemId);
-      // 실제 라우팅 처리 (선택사항)
-      // navigate(href);
+  // 특정 메뉴 그룹이 현재 펼쳐져 있는지 확인
+  const isMenuExpanded = (menuId) => expandedMenus.includes(menuId);
+
+  // 서브 아이템 클릭 핸들러
+  const handleSubItemClick = (e, itemId, path) => {
+    // e.preventDefault();
+    onTabClick(itemId);
+    // 실제 라우팅 처리 (선택사항): navigate(href);
+    if (path) {
+      navigate(path);
     }
   };
 
-  const isMenuExpanded = (menuId) => expandedMenus.includes(menuId);
+  // 메인 메뉴 스타일링을 위한 기본 클래스
+  const baseMainMenuClass =
+    "flex items-center justify-between px-6 py-3 cursor-pointer transition-colors duration-200 text-gray-200 hover:bg-gray-700 hover:text-white";
+  // 서브 메뉴 스타일링을 위한 기본 클래스
+  const baseSubMenuClass =
+    "block w-full text-left py-2 px-10 text-sm transition-colors duration-200 text-gray-300 hover:bg-gray-700 hover:text-white";
+  // 활성화된 서브 메뉴 클래스
+  const activeSubMenuClass = "bg-blue-500 text-white font-medium";
 
   return (
-    <aside className="w-64 bg-gray-800 text-white overflow-y-auto">
+    <aside className="w-64 bg-gray-800 text-white overflow-y-auto min-h-screen">
       <nav className="sidebar-nav">
-        <ul className="py-4">
-          {menuItems.map((item) => (
-            <li key={item.id} className="border-l-4 border-transparent">
-              {/* 메인 메뉴 아이템 */}
-              <div
-                className={`flex items-center justify-between px-6 py-3 cursor-pointer transition-colors duration-200 ${
-                  activeTab === item.id && !item.subItems
-                    ? "bg-blue-600 text-white font-semibold"
-                    : "text-gray-200 hover:bg-gray-700 hover:text-white"
-                } ${item.subItems ? "border-l-4 border-blue-400" : ""}`}
-                onClick={() =>
-                  handleMenuClick(item.id, item.href, !!item.subItems)
-                }
+        <ul className="py-2">
+          {/* === 1. 상품 관리 (products) === */}
+          <li className="border-l-4 border-transparent">
+            <div
+              className={`${baseMainMenuClass} border-l-4 border-blue-400`}
+              onClick={() => toggleMenu("products")}
+            >
+              <div className="flex items-center">상품 관리</div>
+              <span
+                className={`${iconClass} ${
+                  isMenuExpanded("products") ? "rotate-180" : ""
+                }`}
               >
-                <div className="flex items-center">{item.label}</div>
-                {item.subItems && (
-                  <span
-                    className={`transform transition-transform duration-200 ${
-                      isMenuExpanded(item.id) ? "rotate-180" : ""
-                    }`}
-                  >
-                    ▼
-                  </span>
-                )}
-              </div>
+                ▲
+              </span>
+            </div>
 
-              {/* 서브 메뉴 */}
-              {item.subItems && isMenuExpanded(item.id) && (
-                <ul className="bg-gray-900 border-l-4 border-blue-400">
-                  {item.subItems.map((subItem) => (
-                    <li key={subItem.id}>
-                      <a
-                        href={subItem.href}
-                        className={`block py-2 px-10 text-sm transition-colors duration-200 ${
-                          activeTab === subItem.id
-                            ? "bg-blue-500 text-white font-medium"
-                            : "text-gray-300 hover:bg-gray-700 hover:text-white"
-                        }`}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          onTabClick(subItem.id);
-                        }}
-                      >
-                        {subItem.label}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </li>
-          ))}
+            {isMenuExpanded("products") && (
+              <ul className="bg-gray-900 border-l-4 border-blue-400">
+                <li>
+                  <button
+                    className={`${baseSubMenuClass} ${
+                      activeTab === "product-search" ? activeSubMenuClass : ""
+                    }`}
+                    onClick={(e) =>
+                      handleSubItemClick(e, "product-search", "/admin/products")
+                    }
+                  >
+                    상품조회
+                  </button>
+                </li>
+                <li>
+                  <button
+                    className={`${baseSubMenuClass} ${
+                      activeTab === "product-add" ? activeSubMenuClass : ""
+                    }`}
+                    onClick={(e) =>
+                      handleSubItemClick(e, "product-add", "/admin/product/add")
+                    }
+                  >
+                    상품등록
+                  </button>
+                </li>
+                <li>
+                  <button
+                    className={`${baseSubMenuClass} ${
+                      activeTab === "restock-notification"
+                        ? activeSubMenuClass
+                        : ""
+                    }`}
+                    onClick={(e) =>
+                      handleSubItemClick(
+                        e,
+                        "restock-notification",
+                        "/admin/restock/noti"
+                      )
+                    }
+                  >
+                    재입고 알림
+                  </button>
+                </li>
+              </ul>
+            )}
+          </li>
+
+          {/* === 2. 거래내역 관리 (transactions) === */}
+          <li className="border-l-4 border-transparent">
+            <div
+              className={`${baseMainMenuClass} border-l-4 border-blue-400`}
+              onClick={() => toggleMenu("transactions")}
+            >
+              <div className="flex items-center">거래내역 관리</div>
+              <span
+                className={`${iconClass} ${
+                  isMenuExpanded("transactions") ? "rotate-180" : ""
+                }`}
+              >
+                ▲
+              </span>
+            </div>
+            {isMenuExpanded("transactions") && (
+              <ul className="bg-gray-900 border-l-4 border-blue-400">
+                <li>
+                  <button
+                    className={`${baseSubMenuClass} ${
+                      activeTab === "order-history" ? activeSubMenuClass : ""
+                    }`}
+                    onClick={(e) =>
+                      handleSubItemClick(
+                        e,
+                        "order-history",
+                        "/admin/order/search"
+                      )
+                    }
+                  >
+                    주문내역 조회
+                  </button>
+                </li>
+              </ul>
+            )}
+          </li>
+
+          {/* === 3. 회원 관리 (user-management) === */}
+          <li className="border-l-4 border-transparent">
+            <div
+              className={`${baseMainMenuClass} border-l-4 border-blue-400`}
+              onClick={() => toggleMenu("user-management")}
+            >
+              <div className="flex items-center">회원 관리</div>
+              <span
+                className={`${iconClass} ${
+                  isMenuExpanded("user-management") ? "rotate-180" : ""
+                }`}
+              >
+                ▲
+              </span>
+            </div>
+            {isMenuExpanded("user-management") && (
+              <ul className="bg-gray-900 border-l-4 border-blue-400">
+                <li>
+                  <button
+                    className={`${baseSubMenuClass} ${
+                      activeTab === "user-search" ? activeSubMenuClass : ""
+                    }`}
+                    onClick={(e) =>
+                      handleSubItemClick(e, "user-search", "/admin/user/search")
+                    }
+                  >
+                    회원 조회
+                  </button>
+                </li>
+              </ul>
+            )}
+          </li>
+
+          {/* === 4. 쿠폰 관리 (coupon-management) === */}
+          <li className="border-l-4 border-transparent">
+            <div
+              className={`${baseMainMenuClass} border-l-4 border-blue-400`}
+              onClick={() => toggleMenu("coupon-management")}
+            >
+              <div className="flex items-center">쿠폰 관리</div>
+              <span
+                className={`${iconClass} ${
+                  isMenuExpanded("coupon-management") ? "rotate-180" : ""
+                }`}
+              >
+                ▲
+              </span>
+            </div>
+            {isMenuExpanded("coupon-management") && (
+              <ul className="bg-gray-900 border-l-4 border-blue-400">
+                <li>
+                  <button
+                    className={`${baseSubMenuClass} ${
+                      activeTab === "coupon-register" ? activeSubMenuClass : ""
+                    }`}
+                    onClick={(e) =>
+                      handleSubItemClick(
+                        e,
+                        "coupon-register",
+                        "/admin/coupon/register"
+                      )
+                    }
+                  >
+                    쿠폰 등록
+                  </button>
+                </li>
+                <li>
+                  <button
+                    className={`${baseSubMenuClass} ${
+                      activeTab === "coupon-search" ? activeSubMenuClass : ""
+                    }`}
+                    onClick={(e) =>
+                      handleSubItemClick(
+                        e,
+                        "coupon-search",
+                        "/admin/coupon/search"
+                      )
+                    }
+                  >
+                    쿠폰 조회
+                  </button>
+                </li>
+              </ul>
+            )}
+          </li>
+
+          {/* === 5. 통계 (statistics) === */}
+          <li className="border-l-4 border-transparent">
+            <div
+              className={`${baseMainMenuClass} border-l-4 border-blue-400`}
+              onClick={() => toggleMenu("statistics")}
+            >
+              <div className="flex items-center">통계</div>
+              <span
+                className={`${iconClass} ${
+                  isMenuExpanded("statistics") ? "rotate-180" : ""
+                }`}
+              >
+                ▲
+              </span>
+            </div>
+            {isMenuExpanded("statistics") && (
+              <ul className="bg-gray-900 border-l-4 border-blue-400">
+                <li>
+                  <button
+                    className={`${baseSubMenuClass} ${
+                      activeTab === "sales-statistics" ? activeSubMenuClass : ""
+                    }`}
+                    onClick={(e) =>
+                      handleSubItemClick(
+                        e,
+                        "sales-statistics",
+                        "/admin/statistics"
+                      )
+                    }
+                  >
+                    판매 통계
+                  </button>
+                </li>
+              </ul>
+            )}
+          </li>
         </ul>
       </nav>
     </aside>

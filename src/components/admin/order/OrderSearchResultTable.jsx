@@ -1,22 +1,8 @@
 import React, { useState } from "react";
 
 const OrderSearchResultTable = () => {
-  const [downloadType, setDownloadType] = useState("선택 다운로드");
-
-  const headers = [
-    "선택",
-    "번호",
-    "주문날짜",
-    "주문번호",
-    "상품명",
-    "수량",
-    "받는사람/주문자",
-    "결제수단",
-    "결제금액",
-    "주문상태",
-    "출고처리",
-    "배송상태",
-  ];
+  const [sortOrder, setSortOrder] = useState("최근 주문 순");
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const dummyData = [
     {
@@ -30,6 +16,7 @@ const OrderSearchResultTable = () => {
       amount: "10000",
       status: "완료",
       shipment: "미출고",
+      delivery: "배송준비중",
     },
     {
       id: 2,
@@ -42,6 +29,7 @@ const OrderSearchResultTable = () => {
       amount: "20000",
       status: "완료",
       shipment: "출고",
+      delivery: "배송중",
     },
     {
       id: 3,
@@ -54,115 +42,104 @@ const OrderSearchResultTable = () => {
       amount: "30000",
       status: "취소",
       shipment: "미출고",
+      delivery: "반품중",
     },
   ];
 
   return (
-    <div className="border border-gray-300 bg-white w-full">
-      {/* 상단 */}
-      <div className="bg-gray-50 p-3 border-b border-gray-300 flex justify-between items-center">
-        <span>총 {dummyData.length}건의 주문이 검색되었습니다.</span>
+    <div className="w-full mt-8">
+      {/* 상단 컨트롤 영역 */}
+      <div className="flex justify-between items-center mb-3 text-gray-700 flex-wrap gap-2">
+        <span className="font-semibold text-lg">
+          검색 결과 (총 {dummyData.length} 건)
+        </span>
 
-        <div className="flex items-center gap-2">
-          <button className="bg-gray-200 text-gray-700 px-3 py-1.5 text-sm border border-gray-300 cursor-pointer">
-            일괄 송장 등록
-          </button>
-          <button className="bg-gray-200 text-gray-700 px-3 py-1.5 text-sm border border-gray-300 cursor-pointer">
-            출고 처리
-          </button>
-
+        <div className="flex items-center gap-2 flex-wrap">
+          {/* 최근 주문 순 */}
           <select
-            value={downloadType}
-            onChange={(e) => setDownloadType(e.target.value)}
-            className="border border-gray-300 p-1.5 text-sm bg-white text-gray-700 cursor-pointer"
+            value={sortOrder}
+            onChange={(e) => setSortOrder(e.target.value)}
+            className="border border-gray-300 bg-white text-gray-700 px-2 py-1 rounded-md text-sm cursor-pointer"
           >
-            <option>선택 다운로드</option>
-            <option>전체 다운로드</option>
+            <option>최근 주문 순</option>
           </select>
 
-          <button className="bg-gray-200 text-gray-700 px-3 py-1.5 text-sm border border-gray-300 cursor-pointer">
+          {/* 한 페이지당 보기 */}
+          <select
+            value={rowsPerPage}
+            onChange={(e) => setRowsPerPage(parseInt(e.target.value))}
+            className="border border-gray-300 bg-white text-gray-700 px-2 py-1 rounded-md text-sm cursor-pointer"
+          >
+            <option value={10}>10개</option>
+            <option value={15}>15개</option>
+          </select>
+
+          {/* 선택 상품 출고 버튼 */}
+          <button className="bg-blue-50 text-blue-700 hover:bg-blue-100 px-3 py-1 rounded-md border border-blue-200 cursor-pointer transition shadow-sm">
+            선택 상품 출고
+          </button>
+
+          {/* 다운로드 버튼 */}
+          <button className="bg-gray-200 text-gray-700 px-3 py-1 rounded-md border border-gray-300 cursor-pointer hover:bg-gray-300 transition">
             다운로드
           </button>
         </div>
       </div>
 
-      {/* 테이블 */}
-      <div className="overflow-x-auto">
-        <table className="w-full border-collapse text-center text-sm">
+      {/* ✅ 둥근 모서리 + 그림자 복구 */}
+      <div className="overflow-x-auto border border-gray-300 rounded-lg shadow-md">
+        <table className="min-w-full divide-y divide-gray-300 text-sm text-center">
           <thead className="bg-gray-100">
-            <tr>
-              <th className="py-2 border-b border-r border-gray-300 text-gray-700 font-semibold w-auto">
-                선택
-              </th>
-              <th className="py-2 border-b border-r border-gray-300 text-gray-700 font-semibold w-12">
-                번호
-              </th>
-              <th className="py-2 border-b border-r border-gray-300 text-gray-700 font-semibold w-auto">
-                주문날짜
-              </th>
-              <th className="py-2 border-b border-r border-gray-300 text-gray-700 font-semibold w-36">
-                주문번호
-              </th>
-              <th className="py-2 border-b border-r border-gray-300 text-gray-700 font-semibold w-52">
-                상품명
-              </th>
-              <th className="py-2 border-b border-r border-gray-300 text-gray-700 font-semibold w-12">
-                수량
-              </th>
-              <th className="py-2 border-b border-r border-gray-300 text-gray-700 font-semibold w-auto">
-                받는사람/주문자
-              </th>
-              <th className="py-2 border-b border-r border-gray-300 text-gray-700 font-semibold w-auto">
-                결제수단
-              </th>
-              <th className="py-2 border-b border-r border-gray-300 text-gray-700 font-semibold w-auto">
-                결제금액
-              </th>
-              <th className="py-2 border-b border-r border-gray-300 text-gray-700 font-semibold w-auto">
-                주문상태
-              </th>
-              <th className="py-2 border-b border-r border-gray-300 text-gray-700 font-semibold w-auto">
-                출고처리
-              </th>
-              <th className="py-2 border-b border-gray-300 text-gray-700 font-semibold w-auto">
-                배송상태
-              </th>
+            <tr className="text-gray-700 font-semibold text-sm">
+              <th className="px-2 py-3 w-13">선택</th>
+              <th className="px-3 py-3">번호</th>
+              <th className="px-3 py-3">주문날짜</th>
+              <th className="px-3 py-3">주문번호</th>
+              <th className="px-3 py-3">상품명</th>
+              <th className="px-3 py-3">수량</th>
+              <th className="px-3 py-3">받는사람/주문자</th>
+              <th className="px-3 py-3">결제수단</th>
+              <th className="px-3 py-3">결제금액</th>
+              <th className="px-3 py-3">주문상태</th>
+              <th className="px-3 py-3">출고처리</th>
+              <th className="px-3 py-3">배송상태</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="bg-white divide-y divide-gray-200">
             {dummyData.map((item) => (
-              <tr key={item.id}>
-                <td className="py-[6px] px-2 border-b border-r border-gray-300 text-gray-700">
-                  <input type="checkbox" className="cursor-pointer" />
+              <tr key={item.id} className="hover:bg-gray-50 transition">
+                <td className="px-2 py-3">
+                  <input
+                    type="checkbox"
+                    className="w-3.5 h-3.5 border-gray-400 rounded text-blue-600 cursor-pointer"
+                  />
                 </td>
-                <td className="py-[6px] px-2 border-b border-r border-gray-300 text-gray-700">
-                  {item.id}
-                </td>
-                <td className="py-[6px] px-2 border-b border-r border-gray-300 text-gray-700">
-                  {item.date}
-                </td>
-                <td className="py-[6px] px-2 border-b border-r border-gray-300 text-gray-700">
+                <td className="px-3 py-3">{item.id}</td>
+                <td className="px-3 py-3">{item.date}</td>
+                <td className="px-3 py-3 text-blue-600 cursor-pointer hover:underline">
                   {item.orderNo}
                 </td>
-                <td className="py-[6px] px-2 border-b border-r border-gray-300 text-gray-700">
-                  {item.product}
+                <td className="px-3 py-3 text-left">{item.product}</td>
+                <td className="px-3 py-3">{item.qty}</td>
+                <td className="px-3 py-3">{item.customer}</td>
+                <td className="px-3 py-3">{item.method}</td>
+                <td className="px-3 py-3 text-right text-blue-800 font-medium">
+                  {item.amount} 원
                 </td>
-                <td className="py-[6px] px-2 border-b border-r border-gray-300 text-gray-700">
-                  {item.qty}
+                <td className="px-3 py-3">
+                  <span
+                    className={`px-3 py-1 inline-flex text-xs font-semibold rounded-full ${
+                      item.status.includes("완료")
+                        ? "bg-green-100 text-green-800"
+                        : item.status.includes("취소")
+                        ? "bg-red-100 text-red-800"
+                        : "bg-yellow-100 text-yellow-800"
+                    }`}
+                  >
+                    {item.status}
+                  </span>
                 </td>
-                <td className="py-[6px] px-2 border-b border-r border-gray-300 text-gray-700">
-                  {item.customer}
-                </td>
-                <td className="py-[6px] px-2 border-b border-r border-gray-300 text-gray-700">
-                  {item.method}
-                </td>
-                <td className="py-[6px] px-2 border-b border-r border-gray-300 text-gray-700">
-                  {item.amount}
-                </td>
-                <td className="py-[6px] px-2 border-b border-r border-gray-300 text-gray-700">
-                  {item.status}
-                </td>
-                <td className="py-[6px] px-2 border-b border-r border-gray-300 text-gray-700">
+                <td className="px-3 py-3">
                   <select
                     className="border border-gray-300 px-1 py-[2px] text-sm bg-white cursor-pointer"
                     defaultValue={item.shipment}
@@ -171,8 +148,11 @@ const OrderSearchResultTable = () => {
                     <option>출고</option>
                   </select>
                 </td>
-                <td className="py-[6px] px-2 border-b border-gray-300 text-gray-700">
-                  <select className="border border-gray-300 px-1 py-[2px] text-sm bg-white cursor-pointer">
+                <td className="px-3 py-3">
+                  <select
+                    className="border border-gray-300 px-1 py-[2px] text-sm bg-white cursor-pointer"
+                    defaultValue={item.delivery}
+                  >
                     <option>배송준비중</option>
                     <option>배송중</option>
                     <option>배송완료</option>
@@ -184,24 +164,6 @@ const OrderSearchResultTable = () => {
             ))}
           </tbody>
         </table>
-      </div>
-
-      {/* 페이지네이션 */}
-      <div className="flex justify-center items-center gap-2 p-4 border-t border-gray-300 bg-gray-50">
-        <button className="px-3 py-1 border border-gray-300 text-sm cursor-pointer">
-          이전
-        </button>
-        {Array.from({ length: 10 }, (_, i) => (
-          <button
-            key={i}
-            className="px-3 py-1 border border-gray-300 text-sm cursor-pointer"
-          >
-            {i + 1}
-          </button>
-        ))}
-        <button className="px-3 py-1 border border-gray-300 text-sm cursor-pointer">
-          다음
-        </button>
       </div>
     </div>
   );

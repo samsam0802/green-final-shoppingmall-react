@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import AdminSideBar from "./AdminSideBar";
 
 const AdminLayout = ({ children }) => {
-  const [activeTab, setActiveTab] = useState("product-inquiry"); // 기본 선택 탭
+  const [activeTab, setActiveTab] = useState("product-search"); // 기본 선택 탭
 
   const handleTabClick = (tabId) => {
     setActiveTab(tabId);
@@ -16,7 +16,7 @@ const AdminLayout = ({ children }) => {
           <h1 className="text-xl font-semibold">FirstMall 관리자</h1>
         </div>
         <div className="flex items-center gap-4">
-          <div className="navbar-user text-sm">관리자님</div>
+          <div className="navbar-user text-sm">ㅇㅇㅇ관리자님</div>
           <button className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-colors duration-200">
             로그아웃
           </button>
