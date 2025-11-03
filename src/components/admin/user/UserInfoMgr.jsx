@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import UserInfoResultTable from "./UserInfoResultTable";
 
 const UserInfoMgr = () => {
-  // 체크박스 상태
   const [signupMethods, setSignupMethods] = useState({
     쇼핑몰: false,
     네이버: false,
@@ -22,49 +21,6 @@ const UserInfoMgr = () => {
     거부: false,
     전체: false,
   });
-
-  // 전체 클릭 시
-  const handleAllChange = (category, checked) => {
-    if (category === "signup") {
-      setSignupMethods({
-        쇼핑몰: checked,
-        네이버: checked,
-        카카오: checked,
-        기타: checked,
-        전체: checked,
-      });
-    } else if (category === "sms") {
-      setSms({
-        동의: checked,
-        거부: checked,
-        전체: checked,
-      });
-    } else if (category === "email") {
-      setEmail({
-        동의: checked,
-        거부: checked,
-        전체: checked,
-      });
-    }
-  };
-
-  // 개별 체크박스 클릭 시
-  const handleChange = (category, label, checked) => {
-    if (category === "signup") {
-      const newState = { ...signupMethods, [label]: checked };
-      newState.전체 =
-        newState.쇼핑몰 && newState.네이버 && newState.카카오 && newState.기타;
-      setSignupMethods(newState);
-    } else if (category === "sms") {
-      const newState = { ...sms, [label]: checked };
-      newState.전체 = newState.동의 && newState.거부;
-      setSms(newState);
-    } else if (category === "email") {
-      const newState = { ...email, [label]: checked };
-      newState.전체 = newState.동의 && newState.거부;
-      setEmail(newState);
-    }
-  };
 
   return (
     <div className="max-w-6xl mx-auto bg-white shadow-md my-10 text-sm font-['Inter']">
@@ -112,7 +68,7 @@ const UserInfoMgr = () => {
             <input
               type="date"
               className="border border-gray-300 p-1 bg-white cursor-pointer h-[32px]"
-            />{" "}
+            />
             -
             <input
               type="date"
@@ -172,13 +128,30 @@ const UserInfoMgr = () => {
               >
                 <input
                   type="checkbox"
-                  className="w-4 h-4 accent-blue-600"
+                  className="w-3.5 h-3.5 accent-blue-600"
                   checked={signupMethods[label]}
-                  onChange={(e) =>
-                    label === "전체"
-                      ? handleAllChange("signup", e.target.checked)
-                      : handleChange("signup", label, e.target.checked)
-                  }
+                  onChange={(e) => {
+                    if (label === "전체") {
+                      setSignupMethods({
+                        쇼핑몰: e.target.checked,
+                        네이버: e.target.checked,
+                        카카오: e.target.checked,
+                        기타: e.target.checked,
+                        전체: e.target.checked,
+                      });
+                    } else {
+                      const newState = {
+                        ...signupMethods,
+                        [label]: e.target.checked,
+                      };
+                      newState.전체 =
+                        newState.쇼핑몰 &&
+                        newState.네이버 &&
+                        newState.카카오 &&
+                        newState.기타;
+                      setSignupMethods(newState);
+                    }
+                  }}
                 />
                 {label}
               </label>
@@ -199,13 +172,21 @@ const UserInfoMgr = () => {
               >
                 <input
                   type="checkbox"
-                  className="w-4 h-4 accent-blue-600"
+                  className="w-3.5 h-3.5 accent-blue-600"
                   checked={sms[label]}
-                  onChange={(e) =>
-                    label === "전체"
-                      ? handleAllChange("sms", e.target.checked)
-                      : handleChange("sms", label, e.target.checked)
-                  }
+                  onChange={(e) => {
+                    if (label === "전체") {
+                      setSms({
+                        동의: e.target.checked,
+                        거부: e.target.checked,
+                        전체: e.target.checked,
+                      });
+                    } else {
+                      const newState = { ...sms, [label]: e.target.checked };
+                      newState.전체 = newState.동의 && newState.거부;
+                      setSms(newState);
+                    }
+                  }}
                 />
                 {label}
               </label>
@@ -226,13 +207,21 @@ const UserInfoMgr = () => {
               >
                 <input
                   type="checkbox"
-                  className="w-4 h-4 accent-blue-600"
+                  className="w-3.5 h-3.5 accent-blue-600"
                   checked={email[label]}
-                  onChange={(e) =>
-                    label === "전체"
-                      ? handleAllChange("email", e.target.checked)
-                      : handleChange("email", label, e.target.checked)
-                  }
+                  onChange={(e) => {
+                    if (label === "전체") {
+                      setEmail({
+                        동의: e.target.checked,
+                        거부: e.target.checked,
+                        전체: e.target.checked,
+                      });
+                    } else {
+                      const newState = { ...email, [label]: e.target.checked };
+                      newState.전체 = newState.동의 && newState.거부;
+                      setEmail(newState);
+                    }
+                  }}
                 />
                 {label}
               </label>
