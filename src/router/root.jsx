@@ -32,9 +32,6 @@ const AdminOrdMgrPage = lazy(() =>
 const AdminUserInfoMgrPage = lazy(() =>
   import("../components/admin/user/UserInfoMgr")
 );
-const WithdrawalMemberMgrPage = lazy(() =>
-  import("../components/admin/user/WithdrawalMemberMgr")
-);
 
 const Helpcenter = lazy(() => import("../pages/helpcenter/HelpCenterPage"));
 const HelpNoticePage = lazy(() => import("../pages/helpcenter/HelpNoticePage"));
@@ -173,15 +170,6 @@ const root = createBrowserRouter([
     element: (
       <Suspense fallback={Loading}>
         <AdminUserInfoMgrPage />
-      </Suspense>
-    ),
-    children: adminRouter(),
-  },
-  {
-    path: "adminuserwithdrawal",
-    element: (
-      <Suspense fallback={Loading}>
-        <WithdrawalMemberMgrPage />
       </Suspense>
     ),
     children: adminRouter(),
