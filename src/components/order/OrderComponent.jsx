@@ -7,10 +7,8 @@ const OrderComponent = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // ✅ 장바구니에서 전달된 데이터
   const passedItems = location.state?.items || [];
 
-  // ✅ cartItems는 전달된 값이 있으면 그것을 사용
   const [cartItems, setCartItems] = useState(
     passedItems.length > 0
       ? passedItems
@@ -34,12 +32,12 @@ const OrderComponent = () => {
   const [receiver, setReceiver] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
+  const [zipCode, setZipCode] = useState("");
+  const [detailAddress, setDetailAddress] = useState("");
 
-  // ✅ 배송 요청 사항
   const [deliveryMemo, setDeliveryMemo] = useState("");
   const [customDeliveryMemo, setCustomDeliveryMemo] = useState("");
 
-  // ✅ 결제수단
   const paymentMethods = [
     { id: "card", label: "신용/체크카드" },
     { id: "kakao", label: "카카오페이" },
@@ -54,13 +52,11 @@ const OrderComponent = () => {
     (m) => m.id === selectedPayment
   ).label;
 
-  // ✅ 약관 동의
   const [agreeAll, setAgreeAll] = useState(false);
   const [agreePurchase, setAgreePurchase] = useState(false);
   const [agreePersonal, setAgreePersonal] = useState(false);
   const [agreeDelegate, setAgreeDelegate] = useState(false);
 
-  // ✅ 수량 변경
   const increaseQty = (id) => {
     setCartItems((prev) =>
       prev.map((item) =>
@@ -77,23 +73,23 @@ const OrderComponent = () => {
     );
   };
 
-  // ✅ 가격 계산
   const totalPrice = cartItems.reduce(
     (sum, item) => sum + item.salePrice * item.qty,
     0
   );
-  const shippingFee = totalPrice >= 30000 ? 0 : 3000;
+  const shippingFee = totalPrice >= 20000 ? 0 : 2500;
   const couponDiscount = selectedCoupon ? selectedCoupon.amount : 0;
   const finalPrice = totalPrice + shippingFee - couponDiscount;
   const couponName = selectedCoupon ? selectedCoupon.name : null;
 
-  // ✅ 결제 완료 페이지로 이동 + 모든 정보 전달
   const handleOrderCompleteClick = () => {
     navigate("/order/complete", {
       state: {
         items: cartItems,
         receiver,
         address,
+        zipCode,
+        detailAddress,
         phone,
         couponDiscount,
         shippingFee,
@@ -106,29 +102,33 @@ const OrderComponent = () => {
   };
 
   return (
-    <div className="max-w-5xl mx-auto mt-12 text-sm text-[#111111]">
-      <h2 className="text-2xl font-semibold mb-10">주문 / 결제</h2>
+    <div className="max-w-5xl mx-auto mt-12 text-sm text-[#111] space-y-12">
+      <h2 className="text-3xl font-bold tracking-tight mb-6">주문 / 결제</h2>
 
       {/* ✅ 주문 상품 */}
-      <section className="border-t pt-6">
-        <h3 className="font-semibold text-lg mb-4">주문 상품</h3>
+      <section className="bg-white border rounded-lg shadow-sm p-6 space-y-4">
+        <h3 className="font-semibold text-lg">주문 상품</h3>
 
         {cartItems.map((item) => (
           <div
             key={item.id}
-            className="flex justify-between items-center py-4 border-b"
+            className="flex justify-between items-center py-4 border-b last:border-0"
           >
             <div className="flex items-center gap-4">
-              <div className="w-20 h-20 bg-gray-200 rounded-md flex justify-center items-center text-xs text-gray-500">
-                IMG
+              <div className="w-20 h-20 rounded-md overflow-hidden bg-gray-100 flex justify-center items-center">
+                <img
+                  src={item.image}
+                  alt=""
+                  className="object-cover h-full w-full"
+                />
               </div>
-              <div>
+              <div className="space-y-1">
                 <p className="text-xs text-gray-500">{item.brand}</p>
-                <p className="font-semibold">{item.name}</p>
+                <p className="font-medium">{item.name}</p>
                 <p className="line-through text-xs text-gray-400">
                   {item.originalPrice.toLocaleString()}원
                 </p>
-                <p className="font-bold text-[#ff5c00]">
+                <p className="font-semibold text-[#ff5c00]">
                   {item.salePrice.toLocaleString()}원
                 </p>
               </div>
@@ -137,21 +137,21 @@ const OrderComponent = () => {
             <div className="flex flex-col items-end gap-2">
               <div className="flex items-center gap-2">
                 <button
-                  className="w-6 h-6 border border-[#111111] rounded text-xs flex justify-center items-center"
+                  className="w-7 h-7 border border-gray-400 rounded hover:bg-gray-100 transition"
                   onClick={() => decreaseQty(item.id)}
                 >
                   -
                 </button>
                 <span className="w-6 text-center">{item.qty}</span>
                 <button
-                  className="w-6 h-6 border border-[#111111] rounded text-xs flex justify-center items-center"
+                  className="w-7 h-7 border border-gray-400 rounded hover:bg-gray-100 transition"
                   onClick={() => increaseQty(item.id)}
                 >
                   +
                 </button>
               </div>
 
-              <p className="font-semibold whitespace-nowrap">
+              <p className="font-semibold">
                 {(item.salePrice * item.qty).toLocaleString()}원
               </p>
             </div>
@@ -160,27 +160,31 @@ const OrderComponent = () => {
       </section>
 
       {/* ✅ 배송지 */}
-      <section className="mt-10 border-t pt-6">
-        <h3 className="font-semibold text-lg mb-4">배송지 정보</h3>
+      <section className="bg-white border rounded-lg shadow-sm p-6 space-y-4">
+        <h3 className="font-semibold text-lg">배송지 정보</h3>
 
-        <div className="flex gap-3 mb-4">
+        <div className="flex gap-3">
           <button
-            className="px-4 py-2 rounded border border-[#111111] hover:bg-[#111111] hover:text-white transition"
+            className="px-4 py-2 rounded border hover:bg-gray-100 transition"
             onClick={() => {
               setReceiver("홍길동");
               setPhone("010-1234-5678");
+              setZipCode("06236");
               setAddress("서울특별시 강남구 테헤란로 123");
+              setDetailAddress("삼성타워빌딩 10층");
             }}
           >
             기존 배송지 사용
           </button>
 
           <button
-            className="px-4 py-2 rounded border border-[#111111] hover:bg-[#111111] hover:text-white transition"
+            className="px-4 py-2 rounded border hover:bg-gray-100 transition"
             onClick={() => {
               setReceiver("");
               setPhone("");
+              setZipCode("");
               setAddress("");
+              setDetailAddress("");
             }}
           >
             신규 배송지 입력
@@ -188,26 +192,27 @@ const OrderComponent = () => {
         </div>
 
         <input
-          className="border p-2 w-full rounded mb-2"
+          className="border p-2 w-full rounded"
           placeholder="받는 사람"
           value={receiver}
           onChange={(e) => setReceiver(e.target.value)}
         />
         <input
-          className="border p-2 w-full rounded mb-2"
+          className="border p-2 w-full rounded"
           placeholder="연락처 (010-0000-0000)"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
         />
 
-        <div className="flex gap-2 mb-3">
+        <div className="flex gap-2">
           <input
             className="border p-2 flex-1 rounded"
             placeholder="우편번호"
+            value={zipCode}
             readOnly
           />
           <button
-            className="border px-4 py-2 rounded border-[#111111] hover:bg-[#f2f2f2]"
+            className="border px-4 py-2 rounded hover:bg-gray-100 transition"
             onClick={() => setShowAddressModal(true)}
           >
             우편번호 찾기
@@ -215,20 +220,22 @@ const OrderComponent = () => {
         </div>
 
         <input
-          className="border p-2 w-full rounded mb-2"
+          className="border p-2 w-full rounded"
           placeholder="도로명 주소"
           value={address}
           onChange={(e) => setAddress(e.target.value)}
         />
         <input
-          className="border p-2 w-full rounded mb-2"
+          className="border p-2 w-full rounded"
           placeholder="상세주소"
+          value={detailAddress}
+          onChange={(e) => setDetailAddress(e.target.value)}
         />
       </section>
 
       {/* ✅ 배송요청사항 */}
-      <section className="mt-10 border-t pt-6">
-        <h3 className="font-semibold text-lg mb-4">배송 요청사항</h3>
+      <section className="bg-white border rounded-lg shadow-sm p-6 space-y-4">
+        <h3 className="font-semibold text-lg">배송 요청사항</h3>
 
         <select
           className="border p-2 w-full rounded"
@@ -251,7 +258,7 @@ const OrderComponent = () => {
 
         {deliveryMemo === "직접입력" && (
           <input
-            className="border p-2 w-full rounded mt-2"
+            className="border p-2 w-full rounded"
             placeholder="예: 택배함에 넣어주세요"
             value={customDeliveryMemo}
             onChange={(e) => setCustomDeliveryMemo(e.target.value)}
@@ -260,8 +267,8 @@ const OrderComponent = () => {
       </section>
 
       {/* ✅ 쿠폰 */}
-      <section className="mt-10 border-t pt-6">
-        <div className="flex justify-between items-center mb-3">
+      <section className="bg-white border rounded-lg shadow-sm p-6 space-y-3">
+        <div className="flex justify-between items-center">
           <h3 className="font-semibold text-lg">할인 / 쿠폰</h3>
           <button
             className="underline"
@@ -271,9 +278,9 @@ const OrderComponent = () => {
           </button>
         </div>
 
-        <div className="text-gray-500">
+        <div className="text-gray-600">
           {selectedCoupon ? (
-            <span className="font-semibold text-[#111111]">
+            <span className="font-semibold text-[#111]">
               적용된 쿠폰: {couponName} (-{couponDiscount.toLocaleString()}원)
             </span>
           ) : (
@@ -283,18 +290,18 @@ const OrderComponent = () => {
       </section>
 
       {/* ✅ 결제수단 */}
-      <section className="mt-10 border-t pt-6">
-        <h3 className="font-semibold text-lg mb-3">결제수단</h3>
+      <section className="bg-white border rounded-lg shadow-sm p-6 space-y-3">
+        <h3 className="font-semibold text-lg">결제수단</h3>
 
         <div className="grid grid-cols-3 gap-3">
           {paymentMethods.map((m) => (
             <button
               key={m.id}
               onClick={() => setSelectedPayment(m.id)}
-              className={`border px-4 py-3 rounded transition ${
+              className={`border px-4 py-3 rounded transition text-center ${
                 selectedPayment === m.id
-                  ? "bg-[#111111] text-white border-[#111111]"
-                  : "border-[#111111] hover:bg-[#f2f2f2]"
+                  ? "bg-[#111] text-white border-[#111]"
+                  : "hover:bg-gray-100"
               }`}
             >
               {m.label}
@@ -304,10 +311,10 @@ const OrderComponent = () => {
       </section>
 
       {/* ✅ 약관 동의 */}
-      <section className="mt-10 border-t pt-6">
-        <h3 className="font-semibold text-lg mb-4">구매 이용약관 동의</h3>
+      <section className="bg-white border rounded-lg shadow-sm p-6 space-y-3">
+        <h3 className="font-semibold text-lg">구매 이용약관 동의</h3>
 
-        <label className="flex items-center gap-2 mb-3 cursor-pointer">
+        <label className="flex items-center gap-2 cursor-pointer font-medium">
           <input
             type="checkbox"
             checked={agreeAll}
@@ -322,64 +329,62 @@ const OrderComponent = () => {
           모두 동의합니다.
         </label>
 
-        <label className="flex items-center gap-2 mb-2">
+        <label className="flex items-center gap-2 text-gray-700">
           <input
             type="checkbox"
             checked={agreePurchase}
             onChange={(e) => setAgreePurchase(e.target.checked)}
-          />{" "}
+          />
           구매에 동의 (필수)
         </label>
 
-        <label className="flex items-center gap-2 mb-2">
+        <label className="flex items-center gap-2 text-gray-700">
           <input
             type="checkbox"
             checked={agreePersonal}
             onChange={(e) => setAgreePersonal(e.target.checked)}
-          />{" "}
+          />
           개인정보 수집 및 이용 동의 (필수)
         </label>
 
-        <label className="flex items-center gap-2">
+        <label className="flex items-center gap-2 text-gray-700">
           <input
             type="checkbox"
             checked={agreeDelegate}
             onChange={(e) => setAgreeDelegate(e.target.checked)}
-          />{" "}
+          />
           개인정보 취급 위탁 동의 (필수)
         </label>
       </section>
 
       {/* ✅ 결제 요약 */}
-      <section className="mt-12 border-t pt-6 bg-gray-50 p-6 rounded-lg shadow-sm">
-        <div className="flex justify-between py-2">
+      <section className="bg-gray-50 border rounded-lg p-6 shadow-sm space-y-3">
+        <div className="flex justify-between py-1">
           <span>총 상품금액</span>
           <span>{totalPrice.toLocaleString()}원</span>
         </div>
 
-        <div className="flex justify-between py-2">
+        <div className="flex justify-between py-1">
           <span>배송비</span>
           <span>{shippingFee.toLocaleString()}원</span>
         </div>
 
         {selectedCoupon && (
-          <div className="flex justify-between py-2 text-[#ff5c00]">
+          <div className="flex justify-between py-1 text-[#ff5c00] font-medium">
             <span>쿠폰 할인</span>
             <span>- {couponDiscount.toLocaleString()}원</span>
           </div>
         )}
 
-        <div className="flex justify-between py-3 border-t mt-3 text-lg font-bold">
+        <div className="flex justify-between border-t pt-3 text-lg font-bold">
           <span>최종 결제금액</span>
-          <span className="text-[#111111]">
-            {finalPrice.toLocaleString()}원
-          </span>
+          <span>{finalPrice.toLocaleString()}원</span>
         </div>
 
         <button
-          className={`w-full py-3 rounded mt-4 text-lg transition ${
+          className={`w-full py-3 rounded-lg mt-4 text-lg transition ${
             agreePurchase && agreePersonal && agreeDelegate
-              ? "bg-[#111111] text-white hover:bg-black"
+              ? "bg-[#111] text-white hover:bg-black"
               : "bg-gray-300 text-gray-500 cursor-not-allowed"
           }`}
           disabled={!(agreePurchase && agreePersonal && agreeDelegate)}

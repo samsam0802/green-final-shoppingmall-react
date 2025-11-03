@@ -73,8 +73,13 @@ const OrderCompleteComponent = () => {
       <div className="border rounded-lg p-6 mb-8">
         <h3 className="text-lg font-semibold mb-4">배송 정보</h3>
         <p className="text-sm text-gray-700">받는 사람: {order.receiver}</p>
-        <p className="text-sm text-gray-700 mt-1">주소: {order.address}</p>
+        <p className="text-sm text-gray-700 mt-1">
+          주소: {order.zipCode} {order.address} {order.detailAddress}
+        </p>
         <p className="text-sm text-gray-700 mt-1">연락처: {order.phone}</p>
+        <p className="text-sm text-gray-700 mt-1">
+          배송 요청 사항: {order.deliveryMemo}
+        </p>
       </div>
 
       {/* 주문 상품 목록 */}

@@ -7,7 +7,6 @@ const ProductListPage = () => {
   return (
     <>
       <Header />
-      <NavBar />
       <ProductListComponent />
     </>
   );
