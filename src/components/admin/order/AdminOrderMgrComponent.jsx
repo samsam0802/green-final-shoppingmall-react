@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import OrderSearchResultTable from "./OrderSearchResultTable";
 
 const AdminOrderMgrComponent = () => {
-  // 각 체크 상태 관리
   const [preShipStatus, setPreShipStatus] = useState({
     주문접수: false,
     결제확인: false,
@@ -19,18 +18,18 @@ const AdminOrderMgrComponent = () => {
     반품완료: false,
   });
 
-  // 버튼 공통 스타일
-  const btnStyle =
-    "border border-gray-300 bg-white px-3 py-1 text-gray-700 text-sm cursor-pointer";
-
   return (
     <div className="max-w-6xl mx-auto bg-white my-10 text-sm font-['Inter']">
       {/* 헤더 */}
       <h2 className="text-xl font-bold text-gray-800 border-b border-gray-300 px-6 py-4 mb-4 flex justify-between items-center">
         전체 주문 조회
         <div className="space-x-2">
-          <button className={btnStyle}>엑셀 다운로드</button>
-          <button className={btnStyle}>프린트 설정</button>
+          <button className="border border-gray-300 bg-white px-3 py-1 text-gray-700 text-sm cursor-pointer">
+            엑셀 다운로드
+          </button>
+          <button className="border border-gray-300 bg-white px-3 py-1 text-gray-700 text-sm cursor-pointer">
+            프린트 설정
+          </button>
         </div>
       </h2>
 

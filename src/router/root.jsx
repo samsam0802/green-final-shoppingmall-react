@@ -15,7 +15,7 @@ const ReviewPage = lazy(() =>
   import("../components/review/ReviewListComponent")
 );
 const ReviewAddPage = lazy(() =>
-  import("../components/review/ReviewActionsComponent")
+  import("../components/review/ReviewAddComponent")
 );
 
 const ProductList = lazy(() => import("../pages/product/ProductListPage"));
