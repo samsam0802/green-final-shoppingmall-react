@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import products from "../../data/products";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
@@ -13,60 +13,94 @@ export default function ProductDetailComponent() {
   const product = products.find((p) => p.id === Number(id));
   const navigate = useNavigate();
 
-  const [tab, setTab] = useState("info"); // info | buy | review | qna
   const [liked, setLiked] = useState(false);
-  const [quantity, setQuantity] = useState(1);
-  const [selectedImage, setSelectedImage] = useState(product.image);
-  const [showShippingModal, setShowShippingModal] = useState(false);
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [openOptionList, setOpenOptionList] = useState(false);
+  const [selectedItems, setSelectedItems] = useState([]);
 
-  const totalPrice = product.discountPrice * quantity;
+  // ✅ 탭 상태
+  const [tab, setTab] = useState("info"); // info | buy | review | qna
 
-  // ✅ 섹션 위치 참조
-  const infoRef = useRef(null);
-  const buyRef = useRef(null);
-  const reviewRef = useRef(null);
-  const qnaRef = useRef(null);
+  const options = [
+    { id: 1, label: "19C 라이트" },
+    { id: 2, label: "19N 포슬린" },
+    { id: 3, label: "21C 라떼리" },
+    { id: 4, label: "21N 린넨" },
+    { id: 5, label: "23N 진저" },
+  ];
 
-  const scrollTo = (ref) => {
-    window.scrollTo({
-      top: ref.current.offsetTop - 80,
-      behavior: "smooth",
+  const handleSelectOption = (op) => {
+    setSelectedOption(op.label);
+    setOpenOptionList(false);
+
+    const exists = selectedItems.find((item) => item.label === op.label);
+    if (exists) {
+      setSelectedItems((prev) =>
+        prev.map((i) => (i.label === op.label ? { ...i, qty: i.qty + 1 } : i))
+      );
+    } else {
+      setSelectedItems((prev) => [
+        ...prev,
+        {
+          id: op.id,
+          label: op.label,
+          qty: 1,
+          price: product.discountPrice,
+        },
+      ]);
+    }
+  };
+
+  const changeQty = (label, delta) => {
+    setSelectedItems((prev) =>
+      prev
+        .map((i) =>
+          i.label === label ? { ...i, qty: Math.max(1, i.qty + delta) } : i
+        )
+        .filter((i) => i.qty > 0)
+    );
+  };
+
+  const totalPrice = selectedItems.reduce(
+    (sum, item) => sum + item.price * item.qty,
+    0
+  );
+
+  const handleClickOrder = () => {
+    if (selectedItems.length === 0) return alert("옵션을 선택해주세요.");
+
+    navigate("/order", {
+      state: {
+        items: selectedItems.map((i) => ({
+          id: product.id,
+          name: product.name + " - " + i.label,
+          brand: product.brand,
+          originalPrice: product.originalPrice,
+          salePrice: product.discountPrice,
+          qty: i.qty,
+          image: product.image,
+        })),
+      },
     });
   };
 
-  const handleClickOrder = () => {
-    navigate({pathname:"/order"})
-  }
-
   return (
-    <div className="max-w-7xl mx-auto px-8 mt-12 pb-32">
-
-      {/* ====== 경로 표시 ====== */}
+    <div className="max-w-7xl mx-auto px-8 mt-12 pb-32 text-[#111111]">
+      {/* 경로 */}
       <div className="text-sm text-gray-500 mb-6 flex gap-2">
-        <Link to="/" className="hover:underline">홈</Link> /
-        <span>{product.categoryMain}</span> /
-        <span>{product.categorySub}</span>
+        <Link to="/" className="hover:underline">
+          홈
+        </Link>{" "}
+        /<span>{product.categoryMain}</span> /<span>{product.categorySub}</span>
       </div>
 
-      {/* ====== 상품 요약 영역 ====== */}
+      {/* 상품 상단영역 */}
       <div className="grid grid-cols-2 gap-12 mb-16">
         <div>
           <img
-            src={selectedImage}
+            src={product.image}
             className="w-full h-[480px] object-cover rounded-lg border"
           />
-          <div className="flex gap-3 mt-4">
-            {[product.image, ...(product.images || [])].map((img, idx) => (
-              <img
-                key={idx}
-                src={img}
-                className={`w-20 h-20 object-cover rounded-md cursor-pointer border ${
-                  selectedImage === img ? "border-black" : "border-gray-300"
-                }`}
-                onClick={() => setSelectedImage(img)}
-              />
-            ))}
-          </div>
         </div>
 
         <div className="space-y-5">
@@ -74,79 +108,155 @@ export default function ProductDetailComponent() {
           <h1 className="text-2xl font-bold">{product.name}</h1>
 
           <div>
-            <p className="text-gray-400 line-through">
+            <p className="line-through text-gray-400">
               {product.originalPrice.toLocaleString()}원
             </p>
-            <p className="text-3xl font-bold text-red-500">
+            <p className="text-3xl font-bold text-[#111111]">
               {product.discountPrice.toLocaleString()}원
-              <span className="text-blue-500 text-lg ml-2">
+              <span className="text-[#ff5c00] text-lg ml-2">
                 {product.discountRate}%↓
               </span>
             </p>
           </div>
 
-          <button
-            className="text-sm text-gray-600 underline"
-            onClick={() => setShowShippingModal(true)}
-          >
-            배송비 안내
-          </button>
+          {/* 옵션 선택 */}
+          <div className="border rounded-md">
+            <button
+              onClick={() => setOpenOptionList(!openOptionList)}
+              className="w-full text-left px-4 py-3 flex justify-between"
+            >
+              {selectedOption || "옵션을 선택해주세요"}
+              <span>▾</span>
+            </button>
 
-          <div className="flex items-center gap-3">
-            <button onClick={() => quantity > 1 && setQuantity(quantity - 1)} className="border px-3 py-1 rounded">-</button>
-            <span className="text-lg font-semibold">{quantity}</span>
-            <button onClick={() => setQuantity(quantity + 1)} className="border px-3 py-1 rounded">+</button>
+            {openOptionList && (
+              <div className="border-t max-h-48 overflow-y-auto">
+                {options.map((op) => (
+                  <button
+                    key={op.id}
+                    className="w-full text-left px-4 py-3 hover:bg-gray-100 flex gap-3 items-center"
+                    onClick={() => handleSelectOption(op)}
+                  >
+                    <span className="w-4 h-4 bg-[#e8d8c8] rounded-full" />
+                    {op.label}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
-          <div className="text-lg font-semibold">
-            총 상품금액:{" "}
-            <span className="text-red-500 text-2xl">{totalPrice.toLocaleString()}원</span>
+          {/* 선택된 구매 목록 */}
+          {selectedItems.length > 0 && (
+            <div className="mt-4 border rounded-md p-4 space-y-3 bg-gray-50">
+              {selectedItems.map((item) => (
+                <div
+                  key={item.label}
+                  className="flex justify-between items-center"
+                >
+                  <span>{item.label}</span>
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => changeQty(item.label, -1)}
+                      className="border rounded px-2 text-sm"
+                    >
+                      -
+                    </button>
+                    <span>{item.qty}</span>
+                    <button
+                      onClick={() => changeQty(item.label, +1)}
+                      className="border rounded px-2 text-sm"
+                    >
+                      +
+                    </button>
+                    <span className="font-semibold ml-4">
+                      {(item.price * item.qty).toLocaleString()}원
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* 총 금액 */}
+          <div className="text-lg font-semibold pt-2">
+            총 금액:{" "}
+            <span className="text-[#111111] text-2xl">
+              {totalPrice.toLocaleString()}원
+            </span>
           </div>
 
-          <div className="flex gap-3 pt-2">
-            <button className="flex-1 border py-3 rounded-md hover:bg-gray-100" onClick={()=>alert("장바구니에 담겼어요")}>장바구니</button>
-            <button className="flex-1 py-3 rounded-md text-white bg-red-500" onClick={handleClickOrder}>바로구매</button>
-            <button onClick={() => setLiked(!liked)} className="text-3xl ml-2">
-              {liked ? <AiFillHeart className="text-red-500" /> : <AiOutlineHeart className="text-gray-400" />}
+          {/* 버튼 */}
+          <div className="flex gap-3 pt-4">
+            <button className="flex-1 py-3 rounded-md border border-[#111111] text-[#111111] hover:bg-gray-100">
+              장바구니
+            </button>
+            <button
+              className="flex-1 py-3 rounded-md bg-[#111111] text-white hover:bg-black"
+              onClick={handleClickOrder}
+            >
+              바로구매
+            </button>
+
+            <button onClick={() => setLiked(!liked)} className="text-3xl">
+              {liked ? (
+                <AiFillHeart className="text-[#ff5c00]" />
+              ) : (
+                <AiOutlineHeart className="text-gray-400" />
+              )}
             </button>
           </div>
         </div>
       </div>
 
-      {/* ==== 탭 메뉴 ==== */}
-      <div className="sticky top-0 bg-white z-10 border-b flex gap-10 text-lg font-semibold py-3 mt-10">
-        <button className={tab === "info" ? "text-black border-b-2" : "text-gray-500"} onClick={() => setTab("info")}>상품설명</button>
-        <button className={tab === "buy" ? "text-black border-b-2" : "text-gray-500"} onClick={() => setTab("buy")}>구매정보</button>
-        <button className={tab === "review" ? "text-black border-b-2" : "text-gray-500"} onClick={() => setTab("review")}>리뷰</button>
-        <button className={tab === "qna" ? "text-black border-b-2" : "text-gray-500"} onClick={() => setTab("qna")}>Q&A</button>
+      {/* ✅ 탭 메뉴 (상태로 화면 전환) */}
+      <div className="border-b flex gap-10 text-lg font-semibold py-3">
+        <button
+          onClick={() => setTab("info")}
+          className={
+            tab === "info"
+              ? "text-[#111111] border-b-2 border-[#111111]"
+              : "text-gray-400"
+          }
+        >
+          상품설명
+        </button>
+        <button
+          onClick={() => setTab("buy")}
+          className={
+            tab === "buy"
+              ? "text-[#111111] border-b-2 border-[#111111]"
+              : "text-gray-400"
+          }
+        >
+          구매정보
+        </button>
+        <button
+          onClick={() => setTab("review")}
+          className={
+            tab === "review"
+              ? "text-[#111111] border-b-2 border-[#111111]"
+              : "text-gray-400"
+          }
+        >
+          리뷰
+        </button>
+        <button
+          onClick={() => setTab("qna")}
+          className={
+            tab === "qna"
+              ? "text-[#111111] border-b-2 border-[#111111]"
+              : "text-gray-400"
+          }
+        >
+          Q&A
+        </button>
       </div>
 
-      {/* ==== 탭 콘텐츠 영역 ==== */}
+      {/* ✅ 탭 컨텐츠 */}
       {tab === "info" && <ProductDetailInfo />}
-      {tab === "buy" && <ProductDetailBuy />}
+      {tab === "buy" && <ProductDetailBuy product={product} />}
       {tab === "review" && <ProductDetailReview />}
       {tab === "qna" && <ProductDetailQnA />}
-
-
-      {/* ===== 배송비 안내 모달 ===== */}
-      {showShippingModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-          <div className="bg-white p-6 rounded-lg w-96 shadow-xl">
-            <h3 className="font-bold text-lg mb-3">배송비 안내</h3>
-            <ul className="text-sm text-gray-700 space-y-2">
-              <li>기본 배송비: 2,500원</li>
-              <li>도서산간: +2,500원</li>
-              <li>제주지역: +2,500원</li>
-              <li>제주도서산간: +7,000원</li>
-            </ul>
-            <button className="mt-5 w-full py-2 border rounded-md hover:bg-gray-100"
-              onClick={() => setShowShippingModal(false)}
-            >
-              확인
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

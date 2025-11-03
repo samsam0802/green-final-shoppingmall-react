@@ -11,9 +11,11 @@ const ProductCard = ({ product }) => {
   };
 
   return (
-    <div className="border rounded-xl shadow hover:shadow-lg transition p-4 relative group cursor-pointer">
-      
-      {/* 찜하기 버튼 (우측 하단) */}
+    <div
+      className="border border-[#e5e5e5] rounded-lg hover:shadow-md transition cursor-pointer p-4 relative bg-white"
+      onClick={handleClickDetail}
+    >
+      {/* 찜 버튼 */}
       <button
         onClick={(e) => {
           e.stopPropagation();
@@ -21,33 +23,44 @@ const ProductCard = ({ product }) => {
         }}
         className="absolute bottom-3 right-3 text-2xl hover:scale-110 transition"
       >
-        {liked ? <AiFillHeart className="text-red-500" /> : <AiOutlineHeart className="text-gray-400" />}
+        {liked ? (
+          <AiFillHeart className="text-[#ff5c00]" />
+        ) : (
+          <AiOutlineHeart className="text-gray-400" />
+        )}
       </button>
 
-      <div onClick={handleClickDetail}>
-        <img
-          src={product.image}
-          alt={product.name}
-          className="w-full h-48 object-cover rounded-md mb-3 bg-gray-100"
-        />
+      {/* 상품 이미지 */}
+      <img
+        src={product.image}
+        alt={product.name}
+        className="w-full h-48 object-cover rounded-md mb-3 bg-gray-100"
+      />
 
-        <h2 className="text-sm text-gray-700">{product.brand}</h2>
-        <h3 className="text-base font-semibold mt-1 line-clamp-2">{product.name}</h3>
+      {/* 브랜드 */}
+      <h2 className="text-sm text-gray-500">{product.brand}</h2>
 
-        <div className="mt-2">
-          {product.originalPrice && (
-            <p className="text-sm line-through text-gray-400">
-              {product.originalPrice.toLocaleString()}원
-            </p>
-          )}
+      {/* 상품명 */}
+      <h3 className="text-base font-semibold mt-1 line-clamp-2 text-[#111111]">
+        {product.name}
+      </h3>
 
-          <p className="text-lg font-bold text-red-500 flex items-center gap-2">
-            {product.discountPrice.toLocaleString()}원
-            {product.discountRate > 0 && (
-              <span className="text-sm text-blue-500">{product.discountRate}%↓</span>
-            )}
+      {/* 가격 영역 */}
+      <div className="mt-2">
+        {product.originalPrice && (
+          <p className="text-sm line-through text-gray-400">
+            {product.originalPrice.toLocaleString()}원
           </p>
-        </div>
+        )}
+
+        <p className="text-lg font-bold text-[#111111] flex items-center gap-2">
+          {product.discountPrice.toLocaleString()}원
+          {product.discountRate > 0 && (
+            <span className="text-sm text-[#ff5c00]">
+              {product.discountRate}%↓
+            </span>
+          )}
+        </p>
       </div>
     </div>
   );

@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import products from "../../data/products";
 import ProductCard from "../../components/product/ProductCard";
-import ProductSortBar from "./ProductSortBar"
-import ProductFilterBar from "../filter/ProductFilterBar"
+import ProductSortBar from "./ProductSortBar";
+import ProductFilterBar from "../filter/ProductFilterBar";
 import Pagination from "./Pagination";
 
 const ProductListComponent = () => {
@@ -26,18 +26,17 @@ const ProductListComponent = () => {
     return true;
   });
 
-  // ✅ 정렬 적용
   filteredProducts = [...filteredProducts].sort((a, b) => {
     switch (sort) {
       case "낮은 가격순":
         return a.price - b.price;
       case "할인율순":
         return (
-          ((b.originalPrice - b.price) / b.originalPrice) -
-          ((a.originalPrice - a.price) / a.originalPrice)
+          (b.originalPrice - b.price) / b.originalPrice -
+          (a.originalPrice - a.price) / a.originalPrice
         );
       default:
-        return 0; // API 연동 시 인기/판매/신상품 정렬 변경 예정
+        return 0;
     }
   });
 
@@ -48,21 +47,35 @@ const ProductListComponent = () => {
   );
 
   return (
-    <div className="max-w-6xl mx-auto p-8">
+    <div className="max-w-6xl mx-auto p-8 text-[#111111]">
       <h1 className="text-2xl font-bold mb-6">
         {main} &gt; {decodedSub}
       </h1>
 
-      <ProductFilterBar filters={filters} setFilters={setFilters} brandOptions={brandOptions} />
+      <ProductFilterBar
+        filters={filters}
+        setFilters={setFilters}
+        brandOptions={brandOptions}
+      />
       <ProductSortBar sort={sort} setSort={setSort} />
 
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
+      {/* ✅ 카드 간격 & radius 개선 */}
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-6">
         {pagedProducts.map((product) => (
-          <ProductCard key={product.id} product={product} />
+          <div
+            key={product.id}
+            className="rounded-lg overflow-hidden hover:shadow-md transition"
+          >
+            <ProductCard product={product} />
+          </div>
         ))}
       </div>
 
-      <Pagination currentPage={currentPage} totalPages={totalPages} setCurrentPage={setCurrentPage} />
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        setCurrentPage={setCurrentPage}
+      />
     </div>
   );
 };
