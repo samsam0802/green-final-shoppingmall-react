@@ -1,8 +1,6 @@
-// import { useState } from "react";
 import WithdrawalMemberResultTable from "./WithdrawalMemberResultTable";
 
 const WithdrawalMemberMgr = () => {
-  // const [activeTab, setActiveTab] = useState("list");
   const dateOptions = ["오늘", "1주", "15일", "1개월", "3개월", "6개월"];
 
   return (
@@ -12,7 +10,7 @@ const WithdrawalMemberMgr = () => {
         <span>탈퇴회원리스트</span>
       </div>
 
-      {/* 탭 버튼 (밑줄 완전 표시되도록 수정) */}
+      {/* 탭 버튼 */}
       <div className="flex border-b border-gray-300 px-6 bg-gray-50">
         <button className="px-4 py-2 text-sm font-medium text-gray-800 bg-gray-50 cursor-default">
           탈퇴회원리스트
@@ -55,7 +53,7 @@ const WithdrawalMemberMgr = () => {
                 {dateOptions.map((label) => (
                   <button
                     key={label}
-                    className="bg-white text-gray-700 px-3 py-1 border border-gray-300 text-xs"
+                    className="bg-white text-gray-700 px-3 py-1 border border-gray-300 text-xs rounded-sm cursor-pointer"
                   >
                     {label}
                   </button>
@@ -65,12 +63,12 @@ const WithdrawalMemberMgr = () => {
           </div>
         </div>
 
-        {/* 버튼 */}
+        {/* 검색 / 초기화 버튼 */}
         <div className="flex justify-center gap-4 mb-8">
-          <button className="bg-green-500 text-white px-5 py-2 font-bold">
+          <button className="px-5 py-2 font-bold bg-green-500 text-white cursor-pointer">
             검색
           </button>
-          <button className="bg-gray-200 text-gray-700 px-5 py-2 font-bold">
+          <button className="px-5 py-2 font-bold bg-gray-200 text-gray-700 cursor-pointer">
             초기화
           </button>
         </div>

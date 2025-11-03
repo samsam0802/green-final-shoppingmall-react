@@ -172,7 +172,7 @@ const root = createBrowserRouter([
     children: adminRouter(),
   },
   {
-    path: "adminusersecession",
+    path: "adminuserwithdrawal",
     element: (
       <Suspense fallback={Loading}>
         <WithdrawalMemberMgrPage />
