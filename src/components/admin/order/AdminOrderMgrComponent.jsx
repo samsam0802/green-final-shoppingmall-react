@@ -119,7 +119,7 @@ const AdminOrderMgrComponent = () => {
             ))}
 
             {/* 전체 체크 */}
-            <label className="ml-3 flex items-center select-none cursor-pointer font-semibold text-blue-600">
+            <label className="ml-3 flex items-center select-none cursor-pointer">
               <input
                 type="checkbox"
                 className="w-3.5 h-3.5 mr-1 border border-gray-400"
@@ -167,7 +167,7 @@ const AdminOrderMgrComponent = () => {
             ))}
 
             {/* 전체 체크 */}
-            <label className="ml-3 flex items-center select-none cursor-pointer font-semibold text-blue-600">
+            <label className="ml-3 flex items-center select-none cursor-pointer">
               <input
                 type="checkbox"
                 className="w-3.5 h-3.5 mr-1 border border-gray-400"

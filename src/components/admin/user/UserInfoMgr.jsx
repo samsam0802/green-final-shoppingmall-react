@@ -22,6 +22,13 @@ const UserInfoMgr = () => {
     전체: false,
   });
 
+  const [memberStatus, setMemberStatus] = useState({
+    정상: false,
+    탈퇴: false,
+    휴먼: false,
+    전체: false,
+  });
+
   return (
     <div className="max-w-6xl mx-auto bg-white shadow-md my-10 text-sm font-['Inter']">
       {/* 헤더 */}
@@ -220,6 +227,46 @@ const UserInfoMgr = () => {
                       const newState = { ...email, [label]: e.target.checked };
                       newState.전체 = newState.동의 && newState.거부;
                       setEmail(newState);
+                    }
+                  }}
+                />
+                {label}
+              </label>
+            ))}
+          </div>
+        </div>
+
+        {/* 회원 상태 선택 */}
+        <div className="flex border-b border-gray-300 items-stretch">
+          <div className="w-40 bg-gray-50 border-r border-gray-300 text-gray-700 font-semibold flex items-center justify-center">
+            회원 상태
+          </div>
+          <div className="flex items-center flex-grow p-2 gap-4">
+            {Object.keys(memberStatus).map((label) => (
+              <label
+                key={label}
+                className="flex items-center gap-1 text-gray-700 select-none cursor-pointer"
+              >
+                <input
+                  type="checkbox"
+                  className="w-3.5 h-3.5 accent-blue-600"
+                  checked={memberStatus[label]}
+                  onChange={(e) => {
+                    if (label === "전체") {
+                      setMemberStatus({
+                        정상: e.target.checked,
+                        탈퇴: e.target.checked,
+                        휴먼: e.target.checked,
+                        전체: e.target.checked,
+                      });
+                    } else {
+                      const newState = {
+                        ...memberStatus,
+                        [label]: e.target.checked,
+                      };
+                      newState.전체 =
+                        newState.정상 && newState.탈퇴 && newState.휴면;
+                      setMemberStatus(newState);
                     }
                   }}
                 />

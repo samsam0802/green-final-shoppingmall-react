@@ -9,6 +9,7 @@ const UserInfoResultTable = () => {
     "이메일/핸드폰",
     "등급",
     "가입일",
+    "관리", // 새로 추가
   ];
 
   const dummyData = [
@@ -20,6 +21,7 @@ const UserInfoResultTable = () => {
       phone: "010-0000-0001",
       grade: "일반",
       joinDate: "2025-10-30",
+      status: "정상",
     },
     {
       id: 2,
@@ -29,6 +31,7 @@ const UserInfoResultTable = () => {
       phone: "010-0000-0002",
       grade: "매니저",
       joinDate: "2025-10-29",
+      status: "휴면",
     },
     {
       id: 3,
@@ -38,6 +41,7 @@ const UserInfoResultTable = () => {
       phone: "010-0000-0003",
       grade: "관리자",
       joinDate: "2025-10-28",
+      status: "탈퇴",
     },
   ];
 
@@ -98,7 +102,7 @@ const UserInfoResultTable = () => {
 
                   {/* 번호 */}
                   <td
-                    className={`py-[6px] px-2 border-r border-gray-300 text-gray-700 ${
+                    className={`py-[6px] px-2 w-[45px] border-r border-gray-300 text-gray-700 ${
                       notLast && "border-b border-gray-300"
                     }`}
                   >
@@ -107,7 +111,7 @@ const UserInfoResultTable = () => {
 
                   {/* 아이디 */}
                   <td
-                    className={`py-[6px] px-2 border-r border-gray-300 text-gray-700 ${
+                    className={`py-[6px] px-4 border-r border-gray-300 text-gray-700 ${
                       notLast && "border-b border-gray-300"
                     }`}
                   >
@@ -125,7 +129,7 @@ const UserInfoResultTable = () => {
 
                   {/* 이메일 / 핸드폰 */}
                   <td
-                    className={`py-[6px] px-2 border-r border-gray-300 text-gray-700 ${
+                    className={`py-[6px] px-0.5 border-r border-gray-300 text-gray-700 ${
                       notLast && "border-b border-gray-300"
                     }`}
                   >
@@ -134,7 +138,7 @@ const UserInfoResultTable = () => {
 
                   {/* 등급 */}
                   <td
-                    className={`py-[6px] px-2 border-r border-gray-300 ${
+                    className={`py-[6px] px-0.5 border-r border-gray-300 ${
                       notLast && "border-b border-gray-300"
                     }`}
                   >
@@ -152,11 +156,30 @@ const UserInfoResultTable = () => {
 
                   {/* 가입일 */}
                   <td
-                    className={`py-[6px] px-2 text-gray-700 ${
+                    className={`py-[6px] px-2 text-gray-700 border-r border-gray-300 ${
                       notLast && "border-b border-gray-300"
                     }`}
                   >
                     {user.joinDate}
+                  </td>
+
+                  {/* 관리 */}
+                  <td
+                    className={`py-[6px] px-0.5 text-gray-700 border-l border-gray-300 ${
+                      notLast && "border-b border-gray-300"
+                    }`}
+                  >
+                    <div className="flex items-center justify-center gap-1 whitespace-nowrap">
+                      <span>{user.status}</span>
+                      {user.status === "탈퇴" && (
+                        <>
+                          <span>/</span>
+                          <button className="text-blue-600 text-sm px-0.5 py-[1px] cursor-pointer">
+                            복구하기
+                          </button>
+                        </>
+                      )}
+                    </div>
                   </td>
                 </tr>
               );
