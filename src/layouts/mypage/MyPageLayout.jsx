@@ -28,8 +28,9 @@ const menuGroups = [
   {
     title: "나의 게시글",
     items: [
-      { to: "/mypage/inquiries", label: "내 문의내역" },
-      //   { to: "/mypage/reviews", label: "상품후기" },
+      { to: "/mypage/inquiries", label: "1:1 문의내역" },
+      { to: "/mypage/productqna", label: "상품 문의내역" },
+      { to: "/mypage/reviews", label: "나의 리뷰내역" },
       { to: "/helpcenter", label: "고객 센터" },
     ],
   },

@@ -6,7 +6,6 @@ export default function MainPage() {
   return (
     <div className="flex flex-col min-h-screen bg-white">
       <Header />
-      <NavBar />
 
       <main className="flex-1">
         <section className="relative h-[420px] bg-gray-100">
@@ -36,7 +35,7 @@ export default function MainPage() {
       </main>
 
       <footer className="bg-gray-100 text-center text-gray-600 py-5 mt-auto">
-        © 2025 신소라와 세남자 — 사이트 푸터(미정)
+        © 2025 SKPL — Skin Korea Pure Lab (미정)
       </footer>
     </div>
   );

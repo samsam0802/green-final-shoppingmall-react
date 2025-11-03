@@ -1,67 +1,77 @@
 // src/components/mypage/InquiriesList.jsx
 import React from "react";
 
-export default function InquiriesList() {
+export default function MyPageReviewList() {
   const items = [
     {
       id: 1,
-      title: "[회원] 휴대폰 번호 변경하고 싶어요.",
+      title: "[만족] 생각보다 퀄리티 좋아요",
       date: "2025-11-03",
-      status: "답변대기",
+      status: "노출중",
+      nickname: "mint***",
     },
     {
       id: 2,
-      title: "[배송] 배송지 주소를 잘못 입력했어요. 수정 가능할까요?",
+      title: "[사이즈] 170/63 기준 M 딱 맞아요",
       date: "2025-11-02",
-      status: "답변대기",
+      status: "노출중",
+      nickname: "green_cat",
     },
     {
       id: 3,
-      title: "[결제] 현금영수증 다시 발급 받을 수 있나요?",
+      title: "[색상] 화면이랑 거의 똑같아요",
       date: "2025-11-02",
-      status: "답변완료",
+      status: "노출중",
+      nickname: "sora_92",
     },
     {
       id: 4,
-      title: "[쿠폰] 장바구니 쿠폰이 결제창에서 안 보여요.",
+      title: "[배송] 하루만에 왔어요 감사합니다",
       date: "2025-11-01",
-      status: "답변완료",
+      status: "노출중",
+      nickname: "dev_jm",
     },
     {
       id: 5,
-      title: "[환불] 부분환불 진행 상황 확인하고 싶어요.",
+      title: "[불만] 포장이 살짝 찌그러져서 왔네요",
       date: "2025-11-01",
-      status: "답변완료",
+      status: "관리자답변",
+      nickname: "happy_boy",
     },
     {
       id: 6,
-      title: "[교환] 배송 전인데 색상 변경 가능할까요?",
+      title: "[재구매] 지난번에 사보고 또 샀어요",
       date: "2025-10-31",
-      status: "답변완료",
+      status: "노출중",
+      nickname: "okmall_user",
     },
     {
       id: 7,
-      title: "[포인트] 적립금 유효기간이 언제까지인가요?",
+      title: "[착용감] 무게감 없고 하루종일 편했어요",
       date: "2025-10-31",
-      status: "답변완료",
+      status: "노출중",
+      nickname: "sunnyday",
     },
     {
       id: 8,
-      title: "[이벤트] 인스타그램 이벤트 당첨자 공지 언제인가요?",
+      title: "[구성품] 사은품까지 다 왔습니다",
       date: "2025-10-30",
-      status: "답변완료",
+      status: "노출중",
+      nickname: "raccoon",
     },
     {
       id: 9,
-      title: "[회원] 탈퇴 후 재가입하면 쿠폰 다시 받을 수 있나요?",
+      title: "[가격대비] 이 정도면 가성비 괜찮아요",
       date: "2025-10-29",
-      status: "답변완료",
+      status: "노출중",
+      nickname: "zero_one",
     },
     {
       id: 10,
-      title: "[기타] 기업/단체 대량구매 문의드립니다.",
+      title: "[기타] 포토리뷰는 나중에 올릴게요",
       date: "2025-10-28",
-      status: "답변대기",
+      status: "임시저장",
+      nickname: "pm_jm",
     },
   ];
 

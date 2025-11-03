@@ -23,6 +23,8 @@ const MyPageWithdrawPage = lazy(() =>
 const OrderHistory = lazy(() =>
   import("../pages/mypage/MyPageOrderHistoryPage")
 );
+const MyProductPageQnA = lazy(() => import("../pages/mypage/MyProductQnA"));
+const MyPageReviewPage = lazy(() => import("../pages/mypage/MyPageReviewPage"));
 
 const mypageRouter = () => {
   return [
@@ -87,6 +89,22 @@ const mypageRouter = () => {
       element: (
         <Suspense fallback={Loading}>
           <OrderHistory />
+        </Suspense>
+      ),
+    },
+    {
+      path: "productqna",
+      element: (
+        <Suspense fallback={Loading}>
+          <MyProductPageQnA />
+        </Suspense>
+      ),
+    },
+    {
+      path: "reviews",
+      element: (
+        <Suspense fallback={Loading}>
+          <MyPageReviewPage />
         </Suspense>
       ),
     },

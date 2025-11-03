@@ -1,76 +1,130 @@
-// src/components/common/Header.jsx (예시)
-import React from "react";
+// src/components/common/Header.jsx
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import NavBar from "../../layouts/mainpage/NavBar";
 
 export default function Header() {
   const navigate = useNavigate();
 
-  const loginHandleClick = () => {
-    navigate("/loginpage");
-  };
+  const notices = [
+    "[WELCOME] 공지/이벤트(미정)",
+    "11월 신규가입 3,000P 지급 예정",
+    "배송지연 지역 안내 (서울/경기 일부)",
+  ];
+  const [current, setCurrent] = useState(0);
 
-  const joinHandleClick = () => {
-    navigate("/joinpage");
-  };
-
-  // ✅ 마이페이지로 이동
-  const mypageHandleClick = () => {
-    navigate("/mypage");
-  };
-
-  const cartHandleClick = () => {
-    navigate("/cart");
-  };
+  useEffect(() => {
+    const timer = setInterval(
+      () => setCurrent((prev) => (prev + 1) % notices.length),
+      3500
+    );
+    return () => clearInterval(timer);
+  }, [notices.length]);
 
   return (
-    <header className="bg-white border-b">
-      {/* 상단 안내 라인 */}
-      <div className="bg-gray-100 text-center text-xs text-gray-700 py-1 border-b border-gray-200">
-        [WELCOME] 공지/이벤트(미정)
-      </div>
-
-      {/* 메인 헤더 */}
-      <div className="max-w-7xl mx-auto px-8 flex justify-between items-center h-20">
-        {/* 왼쪽 비워둔 자리 */}
-        <div />
-
-        {/* 가운데 로고/타이틀 */}
-        <div className="text-center leading-tight">
-          <h1 className="text-3xl font-extrabold">
-            <span className="text-black">신소라와</span>
-            <span className="text-gray-700"> 세남자</span>
-          </h1>
-          <p className="text-[11px] text-gray-400 mt-0.5">사이트 부제(미정)</p>
-        </div>
-
-        {/* 오른쪽 액션 버튼들 */}
-        <div className="text-sm text-gray-500 flex items-center gap-4">
-          <button
-            className="cursor-pointer opacity-60 hover:opacity-100 transition"
-            onClick={loginHandleClick}
-          >
-            LOGIN
-          </button>
-          <button
-            className="cursor-pointer opacity-60 hover:opacity-100 transition"
-            onClick={joinHandleClick}
-          >
-            JOIN
-          </button>
-          <button
-            className="cursor-pointer opacity-60 hover:opacity-100 transition"
-            onClick={mypageHandleClick}
-          >
-            MYPAGE
-          </button>
-          <button
-            className="cursor-pointer opacity-60 hover:opacity-100 transition"
-            onClick={cartHandleClick}
-          >
-            CART
-          </button>
+    <header className="w-full bg-white">
+      {/* 1) 공지 바 */}
+      <div className="w-full h-9 border-b border-gray-200 flex items-center">
+        <div className="max-w-7xl mx-auto w-full px-6 flex items-center justify-center">
+          <div className="flex items-center gap-2 notice-slide">
+            <span className="w-2 h-2 rounded-full bg-[#b6423a] notice-blink" />
+            <p className="text-xs text-gray-600 tracking-tight">
+              {notices[current]}
+            </p>
+          </div>
         </div>
       </div>
+
+      {/* 2) 브랜드 헤더 (CLUB CLIO 스타일) */}
+      <div className="w-full bg-[#6f6a6a] shadow-[0_1px_0_rgba(0,0,0,0.3)]">
+        <div className="max-w-7xl mx-auto px-6 py-5 lg:py-6 relative flex items-center justify-center">
+          {/* 가운데 로고 */}
+          <div className="text-center leading-tight">
+            <h1 className="text-white text-[30px] tracking-[0.32em] font-semibold">
+              SKPL
+            </h1>
+            <p className="text-[12px] text-white/75 mt-1 tracking-[0.08em]">
+              Skin Korea Pure Lab
+            </p>
+          </div>
+
+          {/* 오른쪽 유틸 + 2차 메뉴 */}
+          <div className="absolute right-6 top-1/2 -translate-y-1/2 flex flex-col items-end gap-2">
+            {/* 위쪽: 로그인/회원가입/장바구니/... */}
+            <div className="flex items-center gap-3 text-[12px] text-white/82">
+              {/* 검색 아이콘은 여기에 */}
+              <button className="w-8 h-8 rounded-full border border-white/35 flex items-center justify-center hover:bg-white/10 transition-colors">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-4 h-4"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.7"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <circle cx="11" cy="11" r="5" />
+                  <line x1="16.5" y1="16.5" x2="21" y2="21" />
+                </svg>
+              </button>
+
+              <button
+                onClick={() => navigate("/loginpage")}
+                className="hover:text-white transition-colors"
+              >
+                로그인
+              </button>
+              <span className="text-white/30">|</span>
+              <button
+                onClick={() => navigate("/joinpage")}
+                className="hover:text-white transition-colors"
+              >
+                회원가입
+              </button>
+              <span className="text-white/30">|</span>
+              <button
+                onClick={() => navigate("/cart")}
+                className="hover:text-white transition-colors"
+              >
+                장바구니
+              </button>
+              <span className="text-white/30">|</span>
+              <button
+                onClick={() => navigate("/helpcenter")}
+                className="hover:text-white transition-colors"
+              >
+                고객센터
+              </button>
+              <button
+                onClick={() => navigate("/mypage")}
+                className="hover:text-white transition-colors"
+              >
+                👤
+              </button>
+            </div>
+
+            {/* 아래쪽: 오특 | 랭킹 | 신상 | 이벤트 */}
+            <div className="flex items-center gap-4 text-sm">
+              <button className="text-white/90 hover:text-orange-400 transition-colors">
+                오특
+              </button>
+              <span className="w-[1px] h-4 bg-white/15"></span>
+              <button className="text-white/90 hover:text-orange-400 transition-colors">
+                랭킹
+              </button>
+              <span className="w-[1px] h-4 bg-white/15"></span>
+              <button className="text-white/90 hover:text-orange-400 transition-colors">
+                신상
+              </button>
+              <span className="w-[1px] h-4 bg-white/15"></span>
+              {/* 이벤트는 고정 주황 */}
+              <button className="text-orange-400 font-medium">이벤트</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <NavBar />
     </header>
   );
 }
