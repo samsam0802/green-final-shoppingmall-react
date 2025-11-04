@@ -44,13 +44,23 @@ const ProductListComponent = () => {
   );
   console.log("결과:", categoryProducts);
 
+  //브랜드 필터(브랜드별로 상품 조회 가능하게 하는 필터)
   const [filters, setFilters] = useState({});
-  const [sort, setSort] = useState("인기순");
+
+  //정렬 필터에 사용할 state
+  const [sort, setSort] = useState("판매순");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 12;
 
+  // 제품 브랜드들을 brandOptions에 담아서 ProductFilterBar에 전달(브랜드 별로 나오도록 필터 적용)
+  // ✅ 수정 후: Set을 사용하여 중복 브랜드 제거
+  const brandOptions = [...new Set(categoryProducts.map((p) => p.brand))];
+
+  console.log("brandOptions:", brandOptions);
+
   // ✅ 정렬 (원하면 나중에 확장 가능)
   const sortedProducts = [...categoryProducts];
+
   // 예시: 정렬 기능은 필요 시 확장 가능
 
   const totalPages = Math.ceil(sortedProducts.length / itemsPerPage);
@@ -123,7 +133,7 @@ const ProductListComponent = () => {
         <ProductFilterBar
           filters={filters}
           setFilters={setFilters}
-          brandOptions={[]}
+          brandOptions={brandOptions}
         />
         <ProductSortBar sort={sort} setSort={setSort} />
 

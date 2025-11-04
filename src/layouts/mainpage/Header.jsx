@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import NavBar from "../../layouts/mainpage/NavBar";
+import ProductSearchBar from "../../components/product/ProductSearchBar";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -12,6 +13,7 @@ export default function Header() {
     "배송지연 지역 안내 (서울/경기 일부)",
   ];
   const [current, setCurrent] = useState(0);
+  const [searchOpen, setSearchOpen] = useState(false);
 
   useEffect(() => {
     const timer = setInterval(
@@ -53,7 +55,10 @@ export default function Header() {
             {/* 위쪽: 로그인/회원가입/장바구니/... */}
             <div className="flex items-center gap-3 text-[12px] text-white/82">
               {/* 검색 아이콘은 여기에 */}
-              <button className="w-8 h-8 rounded-full border border-white/35 flex items-center justify-center hover:bg-white/10 transition-colors">
+              <button
+                className="w-8 h-8 rounded-full border border-white/35 flex items-center justify-center hover:bg-white/10 transition-colors"
+                onClick={() => setSearchOpen(!searchOpen)}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="w-4 h-4"
@@ -124,6 +129,7 @@ export default function Header() {
           </div>
         </div>
       </div>
+      <ProductSearchBar isOpen={searchOpen} />
       <NavBar />
     </header>
   );

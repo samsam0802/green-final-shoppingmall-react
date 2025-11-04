@@ -37,7 +37,8 @@ const CategoryMegaMenu = ({ isOpen }) => {
                     {s.name}
                   </button>
 
-                  {s.children?.length > 0 && (
+                  {/* 3차 카테고리는 카테고리 메뉴에서 제거 */}
+                  {/* {s.children?.length > 0 && (
                     <ul className="ml-2 mt-1 space-y-1 text-gray-500">
                       {s.children.map((deep) => (
                         <li key={deep}>
@@ -50,7 +51,7 @@ const CategoryMegaMenu = ({ isOpen }) => {
                         </li>
                       ))}
                     </ul>
-                  )}
+                  )} */}
                 </li>
               ))}
             </ul>
