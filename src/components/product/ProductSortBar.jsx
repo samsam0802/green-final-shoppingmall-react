@@ -1,7 +1,7 @@
 import React from "react";
 
 const ProductSortBar = ({ sort, setSort }) => {
-  const options = ["인기순", "신상품순", "판매순", "낮은 가격순", "할인율순"];
+  const options = ["신상품순", "판매순", "낮은 가격순", "높은 가격순"];
 
   return (
     <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
@@ -23,6 +23,7 @@ const ProductSortBar = ({ sort, setSort }) => {
         ))}
       </div>
 
+      {/* 모바일용 */}
       <div className="w-full md:hidden">
         <select
           className="w-full border rounded px-3 py-2 text-sm bg-white"

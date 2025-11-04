@@ -8,6 +8,7 @@ import ProductDetailBuy from "./detail/ProductDetailBuy";
 import ProductDetailQnA from "./detail/ProductDetailQnA";
 import ProductDetailInfo from "./detail/ProductDetailInfo";
 import RestockAlertModal from "./RestockAlertModal";
+import ProductDetailOptions from "./detail/ProductDetailOptions";
 import ReviewListComponent from "../review/ReviewListComponent";
 
 export default function ProductDetailComponent() {
@@ -16,47 +17,10 @@ export default function ProductDetailComponent() {
   const navigate = useNavigate();
 
   const [liked, setLiked] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(null);
-  const [openOptionList, setOpenOptionList] = useState(false);
-  const [selectedItems, setSelectedItems] = useState([]);
+  const [selectedItems, setSelectedItems] = useState([]); // ✅ 옵션 선택 상태는 여기 딱 하나만
+
   const [openRestockModal, setOpenRestockModal] = useState(false);
-
-  // ✅ 탭 상태
-  const [tab, setTab] = useState("info"); // info | buy | review | qna
-
-  const options = product.options || [];
-
-  const handleSelectOption = (op) => {
-    setSelectedOption(op.label);
-    setOpenOptionList(false);
-
-    const exists = selectedItems.find((item) => item.label === op.label);
-    if (exists) {
-      setSelectedItems((prev) =>
-        prev.map((i) => (i.label === op.label ? { ...i, qty: i.qty + 1 } : i))
-      );
-    } else {
-      setSelectedItems((prev) => [
-        ...prev,
-        {
-          id: op.id,
-          label: op.label,
-          qty: 1,
-          price: op.price,
-        },
-      ]);
-    }
-  };
-
-  const changeQty = (label, delta) => {
-    setSelectedItems((prev) =>
-      prev
-        .map((i) =>
-          i.label === label ? { ...i, qty: Math.max(1, i.qty + delta) } : i
-        )
-        .filter((i) => i.qty > 0)
-    );
-  };
+  const [tab, setTab] = useState("info");
 
   const totalPrice = selectedItems.reduce(
     (sum, item) => sum + item.price * item.qty,
@@ -72,8 +36,7 @@ export default function ProductDetailComponent() {
           id: product.id,
           name: product.name + " - " + i.label,
           brand: product.brand,
-          originalPrice: product.originalPrice,
-          salePrice: i.price,
+          price: product.price,
           qty: i.qty,
           image: product.image,
         })),
@@ -105,100 +68,33 @@ export default function ProductDetailComponent() {
           <h1 className="text-2xl font-bold">{product.name}</h1>
 
           <div>
-            <p className="line-through text-gray-400">
-              {product.originalPrice.toLocaleString()}원
-            </p>
-            <p className="text-3xl font-bold text-[#111111]">
+            <p className="text-[#111111]">{product.price.toLocaleString()}원</p>
+            {/* <p className="text-3xl font-bold text-[#111111]">
               {product.discountPrice.toLocaleString()}원
               <span className="text-[#ff5c00] text-lg ml-2">
                 {product.discountRate}%↓
               </span>
-            </p>
+            </p> */}
           </div>
 
-          {/* 옵션 선택 */}
-          <div className="border rounded-md">
-            <button
-              onClick={() => setOpenOptionList(!openOptionList)}
-              className="w-full text-left px-4 py-3 flex justify-between"
-            >
-              {selectedOption || "옵션을 선택해주세요"}
-              <span>▾</span>
-            </button>
+          {/* ✅ 옵션 UI */}
+          <ProductDetailOptions
+            product={product}
+            selectedItems={selectedItems}
+            setSelectedItems={setSelectedItems}
+          />
 
-            {openOptionList && (
-              <div className="border-t max-h-48 overflow-y-auto">
-                {options.map((op) => (
-                  <div
-                    key={op.id}
-                    className={`w-full px-4 py-3 flex justify-between items-center border-b ${
-                      op.stock === 0
-                        ? "text-gray-400 cursor-not-allowed"
-                        : "hover:bg-gray-100 cursor-pointer"
-                    }`}
-                    onClick={() => op.stock > 0 && handleSelectOption(op)}
-                  >
-                    <span>{op.label}</span>
-
-                    {op.stock === 0 && (
-                      <span
-                        className="text-[#ff5c00] text-xs underline cursor-pointer"
-                        onClick={(e) => {
-                          e.stopPropagation(); // ✅ 옵션 선택 방지
-                          setOpenRestockModal(true);
-                        }}
-                      >
-                        재입고 알림
-                      </span>
-                    )}
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* 선택된 구매 목록 */}
+          {/* ✅ 총 금액
           {selectedItems.length > 0 && (
-            <div className="mt-4 border rounded-md p-4 space-y-3 bg-gray-50">
-              {selectedItems.map((item) => (
-                <div
-                  key={item.label}
-                  className="flex justify-between items-center"
-                >
-                  <span>{item.label}</span>
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={() => changeQty(item.label, -1)}
-                      className="border rounded px-2 text-sm"
-                    >
-                      -
-                    </button>
-                    <span>{item.qty}</span>
-                    <button
-                      onClick={() => changeQty(item.label, +1)}
-                      className="border rounded px-2 text-sm"
-                    >
-                      +
-                    </button>
-                    <span className="font-semibold ml-4">
-                      {(item.price * item.qty).toLocaleString()}원
-                    </span>
-                  </div>
-                </div>
-              ))}
+            <div className="text-lg font-semibold pt-2">
+              총 금액:{" "}
+              <span className="text-[#111111] text-2xl">
+                {totalPrice.toLocaleString()}원
+              </span>
             </div>
-          )}
-
-          {/* 총 금액 */}
-          <div className="text-lg font-semibold pt-2">
-            총 금액:{" "}
-            <span className="text-[#111111] text-2xl">
-              {totalPrice.toLocaleString()}원
-            </span>
-          </div>
+          )} */}
 
           {/* 버튼 */}
-
           <div className="flex gap-3 pt-4">
             <button
               className="flex-1 py-3 rounded-md border border-[#111111] text-[#111111] hover:bg-gray-100"
@@ -206,6 +102,7 @@ export default function ProductDetailComponent() {
             >
               장바구니
             </button>
+
             <button
               className="flex-1 py-3 rounded-md bg-[#111111] text-white hover:bg-black"
               onClick={handleClickOrder}
@@ -224,51 +121,29 @@ export default function ProductDetailComponent() {
         </div>
       </div>
 
-      {/* ✅ 탭 메뉴 (상태로 화면 전환) */}
+      {/* ✅ 탭 */}
       <div className="border-b flex gap-10 text-lg font-semibold py-3">
-        <button
-          onClick={() => setTab("info")}
-          className={
-            tab === "info"
-              ? "text-[#111111] border-b-2 border-[#111111]"
-              : "text-gray-400"
-          }
-        >
-          상품설명
-        </button>
-        <button
-          onClick={() => setTab("buy")}
-          className={
-            tab === "buy"
-              ? "text-[#111111] border-b-2 border-[#111111]"
-              : "text-gray-400"
-          }
-        >
-          구매정보
-        </button>
-        <button
-          onClick={() => setTab("review")}
-          className={
-            tab === "review"
-              ? "text-[#111111] border-b-2 border-[#111111]"
-              : "text-gray-400"
-          }
-        >
-          리뷰
-        </button>
-        <button
-          onClick={() => setTab("qna")}
-          className={
-            tab === "qna"
-              ? "text-[#111111] border-b-2 border-[#111111]"
-              : "text-gray-400"
-          }
-        >
-          Q&A
-        </button>
+        {["info", "buy", "review", "qna"].map((key) => (
+          <button
+            key={key}
+            onClick={() => setTab(key)}
+            className={
+              tab === key
+                ? "text-[#111111] border-b-2 border-[#111111]"
+                : "text-gray-400"
+            }
+          >
+            {key === "info"
+              ? "상품설명"
+              : key === "buy"
+              ? "구매정보"
+              : key === "review"
+              ? "리뷰"
+              : "Q&A"}
+          </button>
+        ))}
       </div>
 
-      {/* ✅ 탭 컨텐츠 */}
       {tab === "info" && <ProductDetailInfo />}
       {tab === "buy" && <ProductDetailBuy product={product} />}
       {/* {tab === "review" && <ProductDetailReview />} */}

@@ -1,75 +1,65 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { CATEGORY_DATA } from "../../data/categories";
+
+const slug = (s) => encodeURIComponent(String(s).replace(/\//g, "-"));
 
 const CategoryMegaMenu = ({ isOpen }) => {
   const navigate = useNavigate();
   if (!isOpen) return null;
 
-  const handleCategorySelect = (main, sub) => {
-    const mainSlug = encodeURIComponent(main.replace(/\//g, "-"));
-    const subSlug = encodeURIComponent(sub.replace(/\//g, "-"));
-    navigate(`/category/${mainSlug}/${subSlug}`);
-  };
+  const goMain = (main) => navigate(`/category/${slug(main)}`);
+  const goSub = (main, sub) => navigate(`/category/${slug(main)}/${slug(sub)}`);
+  const goDeep = (main, sub, deep) =>
+    navigate(`/category/${slug(main)}/${slug(sub)}/${slug(deep)}`);
 
   return (
     <div className="absolute left-0 w-full bg-white border-t shadow-lg z-50 p-6">
       <div className="grid grid-cols-5 gap-8 text-sm text-gray-700">
-        <CategoryColumn
-          title="스킨케어"
-          items={[
-            "스킨/토너",
-            "에센스/세럼/앰플",
-            "크림",
-            "로션",
-            "미스트/오일",
-            "스킨케어 세트",
-          ]}
-          onItemClick={(sub) => handleCategorySelect("스킨케어", sub)}
-        />
+        {CATEGORY_DATA.map((col) => (
+          <div key={col.main}>
+            {/* ✅ 1차 카테고리 클릭 가능 */}
+            <h3
+              className="font-semibold mb-3 text-black cursor-pointer hover:text-[#111]"
+              onClick={() => goMain(col.main)}
+            >
+              {col.main}
+            </h3>
 
-        <CategoryColumn
-          title="메이크업"
-          items={["립", "베이스메이크업", "아이메이크업", "네일"]}
-          onItemClick={(sub) => handleCategorySelect("메이크업", sub)}
-        />
+            {/* ✅ 2차/3차 */}
+            <ul className="space-y-1">
+              {col.subs.map((s) => (
+                <li key={s.name} className="mb-2">
+                  <button
+                    className="hover:text-black cursor-pointer"
+                    onClick={() => goSub(col.main, s.name)}
+                  >
+                    {s.name}
+                  </button>
 
-        <CategoryColumn
-          title="헤어케어"
-          items={["샴푸/린스", "트리트먼트/팩", "두피앰플/토닉"]}
-          onItemClick={(sub) => handleCategorySelect("헤어케어", sub)}
-        />
-
-        <CategoryColumn
-          title="바디케어"
-          items={["바디워시", "바디로션", "핸드크림"]}
-          onItemClick={(sub) => handleCategorySelect("바디케어", sub)}
-        />
-
-        <CategoryColumn
-          title="향수/디퓨저"
-          items={["향수", "미니/고체향수", "홈프래그런스"]}
-          onItemClick={(sub) => handleCategorySelect("향수/디퓨저", sub)}
-        />
+                  {/* 3차 카테고리는 카테고리 메뉴에서 제거 */}
+                  {/* {s.children?.length > 0 && (
+                    <ul className="ml-2 mt-1 space-y-1 text-gray-500">
+                      {s.children.map((deep) => (
+                        <li key={deep}>
+                          <button
+                            className="hover:text-black cursor-pointer"
+                            onClick={() => goDeep(col.main, s.name, deep)}
+                          >
+                            {deep}
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  )} */}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </div>
     </div>
   );
 };
-
-const CategoryColumn = ({ title, items, onItemClick }) => (
-  <div>
-    <h3 className="font-semibold mb-3 text-black">{title}</h3>
-    <ul className="space-y-1">
-      {items.map((item) => (
-        <li
-          key={item}
-          className="hover:text-black cursor-pointer"
-          onClick={() => onItemClick(item)}
-        >
-          {item}
-        </li>
-      ))}
-    </ul>
-  </div>
-);
 
 export default CategoryMegaMenu;
