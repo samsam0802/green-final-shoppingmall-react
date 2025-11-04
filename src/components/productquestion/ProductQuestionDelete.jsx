@@ -1,9 +1,7 @@
 import React from "react";
 import { X, Trash2 } from "lucide-react";
 
-/**
- * 삭제 확인 모달
- */
+/** 삭제 확인 모달 (스켈레톤) */
 export default function ProductQuestionDelete({
   item,
   onCancel = () => {},
@@ -18,7 +16,7 @@ export default function ProductQuestionDelete({
           <Trash2 className="w-6 h-6 text-red-600" />
           <h3 className="text-xl font-bold">문의 삭제 확인</h3>
           <button
-            className="text-gray-400 text-3xl ml-auto cursor-pointer hover:text-gray-600 transition-colors"
+            className="text-gray-400 hover:text-gray-600 ml-auto"
             onClick={onCancel}
           >
             <X className="w-5 h-5" />
@@ -32,13 +30,13 @@ export default function ProductQuestionDelete({
 
         <div className="flex justify-end space-x-3 pt-2">
           <button
-            className="px-4 py-2 text-sm font-semibold text-gray-700 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-100 transition-colors"
+            className="px-4 py-2 text-sm font-semibold text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-100"
             onClick={onCancel}
           >
             취소
           </button>
           <button
-            className="px-4 py-2 text-sm font-semibold text-white bg-red-600 rounded-lg cursor-pointer hover:bg-red-700 transition-colors"
+            className="px-4 py-2 text-sm font-semibold text-white bg-red-600 rounded-lg hover:bg-red-700"
             onClick={onConfirm}
           >
             삭제
