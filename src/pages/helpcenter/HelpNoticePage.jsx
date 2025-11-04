@@ -210,3 +210,158 @@ export default function HelpNoticePage() {
     </div>
   );
 }
+
+// 이벤트 및 프로모션 타이틀 수정 시 아래 코드로 변환하기
+// // src/pages/help/HelpNoticePage.jsx
+// import React, { useState, useMemo } from "react";
+
+// // ✅ 탭과 1:1 매칭되는 간결 더미데이터 (이벤트 없음)
+// const noticeDummy = [
+//   { id: 1, title: "배송 지연 안내 (태풍 영향)", date: "2025.09.30", type: "일반" },
+//   { id: 2, title: "고객센터 운영시간 변경 (평일 10:00~17:00)", date: "2025.09.08", type: "일반" },
+//   { id: 3, title: "시스템 점검 안내 (9/12 02:00~03:00)", date: "2025.08.11", type: "일반" },
+//   { id: 4, title: "약관 개정 안내", date: "2025.07.29", type: "미정" },
+//   { id: 5, title: "개인정보 처리방침 개정 안내", date: "2025.07.18", type: "미정" },
+//   { id: 6, title: "일부 지역 택배 지연 공지", date: "2025.06.12", type: "일반" },
+//   { id: 7, title: "비밀번호 변경 권장 안내", date: "2025.05.25", type: "일반" },
+//   { id: 8, title: "홈페이지 이용 가이드 갱신", date: "2025.04.28", type: "미정" },
+// ];
+
+// // ✅ 탭 목록 (이벤트 제거)
+// const tabs = ["전체", "일반", "미정"];
+
+// export default function HelpNoticePage() {
+//   const [activeTab, setActiveTab] = useState("전체");
+//   const [keyword, setKeyword] = useState("");
+
+//   // ✅ 탭 + 키워드 필터링 (간결)
+//   const filtered = useMemo(() => {
+//     const byTab =
+//       activeTab === "전체"
+//         ? noticeDummy
+//         : noticeDummy.filter((n) => n.type === activeTab);
+//     if (!keyword.trim()) return byTab;
+//     const q = keyword.trim().toLowerCase();
+//     return byTab.filter(
+//       (n) =>
+//         n.title.toLowerCase().includes(q) ||
+//         n.type.toLowerCase().includes(q)
+//     );
+//   }, [activeTab, keyword]);
+
+//   return (
+//     <div>
+//       {/* 탭 */}
+//       <div className="flex gap-6 text-sm mb-4 border-b border-gray-200">
+//         {tabs.map((tab) => {
+//           const on = tab === activeTab;
+//           return (
+//             <button
+//               key={tab}
+//               onClick={() => setActiveTab(tab)}
+//               className={`pb-2 -mb-[1px] border-b-2 transition ${
+//                 on
+//                   ? "border-black text-black font-medium"
+//                   : "border-transparent text-gray-500 hover:text-gray-900"
+//               }`}
+//             >
+//               {tab}
+//             </button>
+//           );
+//         })}
+//       </div>
+
+//       {/* 검색 */}
+//       <div className="mb-6 flex gap-3">
+//         <input
+//           type="text"
+//           value={keyword}
+//           onChange={(e) => setKeyword(e.target.value)}
+//           className="flex-1 border border-gray-200 rounded-sm px-4 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-black"
+//           placeholder="검색어를 입력해 주세요."
+//         />
+//         <button className="px-6 bg-black text-white rounded-sm text-sm hover:bg-black/80">
+//           검색
+//         </button>
+//       </div>
+
+//       <p className="text-sm text-gray-500 mb-3">총 {filtered.length}건</p>
+
+//       {/* 리스트 */}
+//       <div className="border-t border-gray-300">
+//         {/* 헤더 */}
+//         <div className="grid grid-cols-[80px_1fr_120px] text-xs text-gray-500 py-3 border-b border-gray-200">
+//           <div className="pl-3">번호</div>
+//           <div>제목</div>
+//           <div className="text-right pr-3">작성일</div>
+//         </div>
+
+//         {filtered.map((notice, idx) => (
+//           <div
+//             key={notice.id}
+//             className="grid grid-cols-[80px_1fr_120px] items-center py-3 border-b border-gray-100 text-sm hover:bg-gray-50 cursor-pointer"
+//           >
+//             <div className="pl-3 text-gray-500">{idx + 1}</div>
+//             <div className="flex items-center gap-2">
+//               {/* 단순 배지 (이벤트 분기 제거) */}
+//               <span className="text-[11px] px-1.5 py-0.5 rounded-sm border border-gray-300 text-gray-600">
+//                 {notice.type}
+//               </span>
+//               <span>{notice.title}</span>
+//             </div>
+//             <div className="text-right pr-3 text-xs text-gray-400">
+//               {notice.date}
+//             </div>
+//           </div>
+//         ))}
+//       </div>
+
+//       {/* 페이징 (샘플 고정) */}
+//       <div className="mt-6 flex justify-center gap-2 text-sm">
+//         <button
+//           type="button"
+//           className="w-8 h-8 flex items-center justify-center rounded-full border border-gray-200 text-gray-400 cursor-not-allowed"
+//           disabled
+//         >
+//           «
+//         </button>
+//         <button
+//           type="button"
+//           className="w-8 h-8 flex items-center justify-center rounded-full border border-gray-200 text-gray-400 cursor-not-allowed"
+//           disabled
+//         >
+//           ‹
+//         </button>
+
+//         <button className="w-8 h-8 flex items-center justify-center rounded-full bg-black text-white">
+//           1
+//         </button>
+//         <button className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100">
+//           2
+//         </button>
+//         <button className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100">
+//           3
+//         </button>
+//         <button className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100">
+//           4
+//         </button>
+//         <button className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100">
+//           5
+//         </button>
+
+//         <button
+//           type="button"
+//           className="w-8 h-8 flex items-center justify-center rounded-full border border-gray-200 hover:bg-gray-50"
+//         >
+//           ›
+//         </button>
+//         <button
+//           type="button"
+//           className="w-8 h-8 flex items-center justify-center rounded-full border border-gray-200 hover:bg-gray-50"
+//         >
+//           »
+//         </button>
+//       </div>
+//     </div>
+//   );
+// }

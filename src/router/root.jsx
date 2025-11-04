@@ -32,6 +32,9 @@ const HelpInquiryPage = lazy(() =>
   import("../pages/helpcenter/HelpInquiryPage")
 );
 const HelpFaqPage = lazy(() => import("../pages/helpcenter/HelpFaqPage"));
+const ProductQuestionPage = lazy(() =>
+  import("../components/productquestion/ProductQuestion")
+);
 
 const Loading = <div>Loading...</div>;
 
@@ -158,6 +161,14 @@ const root = createBrowserRouter([
       { path: "faq", element: <HelpFaqPage /> }, // /helpcenter/faq
       { path: "inquiry", element: <HelpInquiryPage /> }, // /helpcenter/inquiry
     ],
+  },
+  {
+    path: "productquestion",
+    element: (
+      <Suspense fallback={Loading}>
+        <ProductQuestionPage />
+      </Suspense>
+    ),
   },
 ]);
 

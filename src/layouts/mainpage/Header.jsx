@@ -1,6 +1,6 @@
 // src/components/common/Header.jsx
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import NavBar from "../../layouts/mainpage/NavBar";
 
 export default function Header() {
@@ -41,7 +41,7 @@ export default function Header() {
           {/* 가운데 로고 */}
           <div className="text-center leading-tight">
             <h1 className="text-white text-[30px] tracking-[0.32em] font-semibold">
-              SKPL
+              <Link to="/">SKPL</Link>
             </h1>
             <p className="text-[12px] text-white/75 mt-1 tracking-[0.08em]">
               Skin Korea Pure Lab
