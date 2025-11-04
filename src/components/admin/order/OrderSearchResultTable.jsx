@@ -1,9 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 
 const OrderSearchResultTable = () => {
-  const [sortOrder, setSortOrder] = useState("최근 주문 순");
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-
   const dummyData = [
     {
       id: 1,
@@ -53,40 +50,32 @@ const OrderSearchResultTable = () => {
         <span className="font-semibold text-lg">
           검색 결과 (총 {dummyData.length} 건)
         </span>
-
         <div className="flex items-center gap-2 flex-wrap">
-          {/* 최근 주문 순 */}
-          <select
-            value={sortOrder}
-            onChange={(e) => setSortOrder(e.target.value)}
-            className="border border-gray-300 bg-white text-gray-700 px-2 py-1 rounded-md text-sm cursor-pointer"
-          >
-            <option>최근 주문 순</option>
-          </select>
-
-          {/* 한 페이지당 보기 */}
-          <select
-            value={rowsPerPage}
-            onChange={(e) => setRowsPerPage(parseInt(e.target.value))}
-            className="border border-gray-300 bg-white text-gray-700 px-2 py-1 rounded-md text-sm cursor-pointer"
-          >
-            <option value={10}>10개</option>
-            <option value={15}>15개</option>
-          </select>
-
-          {/* 선택 상품 출고 버튼 */}
           <button className="bg-blue-50 text-blue-700 hover:bg-blue-100 px-3 py-1 rounded-md border border-blue-200 cursor-pointer transition shadow-sm">
             선택 상품 출고
           </button>
-
-          {/* 다운로드 버튼 */}
           <button className="bg-gray-200 text-gray-700 px-3 py-1 rounded-md border border-gray-300 cursor-pointer hover:bg-gray-300 transition">
             다운로드
           </button>
+
+          {/* 정렬 기준 드롭다운 */}
+          <select
+            defaultValue="recent"
+            className="border border-gray-300 bg-white text-gray-700 px-2 py-1 rounded-md text-sm cursor-pointer"
+          >
+            <option value="recent">최근 주문 순</option>
+            <option value="old">오래된 주문 순</option>
+          </select>
+
+          {/* 페이지당 표시 개수 드롭다운 */}
+          <select
+            defaultValue="10"
+            className="border border-gray-300 bg-white text-gray-700 px-2 py-1 rounded-md text-sm cursor-pointer"
+          >
+            <option value="10">10개</option>
+          </select>
         </div>
       </div>
-
-      {/* ✅ 둥근 모서리 + 그림자 복구 */}
       <div className="overflow-x-auto border border-gray-300 rounded-lg shadow-md">
         <table className="min-w-full divide-y divide-gray-300 text-sm text-center">
           <thead className="bg-gray-100">

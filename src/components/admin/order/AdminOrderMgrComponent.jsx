@@ -4,12 +4,12 @@ import CheckboxGroup from "../CheckboxGroup";
 
 const AdminOrderMgrComponent = () => {
   // --- 상태 관리 ---
-  const [selectedPreStatuses, setSelectedPreStatuses] = useState([]);
-  const [selectedPostStatuses, setSelectedPostStatuses] = useState([]);
-  const [selectedDelivery, setSelectedDelivery] = useState([]);
-  const [selectedPayment, setSelectedPayment] = useState([]);
-  const [selectedOrderType, setSelectedOrderType] = useState([]);
-  const [selectedPaymentStatus, setSelectedPaymentStatus] = useState([]);
+  const [selectedPreStatuses, setSelectedPreStatuses] = useState([]); //주문상태(출고 전)
+  const [selectedPostStatuses, setSelectedPostStatuses] = useState([]); //주문상태(출고 후)
+  const [selectedDelivery, setSelectedDelivery] = useState([]); //배송방법 state
+  const [selectedPayment, setSelectedPayment] = useState([]); //주문결제 state
+  const [selectedOrderType, setSelectedOrderType] = useState([]); //주문유형 state
+  const [selectedPaymentStatus, setSelectedPaymentStatus] = useState([]); //결제상태 state
 
   // --- 체크박스 옵션 ---
   const allPreStatuses = [
@@ -125,8 +125,6 @@ const AdminOrderMgrComponent = () => {
           setSelectedOptions={setSelectedPostStatuses}
           showAll={true}
         />
-
-        {/* 나머지 필터들도 CheckboxGroup으로 재사용 */}
         <CheckboxGroup
           title="배송방법"
           options={allDelivery}

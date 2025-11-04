@@ -4,10 +4,10 @@ import CheckboxGroup from "../CheckboxGroup";
 
 const UserInfoMgr = () => {
   // --- 체크박스 상태 관리 ---
-  const [signupMethods, setSignupMethods] = useState([]);
-  const [smsOptions, setSmsOptions] = useState([]);
-  const [emailOptions, setEmailOptions] = useState([]);
-  const [memberStatus, setMemberStatus] = useState([]);
+  const [signupMethods, setSignupMethods] = useState([]); //회원가입 방법 state
+  const [smsOptions, setSmsOptions] = useState([]); //SMS 수신 state
+  const [emailOptions, setEmailOptions] = useState([]); //email 수신 state
+  const [memberStatus, setMemberStatus] = useState([]); //회원 상태 state
 
   // --- 옵션 정의 (CheckboxGroup용) ---
   const signupOptions = ["쇼핑몰", "네이버", "카카오", "기타", "전체"];

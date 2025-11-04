@@ -54,6 +54,7 @@ const UserInfoResultTable = () => {
         <span className="font-semibold text-lg">
           검색 결과 (총 {dummyData.length} 명)
         </span>
+
         <div className="flex items-center gap-2 flex-wrap">
           <button className="bg-blue-50 text-blue-700 hover:bg-blue-100 px-3 py-1 rounded-md border border-blue-200 cursor-pointer transition shadow-sm">
             이메일 발송
@@ -64,6 +65,23 @@ const UserInfoResultTable = () => {
           <button className="bg-gray-200 text-gray-700 px-3 py-1 rounded-md border border-gray-300 cursor-pointer hover:bg-gray-300 transition shadow-sm">
             다운로드
           </button>
+
+          {/* 정렬 기준 드롭다운 */}
+          <select
+            defaultValue="recent"
+            className="border border-gray-300 text-gray-700 px-3 py-1 rounded-md cursor-pointer bg-white shadow-sm hover:bg-gray-50 transition"
+          >
+            <option value="recent">최근 가입 순</option>
+            <option value="old">오래된 가입 순</option>
+          </select>
+
+          {/* 페이지당 표시 개수 드롭다운 */}
+          <select
+            defaultValue="10"
+            className="border border-gray-300 text-gray-700 px-3 py-1 rounded-md cursor-pointer bg-white shadow-sm hover:bg-gray-50 transition"
+          >
+            <option value="10">10개</option>
+          </select>
         </div>
       </div>
 
@@ -72,14 +90,11 @@ const UserInfoResultTable = () => {
         <table className="min-w-full divide-y divide-gray-300 text-sm text-center">
           <thead className="bg-gray-100">
             <tr className="text-gray-700 font-semibold text-sm">
-              <th className="px-2 py-3 w-15">선택</th>
-              <th className="px-3 py-3 w-15">번호</th>
-              <th className="px-3 py-3 w-50">아이디</th>
-              <th className="px-3 py-3 ">이름(닉네임)</th>
-              <th className="px-3 py-3">이메일/핸드폰</th>
-              <th className="px-3 py-3">등급</th>
-              <th className="px-3 py-3">가입일</th>
-              <th className="px-3 py-3">관리</th>
+              {headers.map((header) => (
+                <th key={header} className="px-3 py-3 whitespace-nowrap">
+                  {header}
+                </th>
+              ))}
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
