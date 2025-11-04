@@ -9,24 +9,21 @@ const CartComponent = () => {
       id: 1,
       brand: "HYGEE",
       name: "보디 바디스크럽 285g",
-      originalPrice: 24000,
-      salePrice: 17900,
+      price: 24000,
       qty: 1,
     },
     {
       id: 2,
       brand: "HYGEE",
       name: "수딩 알로에 진정 수분크림 120ml",
-      originalPrice: 42000,
-      salePrice: 34900,
+      price: 42000,
       qty: 1,
     },
     {
       id: 3,
       brand: "HYGEE",
       name: "수분 진정 토너 500ml",
-      originalPrice: 45000,
-      salePrice: 36900,
+      price: 45000,
       qty: 1,
     },
   ]);
@@ -66,7 +63,7 @@ const CartComponent = () => {
   );
 
   const totalPrice = selectedCartItems.reduce(
-    (sum, item) => sum + item.salePrice * item.qty,
+    (sum, item) => sum + item.price * item.qty,
     0
   );
 
@@ -113,11 +110,6 @@ const CartComponent = () => {
 
           <tbody className="text-sm">
             {cart.map((item) => {
-              const discountRate = Math.round(
-                ((item.originalPrice - item.salePrice) / item.originalPrice) *
-                  100
-              );
-
               return (
                 <tr key={item.id} className="border-b last:border-none">
                   <td className="p-3">
@@ -143,13 +135,9 @@ const CartComponent = () => {
 
                   {/* 판매가 */}
                   <td className="text-center p-3">
-                    <p className="text-gray-400 line-through text-xs">
-                      {item.originalPrice.toLocaleString()}원
-                    </p>
                     <p className="text-[#111111] font-semibold">
-                      {item.salePrice.toLocaleString()}원
+                      {item.price.toLocaleString()}원
                     </p>
-                    <p className="text-[#ff5c00] text-xs">-{discountRate}%</p>
                   </td>
 
                   {/* 수량 */}
@@ -173,7 +161,7 @@ const CartComponent = () => {
 
                   {/* 구매가 */}
                   <td className="text-center p-3 font-semibold">
-                    {(item.salePrice * item.qty).toLocaleString()}원
+                    {(item.price * item.qty).toLocaleString()}원
                   </td>
 
                   <td className="text-center p-3">

@@ -22,7 +22,7 @@ export default function ProductDetailOptions({
 
     setSelectedItems([
       ...selectedItems,
-      { label, qty: 1, price: product.discountPrice },
+      { label, qty: 1, price: product.price },
     ]);
   };
 

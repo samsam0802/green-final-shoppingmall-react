@@ -47,20 +47,20 @@ const ProductCard = ({ product }) => {
 
       {/* 가격 영역 */}
       <div className="mt-2">
-        {product.originalPrice && (
-          <p className="text-sm line-through text-gray-400">
-            {product.originalPrice.toLocaleString()}원
+        {product.price && (
+          <p className="text-sm text-[#111111]">
+            {product.price.toLocaleString()}원
           </p>
         )}
 
-        <p className="text-lg font-bold text-[#111111] flex items-center gap-2">
+        {/* <p className="text-lg font-bold text-[#111111] flex items-center gap-2">
           {product.discountPrice.toLocaleString()}원
           {product.discountRate > 0 && (
             <span className="text-sm text-[#ff5c00]">
               {product.discountRate}%↓
             </span>
           )}
-        </p>
+        </p> */}
       </div>
     </div>
   );

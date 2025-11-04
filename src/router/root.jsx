@@ -89,7 +89,23 @@ const root = createBrowserRouter([
     children: mypageRouter(),
   },
   {
+    path: "category/:main",
+    element: (
+      <Suspense fallback={Loading}>
+        <ProductList />
+      </Suspense>
+    ),
+  },
+  {
     path: "category/:main/:sub",
+    element: (
+      <Suspense fallback={Loading}>
+        <ProductList />
+      </Suspense>
+    ),
+  },
+  {
+    path: "category/:main/:sub/:deep",
     element: (
       <Suspense fallback={Loading}>
         <ProductList />

@@ -36,8 +36,7 @@ export default function ProductDetailComponent() {
           id: product.id,
           name: product.name + " - " + i.label,
           brand: product.brand,
-          originalPrice: product.originalPrice,
-          salePrice: i.price,
+          price: product.price,
           qty: i.qty,
           image: product.image,
         })),
@@ -69,15 +68,13 @@ export default function ProductDetailComponent() {
           <h1 className="text-2xl font-bold">{product.name}</h1>
 
           <div>
-            <p className="line-through text-gray-400">
-              {product.originalPrice.toLocaleString()}원
-            </p>
-            <p className="text-3xl font-bold text-[#111111]">
+            <p className="text-[#111111]">{product.price.toLocaleString()}원</p>
+            {/* <p className="text-3xl font-bold text-[#111111]">
               {product.discountPrice.toLocaleString()}원
               <span className="text-[#ff5c00] text-lg ml-2">
                 {product.discountRate}%↓
               </span>
-            </p>
+            </p> */}
           </div>
 
           {/* ✅ 옵션 UI */}

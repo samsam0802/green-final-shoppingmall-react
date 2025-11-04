@@ -17,8 +17,7 @@ const OrderComponent = () => {
             id: 1,
             name: "진정 수분 토너",
             brand: "HYGEE",
-            originalPrice: 18000,
-            salePrice: 15000,
+            price: 18000,
             qty: 1,
             image: "/images/toner1.jpg",
           },
@@ -74,7 +73,7 @@ const OrderComponent = () => {
   };
 
   const totalPrice = cartItems.reduce(
-    (sum, item) => sum + item.salePrice * item.qty,
+    (sum, item) => sum + Number(item.price) * Number(item.qty),
     0
   );
   const shippingFee = totalPrice >= 20000 ? 0 : 2500;
@@ -83,6 +82,9 @@ const OrderComponent = () => {
   const couponName = selectedCoupon ? selectedCoupon.name : null;
 
   const handleOrderCompleteClick = () => {
+    // ✅ 주문번호 생성 (예: 20250207-38492034)
+    const orderNumber = `ORD-${Date.now()}`;
+
     navigate("/order/complete", {
       state: {
         items: cartItems,
@@ -95,6 +97,7 @@ const OrderComponent = () => {
         shippingFee,
         couponName,
         paymentMethod,
+        orderNumber, // ✅ 추가
         deliveryMemo:
           deliveryMemo === "직접입력" ? customDeliveryMemo : deliveryMemo,
       },
@@ -125,11 +128,9 @@ const OrderComponent = () => {
               <div className="space-y-1">
                 <p className="text-xs text-gray-500">{item.brand}</p>
                 <p className="font-medium">{item.name}</p>
-                <p className="line-through text-xs text-gray-400">
-                  {item.originalPrice.toLocaleString()}원
-                </p>
+
                 <p className="font-semibold text-[#ff5c00]">
-                  {item.salePrice.toLocaleString()}원
+                  {item.price.toLocaleString()}원
                 </p>
               </div>
             </div>
@@ -152,7 +153,7 @@ const OrderComponent = () => {
               </div>
 
               <p className="font-semibold">
-                {(item.salePrice * item.qty).toLocaleString()}원
+                {(Number(item.price) * Number(item.qty)).toLocaleString()}원
               </p>
             </div>
           </div>
