@@ -4,10 +4,11 @@ import products from "../../data/products";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 
 import ProductDetailBuy from "./detail/ProductDetailBuy";
-import ProductDetailReview from "./detail/ProductDetailReview";
+// import ProductDetailReview from "./detail/ProductDetailReview";
 import ProductDetailQnA from "./detail/ProductDetailQnA";
 import ProductDetailInfo from "./detail/ProductDetailInfo";
 import RestockAlertModal from "./RestockAlertModal";
+import ReviewListComponent from "../review/ReviewListComponent";
 
 export default function ProductDetailComponent() {
   const { id } = useParams();
@@ -270,7 +271,8 @@ export default function ProductDetailComponent() {
       {/* ✅ 탭 컨텐츠 */}
       {tab === "info" && <ProductDetailInfo />}
       {tab === "buy" && <ProductDetailBuy product={product} />}
-      {tab === "review" && <ProductDetailReview />}
+      {/* {tab === "review" && <ProductDetailReview />} */}
+      {tab === "review" && <ReviewListComponent />}
       {tab === "qna" && <ProductDetailQnA />}
 
       <RestockAlertModal
