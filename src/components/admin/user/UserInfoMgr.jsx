@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import UserInfoResultTable from "./UserInfoResultTable";
 import CheckboxGroup from "../CheckboxGroup";
+import dayjs from "dayjs";
 
 const UserInfoMgr = () => {
   // --- 체크박스 상태 관리 ---
@@ -14,6 +15,33 @@ const UserInfoMgr = () => {
   const smsOptionList = ["동의", "거부", "전체"];
   const emailOptionList = ["동의", "거부", "전체"];
   const memberStatusOptions = ["정상", "탈퇴", "휴먼", "전체"];
+
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+
+  const dateHandler = (label) => {
+    let today = dayjs(); //오늘 기준
+    let start;
+
+    if (label === "오늘") {
+      start = today;
+    } else if (label === "1주일") {
+      start = today.subtract(6, "day"); //오늘 포함 1주일
+    } else if (label === "14일") {
+      start = today.subtract(13, "day");
+    } else if (label === "1개월") {
+      start = today.subtract(1, "month");
+    } else if (label === "3개월") {
+      start = today.subtract(3, "month");
+    } else if (label === "6개월") {
+      start = today.subtract(6, "month");
+    } else {
+      start = today;
+    }
+
+    setStartDate(start.format("YYYY-MM-DD"));
+    setEndDate(today.format("YYYY-MM-DD"));
+  };
 
   return (
     <div className="w-full bg-white p-6 text-sm font-['Inter'] min-h-screen">
@@ -60,27 +88,29 @@ const UserInfoMgr = () => {
             <span>가입일</span>
             <input
               type="date"
+              value={startDate}
               className="border border-gray-300 p-1 bg-white cursor-pointer rounded-md h-[32px]"
+              onChange={(e) => setStartDate(e.target.value)}
             />
             <span className="text-gray-500">~</span>
             <input
               type="date"
+              value={endDate}
               className="border border-gray-300 p-1 bg-white cursor-pointer rounded-md h-[32px]"
+              onChange={(e) => setEndDate(e.target.value)}
             />
             <div className="flex gap-1 ml-3">
-              {["오늘", "1주", "15일", "1개월", "3개월", "6개월"].map(
+              {["오늘", "1주일", "14일", "1개월", "3개월", "6개월"].map(
                 (label) => (
                   <button
                     key={label}
                     className="border border-gray-300 bg-white px-2 py-1 text-gray-700 text-xs cursor-pointer rounded-md hover:bg-blue-50 hover:border-blue-500 transition"
+                    onClick={() => dateHandler(label)}
                   >
                     {label}
                   </button>
                 )
               )}
-              <button className="border border-blue-600 bg-blue-50 px-2 py-1 text-blue-700 text-xs cursor-pointer rounded-md hover:bg-blue-100 transition">
-                전체
-              </button>
             </div>
           </div>
         </div>
