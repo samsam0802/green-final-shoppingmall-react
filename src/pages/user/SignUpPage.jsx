@@ -1,10 +1,10 @@
 // src/pages/join/JoinPage.jsx
 import React, { useEffect, useMemo, useState } from "react";
-import AgreementStep from "../../components/signup/AgreementStep";
-import InfoStep from "../../components/signup/InfoStep";
-import SuccessStep from "../../components/signup/SuccessStep";
-import SignUpChoiceModal from "../../components/signup/SignUpChoiceModal";
+import AgreementStep from "../../components/user/signup/AgreementStep";
+import InfoStep from "../../components/user/signup/InfoStep";
+import SuccessStep from "../../components/user/signup/SuccessStep";
 import HomeBar from "../../layouts/mainpage/HomeBar";
+import SignUpChoiceModal from "../../components/user/signup/SignUpChoiceModal";
 
 export default function JoinPage() {
   const [step, setStep] = useState(1);
