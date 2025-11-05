@@ -10,6 +10,9 @@ import ProductDetailInfo from "./detail/ProductDetailInfo";
 // import RestockAlertModal from "./RestockAlertModal";
 import ProductDetailOptions from "./detail/ProductDetailOptions";
 import ReviewListComponent from "../review/ReviewListComponent";
+import { useDispatch, useSelector } from "react-redux";
+import { addItem, changeQty, removeItem } from "../../store/cartSlice";
+import ProductDetailQuantity from "./detail/ProductDetailQuantity";
 
 export default function ProductDetailComponent() {
   const { id } = useParams();
@@ -20,16 +23,16 @@ export default function ProductDetailComponent() {
   const [selectedItems, setSelectedItems] = useState([]); // ✅ 옵션 선택 상태는 여기 딱 하나만
 
   const [tab, setTab] = useState("info");
+  //옵션 없는 상품의 수량을 구하기 위한 state
+  const [qty, setQty] = useState(1);
 
-  // const totalPrice = selectedItems.reduce(
-  //   (sum, item) => sum + item.price * item.qty,
-  //   0
-  // );
+  // cartSlice에 action을 전달할 dispatch 불러오기
+  const dispatch = useDispatch();
 
-  const handleClickOrder = () => {
+  const handleClickOrderOption = () => {
     if (
       product.options &&
-      product.options.length !== 0 &&
+      product.options.length > 0 &&
       selectedItems.length === 0
     )
       return alert("옵션을 선택해주세요.");
@@ -46,6 +49,59 @@ export default function ProductDetailComponent() {
         })),
       },
     });
+  };
+
+  const handleClickOrder = () => {
+    console.log("handleClickOrder");
+    navigate("/order", {
+      state: {
+        items: [
+          {
+            id: product.id,
+            name: product.name,
+            brand: product.brand,
+            price: product.price,
+            qty: qty,
+            image: product.image,
+          },
+        ],
+      },
+    });
+  };
+
+  const handleAddCartOption = (selectedItems) => {
+    if (
+      product.options &&
+      product.options.length > 0 &&
+      selectedItems.length === 0
+    )
+      return alert("옵션을 선택해주세요.");
+
+    selectedItems.map((i) =>
+      dispatch(
+        addItem({
+          id: product.id,
+          name: product.name + " - " + i.label,
+          brand: product.brand,
+          price: product.price,
+          qty: i.qty,
+          image: product.image,
+        })
+      )
+    );
+  };
+
+  const handleAddCart = (product) => {
+    dispatch(
+      addItem({
+        id: product.id,
+        name: product.name,
+        brand: product.brand,
+        price: product.price,
+        qty: qty,
+        image: product.image,
+      })
+    );
   };
 
   return (
@@ -82,46 +138,74 @@ export default function ProductDetailComponent() {
           </div>
 
           {/* ✅ 옵션 UI */}
-          <ProductDetailOptions
-            product={product}
-            selectedItems={selectedItems}
-            setSelectedItems={setSelectedItems}
-          />
+          {/* 옵션이 있을 때 뜨는 옵션 선택창 */}
+          {product.options.length > 0 && (
+            <ProductDetailOptions
+              product={product}
+              selectedItems={selectedItems}
+              setSelectedItems={setSelectedItems}
+            />
+          )}
 
-          {/* ✅ 총 금액
-          {selectedItems.length > 0 && (
-            <div className="text-lg font-semibold pt-2">
-              총 금액:{" "}
-              <span className="text-[#111111] text-2xl">
-                {totalPrice.toLocaleString()}원
-              </span>
-            </div>
-          )} */}
+          {/* 옵션이 없을때 뜨는 수량 조절창 */}
+          {product.options.length === 0 && (
+            <ProductDetailQuantity
+              qty={qty}
+              setQty={setQty}
+              price={product.price}
+            />
+          )}
 
           {/* 버튼 */}
-          <div className="flex gap-3 pt-4">
-            <button
-              className="flex-1 py-3 rounded-md border border-[#111111] text-[#111111] hover:bg-gray-100"
-              onClick={() => alert("장바구니 버튼 클릭")}
-            >
-              장바구니
-            </button>
+          {product.options.length > 0 && (
+            <div className="flex gap-3 pt-4">
+              <button
+                className="flex-1 py-3 rounded-md border border-[#111111] text-[#111111] hover:bg-gray-100"
+                onClick={() => handleAddCartOption(selectedItems)}
+              >
+                장바구니
+              </button>
 
-            <button
-              className="flex-1 py-3 rounded-md bg-[#111111] text-white hover:bg-black"
-              onClick={handleClickOrder}
-            >
-              바로구매
-            </button>
+              <button
+                className="flex-1 py-3 rounded-md bg-[#111111] text-white hover:bg-black"
+                onClick={() => handleClickOrderOption()}
+              >
+                바로구매
+              </button>
+              <button onClick={() => setLiked(!liked)} className="text-3xl">
+                {liked ? (
+                  <AiFillHeart className="text-[#ff5c00]" />
+                ) : (
+                  <AiOutlineHeart className="text-gray-400" />
+                )}
+              </button>
+            </div>
+          )}
+          {product.options.length === 0 && (
+            <div className="flex gap-3 pt-4">
+              <button
+                className="flex-1 py-3 rounded-md border border-[#111111] text-[#111111] hover:bg-gray-100"
+                onClick={() => handleAddCart(product)}
+              >
+                장바구니
+              </button>
 
-            <button onClick={() => setLiked(!liked)} className="text-3xl">
-              {liked ? (
-                <AiFillHeart className="text-[#ff5c00]" />
-              ) : (
-                <AiOutlineHeart className="text-gray-400" />
-              )}
-            </button>
-          </div>
+              <button
+                className="flex-1 py-3 rounded-md bg-[#111111] text-white hover:bg-black"
+                onClick={() => handleClickOrder()}
+              >
+                바로구매
+              </button>
+
+              <button onClick={() => setLiked(!liked)} className="text-3xl">
+                {liked ? (
+                  <AiFillHeart className="text-[#ff5c00]" />
+                ) : (
+                  <AiOutlineHeart className="text-gray-400" />
+                )}
+              </button>
+            </div>
+          )}
         </div>
       </div>
 

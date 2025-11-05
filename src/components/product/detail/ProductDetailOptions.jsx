@@ -35,7 +35,7 @@ const ProductDetailOptions = ({ product, selectedItems, setSelectedItems }) => {
 
       {/* 드롭다운 리스트 */}
       {isOpen && (
-        <ul className="absolute left-0 w-full mt-1 max-h-60 overflow-y-auto bg-white border rounded-lg shadow-lg z-10">
+        <ul className="w-full mt-1 max-h-60 overflow-y-auto bg-white border rounded-lg shadow-lg">
           {product.options.map((o) => (
             <li
               key={o.id}
