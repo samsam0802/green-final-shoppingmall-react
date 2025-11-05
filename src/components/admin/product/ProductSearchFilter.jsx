@@ -37,7 +37,7 @@ const initialCondition = {
   fromDate: "",
   toDate: "",
   saleStatus: ["정상", "품절", "재고 확보 중", "판매 중지"],
-  isExposed: "전체",
+  exposureStatus: "전체",
 };
 
 const ProductSearchFilter = () => {
@@ -340,7 +340,6 @@ const ProductSearchFilter = () => {
                   ? searchConditions.saleStatus.length === 4
                   : searchConditions.saleStatus.includes(status)
               }
-              defaultChecked={status === "전체"}
             />
             {status}
           </label>
@@ -353,12 +352,11 @@ const ProductSearchFilter = () => {
           <label key={exposure} className="flex items-center text-sm mr-4">
             <input
               type="radio"
-              name="isExposed"
+              name="exposureStatus"
               value={exposure}
               onChange={onRadioChangeHandler}
               className="mr-1 text-blue-600 focus:ring-blue-500"
-              checked={searchConditions.isExposed === exposure}
-              defaultChecked={exposure === "전체"}
+              checked={searchConditions.exposureStatus === exposure}
             />
             {exposure}
           </label>
