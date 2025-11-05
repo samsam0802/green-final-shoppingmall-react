@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function JoinChoiceModal({
+export default function SignUpChoiceModal({
   open,
   onClose,
   onNormalJoin,
