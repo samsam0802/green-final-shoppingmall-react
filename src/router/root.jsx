@@ -11,10 +11,6 @@ const FindIdPage = lazy(() => import("../pages/user/FindIdPage"));
 const FindPasswordPage = lazy(() => import("../pages/user/FindPasswordPage"));
 const MyPageLayout = lazy(() => import("../layouts/mypage/MyPageLayout"));
 
-const ReviewAddPage = lazy(() =>
-  import("../components/review/ReviewAddComponent")
-);
-
 const ProductList = lazy(() => import("../pages/product/ProductListPage"));
 const ProductDetail = lazy(() => import("../pages/product/ProductDetailPage"));
 
@@ -138,14 +134,6 @@ const root = createBrowserRouter([
     element: (
       <Suspense fallback={Loading}>
         <Cart />
-      </Suspense>
-    ),
-  },
-  {
-    path: "reviewadd",
-    element: (
-      <Suspense fallback={Loading}>
-        <ReviewAddPage />
       </Suspense>
     ),
   },

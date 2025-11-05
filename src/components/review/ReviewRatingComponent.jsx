@@ -1,15 +1,14 @@
 import React from "react";
 import { FaStar } from "react-icons/fa";
 
-const initialScoreData = [
-  { label: "아주 좋아요 (5점)", count: 115, score: 5 },
-  { label: "맘에 들어요 (4점)", count: 1, score: 4 },
-  { label: "보통이에요 (3점)", count: 0, score: 3 },
-  { label: "그냥 그래요 (2점)", count: 0, score: 2 },
-  { label: "별로예요 (1점)", count: 0, score: 1 },
-];
-
 const ReviewRatingComponent = () => {
+  const initialScoreData = [
+    { label: "아주 좋아요 (5점)", count: 115, score: 5 },
+    { label: "맘에 들어요 (4점)", count: 1, score: 4 },
+    { label: "보통이에요 (3점)", count: 0, score: 3 },
+    { label: "그냥 그래요 (2점)", count: 0, score: 2 },
+    { label: "별로예요 (1점)", count: 0, score: 1 },
+  ];
   const averageScore = "4.8";
   const positivePercentage = 96;
   const totalReviews = 116;
@@ -21,7 +20,7 @@ const ReviewRatingComponent = () => {
       </p>
 
       <div className="flex flex-col lg:flex-row lg:space-x-12">
-        {/* 좌측 평균 점수 */}
+        {/* 평균 점수 */}
         <div className="flex flex-col items-center justify-center lg:w-1/3 py-4 border-b lg:border-b-0 lg:border-r border-gray-200 mb-6 lg:mb-0">
           <div className="flex items-center space-x-2 text-6xl font-extrabold text-gray-900 mb-2">
             <FaStar className="w-12 h-12 text-yellow-500" />
@@ -38,7 +37,7 @@ const ReviewRatingComponent = () => {
           </p>
         </div>
 
-        {/* 우측 별점 그래프 */}
+        {/* 별점 그래프 */}
         <div className="flex-1 lg:w-2/3 space-y-3 pt-4">
           {initialScoreData.map((data) => (
             <div key={data.score} className="flex items-center text-sm">

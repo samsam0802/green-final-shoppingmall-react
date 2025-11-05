@@ -1,11 +1,6 @@
 import React from "react";
 
-const ReviewModifyComponent = ({
-  currentRating,
-  setCurrentRating,
-  closeModal,
-}) => {
-  // 임시 선택값
+const ReviewModifyDelete = (props) => {
   const tempSatisfaction = "보통이에요";
   const tempSkinType = "지성";
   const tempChange = "효과만족";
@@ -17,7 +12,7 @@ const ReviewModifyComponent = ({
           리뷰 수정
           <button
             className="text-gray-400 text-3xl cursor-pointer"
-            onClick={closeModal}
+            onClick={props.closeModal}
           >
             ×
           </button>
@@ -37,15 +32,15 @@ const ReviewModifyComponent = ({
               <div className="flex space-x-1 text-2xl">
                 {[1, 2, 3, 4, 5].map((star) => {
                   let starClass = "cursor-pointer transition text-gray-300";
-                  if (currentRating >= star)
+                  if (props.currentRating >= star)
                     starClass = "cursor-pointer transition text-yellow-500";
                   return (
                     <span
                       key={star}
                       className={starClass}
-                      onClick={() => setCurrentRating(star)}
+                      onClick={() => props.setCurrentRating(star)}
                     >
-                      {currentRating >= star ? "★" : "☆"}
+                      {props.currentRating >= star ? "★" : "☆"}
                     </span>
                   );
                 })}
@@ -132,7 +127,7 @@ const ReviewModifyComponent = ({
           defaultValue="구매한 상품이 기대 이상으로 만족스러워요. 포장 상태도 좋았고 배송도 빨랐습니다!"
         />
 
-        {/* 사진 첨부 + 수정완료/취소 버튼 */}
+        {/* 사진 첨부 + 삭제/수정 버튼 */}
         <div className="flex justify-between items-center pt-2 border-t mt-4">
           <button className="flex items-center space-x-2 px-3 py-2 text-sm text-gray-700 border border-gray-300 rounded-full cursor-pointer">
             <span className="text-lg">📷</span>
@@ -141,16 +136,24 @@ const ReviewModifyComponent = ({
 
           <div className="flex space-x-3">
             <button
-              className="px-4 py-2 text-sm font-semibold text-gray-700 bg-gray-200 rounded-lg cursor-pointer"
-              onClick={closeModal}
+              className="px-4 py-2 text-sm font-semibold text-red-600 border border-red-400 bg-red-50 rounded-lg cursor-pointer"
+              onClick={() => {
+                if (confirm("정말 삭제하시겠습니까?")) {
+                  alert("리뷰가 삭제되었습니다.");
+                  props.closeModal();
+                }
+              }}
             >
-              수정 취소
+              삭제하기
             </button>
             <button
               className="px-5 py-2 text-sm font-semibold text-white rounded-lg cursor-pointer"
               style={{ backgroundColor: "#111111" }}
+              onClick={() => {
+                alert("수정되었습니다");
+              }}
             >
-              수정 완료
+              수정하기
             </button>
           </div>
         </div>
@@ -159,4 +162,4 @@ const ReviewModifyComponent = ({
   );
 };
 
-export default ReviewModifyComponent;
+export default ReviewModifyDelete;
