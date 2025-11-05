@@ -1,7 +1,9 @@
 import React, { useState, Fragment } from "react";
+import ReviewAddComponent from "../review/ReviewAddComponent";
 
 export default function OrderHistoryComponent() {
   const [selectedPeriod, setSelectedPeriod] = useState("1개월");
+  const [reviewModal, setReviewModal] = useState(false);
 
   const sampleOrders = [
     {
@@ -66,7 +68,6 @@ export default function OrderHistoryComponent() {
   return (
     <div className="max-w-5xl mx-auto p-8 text-[#111]">
       <h1 className="text-2xl font-bold mb-8">주문 / 배송 조회</h1>
-
       {/* 요약 카드 */}
       <div className="grid grid-cols-5 text-center bg-white border rounded-lg py-5 mb-8">
         {["주문접수", "결제완료", "배송준비중", "배송중", "배송완료"].map(
@@ -78,7 +79,6 @@ export default function OrderHistoryComponent() {
           )
         )}
       </div>
-
       {/* 구매기간 */}
       <div className="border rounded-lg p-6 mb-10 bg-white">
         <p className="font-semibold text-sm mb-3">구매기간</p>
@@ -101,7 +101,6 @@ export default function OrderHistoryComponent() {
           ※ 최근 1년 내 구매내역만 조회 가능합니다.
         </p>
       </div>
-
       {/* ✅ 메인 테이블 */}
       <table className="w-full text-sm border-t bg-white">
         <thead className="bg-gray-50 border-b">
@@ -154,17 +153,25 @@ export default function OrderHistoryComponent() {
 
                   {/* ✅ 상태에 따른 버튼 표시 */}
                   <td className="text-center">
-                    {item.status === "배송중" || item.status === "배송완료" ? (
-                      <button className="text-xs px-3 py-1 border rounded hover:bg-gray-50">
-                        배송조회
-                      </button>
-                    ) : null}
-
-                    {item.status === "배송완료" && (
-                      <button className="text-xs px-3 py-1 border rounded ml-2 hover:bg-gray-50">
-                        리뷰작성
-                      </button>
-                    )}
+                    <div className="flex flex-col gap-1 items-center">
+                      {item.status === "배송중" ||
+                      item.status === "배송완료" ? (
+                        <button className="text-xs px-3 py-1 border rounded hover:bg-gray-50">
+                          배송조회
+                        </button>
+                      ) : null}
+                      {/* 리뷰작성 버튼 / 모달 열기 */}
+                      {item.status === "배송완료" && (
+                        <button
+                          className="text-xs px-3 py-1 border rounded hover:bg-gray-50"
+                          onClick={() => {
+                            setReviewModal(true); //모달 열기
+                          }}
+                        >
+                          리뷰작성
+                        </button>
+                      )}
+                    </div>
                   </td>
                 </tr>
               ))}
@@ -172,6 +179,10 @@ export default function OrderHistoryComponent() {
           ))}
         </tbody>
       </table>
+      {/* 리뷰 작성 모달 띄우기 */}
+      {reviewModal && (
+        <ReviewAddComponent closeModal={() => setReviewModal(false)} />
+      )}
     </div>
   );
 }
