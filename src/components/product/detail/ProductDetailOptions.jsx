@@ -1,149 +1,110 @@
 import React, { useState } from "react";
 
-export default function ProductDetailOptions({
-  product,
-  selectedItems,
-  setSelectedItems,
-}) {
-  const hasOption1 = product.options && product.options.length > 0;
-  const hasOption2 = product.option2 && product.option2.length > 0;
+const ProductDetailOptions = ({ product, selectedItems, setSelectedItems }) => {
+  const [isOpen, setIsOpen] = useState(false);
 
-  const [selectedOption1, setSelectedOption1] = useState(null);
-  const [selectedOption2, setSelectedOption2] = useState(null);
+  const handleSelect = (option) => {
+    setSelectedItems((prev) => {
+      console.log("prev", prev);
+      // 이미 같은 옵션이 들어있다면 그대로 반환 (추가 X)
+      const exists = prev.some((item) => item.id === option.id);
+      if (exists) return prev;
 
-  const addSelection = () => {
-    if (!selectedOption1) return;
-
-    const label = hasOption2
-      ? `${selectedOption1.label} / ${selectedOption2?.label ?? ""}`.trim()
-      : selectedOption1.label;
-
-    if (selectedItems.some((i) => i.label === label)) return;
-
-    setSelectedItems([
-      ...selectedItems,
-      { label, qty: 1, price: product.price },
-    ]);
+      // 없으면 새로 추가 (기본 수량 포함)
+      return [...prev, { ...option, qty: 1 }];
+    });
+    setIsOpen(false);
   };
 
-  const changeQty = (label, delta) => {
-    setSelectedItems((prev) =>
-      prev.map((i) =>
-        i.label === label ? { ...i, qty: Math.max(1, i.qty + delta) } : i
-      )
-    );
+  const handleQtyChange = (option, delta) => {
+    setSelectedItems((prev) => {
+      return [...prev, { ...option, qty: qty + delta }];
+    });
   };
-
-  const removeItem = (label) => {
-    setSelectedItems(selectedItems.filter((i) => i.label !== label));
-  };
-
-  const totalPrice = selectedItems.reduce((acc, i) => acc + i.price * i.qty, 0);
 
   return (
-    <div className="space-y-4 mt-6">
-      {hasOption1 && (
-        <OptionDropdown
-          title="첫번째 옵션을 선택해주세요"
-          options={product.options}
-          onSelect={(o) => {
-            setSelectedOption1(o);
-            if (!hasOption2) addSelection();
-          }}
-        />
-      )}
+    <div className="w-full max-w-md border rounded-lg p-2 relative">
+      {/* 드롭다운 토글 버튼 */}
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full flex justify-between items-center px-4 py-3 border-b"
+      >
+        <span className="text-gray-700 text-sm">옵션을 선택해주세요</span>
+        <span className="text-gray-500">▼</span>
+      </button>
 
-      {hasOption2 && (
-        <OptionDropdown
-          title="두번째 옵션을 선택해주세요"
-          options={product.option2}
-          onSelect={(o) => {
-            setSelectedOption2(o);
-            if (selectedOption1) addSelection();
-          }}
-        />
-      )}
-
-      {/* ✅ 여기부터 선택 박스 UI (클럽클리오 스타일) */}
-      {selectedItems.length > 0 && (
-        <div className="space-y-3">
-          {selectedItems.map((item) => (
-            <div
-              key={item.label}
-              className="border rounded-md p-3 flex justify-between items-center bg-white"
+      {/* 드롭다운 리스트 */}
+      {isOpen && (
+        <ul className="absolute left-0 w-full mt-1 max-h-60 overflow-y-auto bg-white border rounded-lg shadow-lg z-10">
+          {product.options.map((o) => (
+            <li
+              key={o.id}
+              className={`flex items-center gap-3 px-4 py-3 cursor-pointer border-b hover:bg-gray-50 ${
+                o.stock === 0 ? "opacity-40 cursor-not-allowed" : ""
+              }`}
+              onClick={() => o.stock !== 0 && handleSelect(o)}
             >
-              <span>{item.label}</span>
+              <div className="flex flex-col">
+                <span className="text-sm text-gray-800">{o.label}</span>
 
-              <div className="flex items-center gap-3">
-                <button
-                  onClick={() => changeQty(item.label, -1)}
-                  className="px-2 border rounded text-sm"
-                >
-                  -
-                </button>
-
-                <span>{item.qty}</span>
-
-                <button
-                  onClick={() => changeQty(item.label, 1)}
-                  className="px-2 border rounded text-sm"
-                >
-                  +
-                </button>
-
-                <span className="font-medium">
-                  {(item.qty * item.price).toLocaleString()}원
-                </span>
-
-                <button
-                  onClick={() => removeItem(item.label)}
-                  className="text-red-500 text-sm ml-2"
-                >
-                  삭제
-                </button>
+                {/* 품절 여부 표시 */}
+                {o.stock === 0 && (
+                  <span className="text-xs text-[#ff5c00]">품절</span>
+                )}
               </div>
-            </div>
-          ))}
-        </div>
-      )}
 
-      <div className="text-lg font-semibold pt-2">
-        총 금액: {totalPrice.toLocaleString()}원
+              {o.stock === 0 && (
+                <button
+                  className="ml-auto text-xs text-[#ff5c00]"
+                  onClick={() => alert("재입고 알림 버튼 클릭")}
+                >
+                  재입고 알림
+                </button>
+              )}
+            </li>
+          ))}
+        </ul>
+      )}
+      {/* 옵션 선택하면 아래 구매리스트에 뜨도록 설계 */}
+      <div className="border-t mt-4 pt-4 space-y-3">
+        {selectedItems.map((item) => (
+          <div
+            key={item.id}
+            className="flex justify-between items-center p-3 border rounded-lg bg-gray-50"
+          >
+            {/* 제품명 */}
+            <div className="text-sm text-gray-800">{item.label}</div>
+
+            {/* 수량 조절 */}
+            <div className="flex items-center border rounded-lg overflow-hidden w-max">
+              <button
+                onClick={() => handleQtyChange(item, -1)}
+                className="w-9 h-9 flex justify-center items-center text-lg text-gray-600 border-r hover:bg-gray-100 transition-colors"
+              >
+                -
+              </button>
+              <span className="w-12 h-9 flex justify-center items-center text-sm text-gray-800">
+                {item.qty}
+              </span>
+              <button
+                onClick={() => handleQtyChange(item, +1)}
+                className="w-9 h-9 flex justify-center items-center text-lg text-gray-600 border-l hover:bg-gray-100 transition-colors"
+              >
+                +
+              </button>
+            </div>
+
+            {/* 가격 */}
+            <div className="text-sm font-semibold">
+              {product.price.toLocaleString()}원
+            </div>
+
+            {/* 삭제 버튼 => 나중에 추가*/}
+          </div>
+        ))}
       </div>
     </div>
   );
-}
+};
 
-function OptionDropdown({ title, options, onSelect }) {
-  return (
-    <details className="border rounded-md">
-      <summary className="p-3 cursor-pointer text-sm">{title}</summary>
-      <div className="max-h-56 overflow-y-auto divide-y">
-        {options.map((o) => (
-          <button
-            key={o.id}
-            onClick={() => o.stock > 0 && onSelect(o)}
-            className={`w-full p-3 flex justify-between text-sm ${
-              o.stock === 0
-                ? "text-gray-400 bg-gray-100 cursor-not-allowed"
-                : "hover:bg-gray-50"
-            }`}
-          >
-            <span>
-              {o.stock === 0 && "[품절] "}
-              {o.label}
-            </span>
-            {o.stock === 0 && (
-              <span
-                className="text-orange-500 text-xs"
-                onClick={() => alert("재입고 알림 신청이 완료되었습니다")}
-              >
-                재입고 알림
-              </span>
-            )}
-          </button>
-        ))}
-      </div>
-    </details>
-  );
-}
+export default ProductDetailOptions;

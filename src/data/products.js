@@ -9,7 +9,7 @@ const products = [
     price: 32000,
     image: "/images/placeholder.jpg",
     options: [
-      { id: 1, label: "21N 아이보리", stock: 10 },
+      { id: 1, label: "21N 아이보리", stock: 0 },
       { id: 2, label: "23N 베이지", stock: 4 },
     ],
   },

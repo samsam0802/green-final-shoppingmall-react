@@ -7,7 +7,7 @@ import ProductDetailBuy from "./detail/ProductDetailBuy";
 // import ProductDetailReview from "./detail/ProductDetailReview";
 import ProductDetailQnA from "./detail/ProductDetailQnA";
 import ProductDetailInfo from "./detail/ProductDetailInfo";
-import RestockAlertModal from "./RestockAlertModal";
+// import RestockAlertModal from "./RestockAlertModal";
 import ProductDetailOptions from "./detail/ProductDetailOptions";
 import ReviewListComponent from "../review/ReviewListComponent";
 
@@ -19,16 +19,20 @@ export default function ProductDetailComponent() {
   const [liked, setLiked] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]); // ✅ 옵션 선택 상태는 여기 딱 하나만
 
-  const [openRestockModal, setOpenRestockModal] = useState(false);
   const [tab, setTab] = useState("info");
 
-  const totalPrice = selectedItems.reduce(
-    (sum, item) => sum + item.price * item.qty,
-    0
-  );
+  // const totalPrice = selectedItems.reduce(
+  //   (sum, item) => sum + item.price * item.qty,
+  //   0
+  // );
 
   const handleClickOrder = () => {
-    if (selectedItems.length === 0) return alert("옵션을 선택해주세요.");
+    if (
+      product.options &&
+      product.options.length !== 0 &&
+      selectedItems.length === 0
+    )
+      return alert("옵션을 선택해주세요.");
 
     navigate("/order", {
       state: {
@@ -98,7 +102,7 @@ export default function ProductDetailComponent() {
           <div className="flex gap-3 pt-4">
             <button
               className="flex-1 py-3 rounded-md border border-[#111111] text-[#111111] hover:bg-gray-100"
-              onClick={() => alert("장바구니에 담겼습니다")}
+              onClick={() => alert("장바구니 버튼 클릭")}
             >
               장바구니
             </button>
@@ -149,11 +153,6 @@ export default function ProductDetailComponent() {
       {/* {tab === "review" && <ProductDetailReview />} */}
       {tab === "review" && <ReviewListComponent />}
       {tab === "qna" && <ProductDetailQnA />}
-
-      <RestockAlertModal
-        isOpen={openRestockModal}
-        onClose={() => setOpenRestockModal(false)}
-      />
     </div>
   );
 }
