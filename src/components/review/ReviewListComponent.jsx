@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import ReviewRatingComponent from "./ReviewRatingComponent";
 
 const ReviewListComponent = () => {
   const [showComments, setShowComments] = useState(false); // 댓글창 열림 상태
@@ -29,15 +30,10 @@ const ReviewListComponent = () => {
 
   return (
     <div className="w-full min-h-screen">
-      <div className="w-full mx-auto">
+      <div className="w-full mx-auto my-25">
+        <ReviewRatingComponent />
         <div className="flex justify-between items-center py-10 text-sm text-gray-600">
-          <div className="flex items-center space-x-2 text-gray-800 font-semibold text-base">
-            <span>리뷰 103개</span>
-            <span className="flex items-center space-x-1 text-sm">
-              <span className="text-yellow-500 text-xl leading-none">★</span>
-              <span className="text-gray-800">4.8점</span>
-            </span>
-          </div>
+          <div className="flex items-center space-x-2 text-gray-800 font-semibold text-base"></div>
           <select className="px-2 py-1 text-xs bg-white text-gray-700 rounded-md focus:ring-0 focus:outline-none">
             <option>최신순</option>
             <option>좋아요순</option>
@@ -47,7 +43,7 @@ const ReviewListComponent = () => {
         </div>
 
         {/* 리뷰 1 */}
-        <div className="bg-white pb-4 mb-4 border-b border-gray-500">
+        <div className="bg-white pb-4 mb-4 border-b border-gray-300">
           <div>
             <div className="flex justify-between items-center mb-2">
               <div className="flex items-center space-x-3">
@@ -98,7 +94,7 @@ const ReviewListComponent = () => {
 
             {/* 댓글 목록 */}
             {showComments && (
-              <div className="mt-4 border-t border-gray-100 pt-3">
+              <div className="mt-4 border-t border-gray-200 pt-3">
                 {initialComments.map((comment) => {
                   const nameColor = comment.isSeller
                     ? "text-blue-600"
@@ -107,7 +103,7 @@ const ReviewListComponent = () => {
                   return (
                     <div
                       key={comment.id}
-                      className="py-3 border-b border-gray-200"
+                      className="py-3 border-b border-gray-100"
                     >
                       <div className="flex justify-between items-center mb-1">
                         <div className="flex items-center space-x-2">
@@ -156,7 +152,7 @@ const ReviewListComponent = () => {
             )}
           </div>
         </div>
-        <div className="bg-white pb-4 border-b border-gray-500">
+        <div className="bg-white pb-4 border-b border-gray-300">
           <div>
             <div className="flex justify-between items-center mb-2 pt-4">
               <div className="flex items-center space-x-3">
