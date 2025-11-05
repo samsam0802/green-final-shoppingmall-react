@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import OrderSearchResultTable from "./OrderSearchResultTable";
 import CheckboxGroup from "../CheckboxGroup";
+import dayjs from "dayjs";
 
 const AdminOrderMgrComponent = () => {
   // --- 상태 관리 ---
@@ -11,7 +12,9 @@ const AdminOrderMgrComponent = () => {
   const [selectedOrderType, setSelectedOrderType] = useState([]); //주문유형 state
   const [selectedPaymentStatus, setSelectedPaymentStatus] = useState([]); //결제상태 state
 
-  // --- 체크박스 옵션 ---
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+
   const allPreStatuses = [
     "주문접수",
     "결제확인",
@@ -32,6 +35,30 @@ const AdminOrderMgrComponent = () => {
   const allPayment = ["무통장입금", "신용카드", "휴대폰결제"];
   const allOrderType = ["고객주문", "관리자주문"];
   const allPaymentStatus = ["무통장입금 대기", "카드결제완료", "소액결제완료"];
+
+  const dateHandler = (label) => {
+    let today = dayjs(); //오늘 기준
+    let start;
+
+    if (label === "오늘") {
+      start = today;
+    } else if (label === "1주일") {
+      start = today.subtract(6, "day"); //오늘 포함 1주일
+    } else if (label === "14일") {
+      start = today.subtract(13, "day");
+    } else if (label === "1개월") {
+      start = today.subtract(1, "month");
+    } else if (label === "3개월") {
+      start = today.subtract(3, "month");
+    } else if (label === "6개월") {
+      start = today.subtract(6, "month");
+    } else {
+      start = today;
+    }
+
+    setStartDate(start.format("YYYY-MM-DD"));
+    setEndDate(today.format("YYYY-MM-DD"));
+  };
 
   return (
     <div className="w-full bg-white p-6 text-sm font-['Inter'] min-h-screen">
@@ -84,28 +111,30 @@ const AdminOrderMgrComponent = () => {
             <div className="flex items-center gap-1">
               <input
                 type="date"
+                value={startDate}
                 className="border border-gray-300 p-1 bg-white cursor-pointer h-[32px] rounded-md focus:ring-blue-500 focus:border-blue-500"
+                onChange={(e) => setStartDate(e.target.value)}
               />
               <span className="text-gray-500">~</span>
               <input
                 type="date"
+                value={endDate}
                 className="border border-gray-300 p-1 bg-white cursor-pointer h-[32px] rounded-md focus:ring-blue-500 focus:border-blue-500"
+                onChange={(e) => setEndDate(e.target.value)}
               />
             </div>
             <div className="flex gap-1 ml-2">
-              {["오늘", "1주", "15일", "1개월", "3개월", "6개월"].map(
+              {["오늘", "1주일", "14일", "1개월", "3개월", "6개월"].map(
                 (label) => (
                   <button
                     key={label}
                     className="border border-gray-300 bg-white px-2 py-1 text-gray-700 text-xs cursor-pointer rounded-md hover:bg-blue-50 hover:border-blue-500 transition"
+                    onClick={() => dateHandler(label)}
                   >
                     {label}
                   </button>
                 )
               )}
-              <button className="border border-blue-600 bg-blue-50 px-2 py-1 text-blue-700 text-xs cursor-pointer rounded-md hover:bg-blue-100 transition">
-                전체
-              </button>
             </div>
           </div>
         </div>
