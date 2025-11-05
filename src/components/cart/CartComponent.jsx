@@ -1,32 +1,17 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { changeQty } from "../../store/cartSlice";
 
 const CartComponent = () => {
   const navigate = useNavigate();
 
-  const [cart, setCart] = useState([
-    {
-      id: 1,
-      brand: "HYGEE",
-      name: "보디 바디스크럽 285g",
-      price: 24000,
-      qty: 1,
-    },
-    {
-      id: 2,
-      brand: "HYGEE",
-      name: "수딩 알로에 진정 수분크림 120ml",
-      price: 42000,
-      qty: 1,
-    },
-    {
-      id: 3,
-      brand: "HYGEE",
-      name: "수분 진정 토너 500ml",
-      price: 45000,
-      qty: 1,
-    },
-  ]);
+  // cartSlice에 action을 전달할 dispatch 불러오기
+  const dispatch = useDispatch();
+
+  //store 전역 저장소에서 장바구니 내역 불러오기
+  const cart = useSelector((state) => state.cart);
+  // const [cart, setCart] = useState(cartState);
 
   const [selectedItems, setSelectedItems] = useState(
     cart.map((item) => item.id)
@@ -46,31 +31,33 @@ const CartComponent = () => {
     );
   };
 
-  const increaseQty = (id) => {
-    setCart((prev) =>
-      prev.map((i) => (i.id === id ? { ...i, qty: i.qty + 1 } : i))
-    );
-  };
+  // const increaseQty = (id) => {
+  //   setCart((prev) =>
+  //     prev.map((i) => (i.id === id ? { ...i, qty: i.qty + 1 } : i))
+  //   );
+  // };
 
-  const decreaseQty = (id) => {
-    setCart((prev) =>
-      prev.map((i) => (i.id === id && i.qty > 1 ? { ...i, qty: i.qty - 1 } : i))
-    );
+  // const decreaseQty = (id) => {
+  //   setCart((prev) =>
+  //     prev.map((i) => (i.id === id && i.qty > 1 ? { ...i, qty: i.qty - 1 } : i))
+  //   );
+  // };
+
+  const handleChangeQty = (id, delta) => {
+    dispatch(changeQty({ id, delta }));
   };
 
   const selectedCartItems = cart.filter((item) =>
     selectedItems.includes(item.id)
   );
 
-  const totalPrice = selectedCartItems.reduce(
-    (sum, item) => sum + item.price * item.qty,
-    0
-  );
+  const totalPrice = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
 
   const shipping = totalPrice >= 20000 ? 0 : 2500;
 
   // ✅ 주문 페이지 이동 시 선택한 상품만 전달
   const handleOrderSelected = () => {
+    if (selectedCartItems.length === 0) return alert("상품을 선택해주세요");
     navigate("/order", { state: { items: selectedCartItems } });
   };
 
@@ -145,14 +132,14 @@ const CartComponent = () => {
                     <div className="flex items-center justify-center gap-2">
                       <button
                         className="w-6 h-6 border border-[#111111] rounded text-xs"
-                        onClick={() => decreaseQty(item.id)}
+                        onClick={() => handleChangeQty(item.id, -1)}
                       >
                         -
                       </button>
                       <span className="w-6 text-center">{item.qty}</span>
                       <button
                         className="w-6 h-6 border border-[#111111] rounded text-xs"
-                        onClick={() => increaseQty(item.id)}
+                        onClick={() => handleChangeQty(item.id, +1)}
                       >
                         +
                       </button>
