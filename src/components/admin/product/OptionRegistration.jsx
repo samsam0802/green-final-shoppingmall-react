@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { ChevronUp, ChevronDown } from "lucide-react";
+import { useDispatch } from "react-redux";
+import { updateProductRegisterForm } from "../../../redux/slices/features/admin/product/productRegisterSlice";
 
 export default function OptionRegistration() {
+  const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(true);
   const [options, setOptions] = useState([
     {
@@ -16,34 +19,46 @@ export default function OptionRegistration() {
   ]);
 
   const addOptionHandler = () => {
-    setOptions((prev) => [
-      ...prev,
-      {
-        optionName: "",
-        purchasePrice: "",
-        sellingPrice: "",
-        currentStock: "",
-        initialStock: "",
-        safetyStock: "",
-        image: null,
-      },
-    ]);
+    setOptions((prev) => {
+      const data = [
+        ...prev,
+        {
+          optionName: "",
+          purchasePrice: "",
+          sellingPrice: "",
+          currentStock: "",
+          initialStock: "",
+          safetyStock: "",
+          image: null,
+        },
+      ];
+
+      dispatch(updateProductRegisterForm({ section: "options", data: data }));
+
+      return data;
+    });
   };
 
   const removeOptionHandler = (index) => {
     if (options.length > 1) {
-      setOptions((prev) => prev.filter((_, i) => i !== index));
+      setOptions((prev) => {
+        const data = prev.filter((_, i) => i !== index);
+
+        dispatch(updateProductRegisterForm({ section: "options", data: data }));
+
+        return data;
+      });
     }
   };
 
   const inputChangeHandler = (index, field, value) => {
     setOptions((prev) => {
-      const temp = prev.map((option, i) =>
+      const data = prev.map((option, i) =>
         // 수정한 옵션의 값만 바뀌도록
         i === index ? { ...option, [field]: value } : option
       );
-      console.log(temp);
-      return temp;
+      dispatch(updateProductRegisterForm({ section: "options", data: data }));
+      return data;
     });
   };
 

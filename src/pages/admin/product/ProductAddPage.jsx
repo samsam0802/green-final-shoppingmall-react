@@ -6,21 +6,16 @@ import ProductSaleInfo from "../../../components/admin/product/ProductSaleInfo";
 import ProductImageRegister from "../../../components/admin/product/ProductImageRegister";
 import DeliveryCharge from "../../../components/admin/product/DeliveryCharge";
 import OptionRegistration from "../../../components/admin/product/OptionRegistration";
+import { useSelector } from "react-redux";
 
 const ProductAddPage = () => {
-  const [productData, setProductData] = useState({
-    category: {},
-    brand: {},
-    basicInfo: {},
-    saleInfo: {},
-    images: {},
-    delivery: {},
-    options: [],
-  });
+  const productRegisterForm = useSelector(
+    (state) => state.productRegisterSlice
+  );
 
-  const handleSubmit = async () => {
+  const submitHandler = async () => {
     try {
-      console.log("상품 데이터:", productData);
+      console.log("상품 등록 폼:", productRegisterForm);
       alert("상품이 등록되었습니다.");
     } catch (error) {
       console.error("등록 실패:", error);
@@ -29,59 +24,37 @@ const ProductAddPage = () => {
   };
 
   return (
-    <div className="space-y-8 pb-24">
-      {/* 컴포넌트들 */}
-      <ProductCategory
-        onDataChange={(data) =>
-          setProductData((prev) => ({ ...prev, category: data }))
-        }
-      />
-      <ProductBrand
-        onDataChange={(data) =>
-          setProductData((prev) => ({ ...prev, brand: data }))
-        }
-      />
-      <ProductBasicInfo
-        onDataChange={(data) =>
-          setProductData((prev) => ({ ...prev, basicInfo: data }))
-        }
-      />
-      <ProductSaleInfo
-        onDataChange={(data) =>
-          setProductData((prev) => ({ ...prev, saleInfo: data }))
-        }
-      />
-      <ProductImageRegister
-        onDataChange={(data) =>
-          setProductData((prev) => ({ ...prev, images: data }))
-        }
-      />
-      <DeliveryCharge
-        onDataChange={(data) =>
-          setProductData((prev) => ({ ...prev, delivery: data }))
-        }
-      />
-      <OptionRegistration
-        onDataChange={(data) =>
-          setProductData((prev) => ({ ...prev, options: data }))
-        }
-      />
-      {/* 등록 버튼 - 사이드바 너비 고려 */}
-      <div className="fixed bottom-0 left-64 right-0 bg-white border-t border-gray-200 p-4 shadow-lg z-50">
-        <div className="max-w-7xl mx-auto flex justify-end space-x-3">
-          <button
-            type="button"
-            className="px-6 py-3 bg-gray-500 text-white text-sm font-medium rounded-md hover:bg-gray-600 transition-colors"
-          >
-            취소
-          </button>
-          <button
-            type="button"
-            onClick={handleSubmit}
-            className="px-6 py-3 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 transition-colors"
-          >
-            상품 등록
-          </button>
+    <div className="min-h-screen">
+      <div className="space-y-8 pb-40">
+        {/* props 전달 없이 사용 */}
+        <ProductCategory />
+        <ProductBrand />
+        <ProductBasicInfo />
+        <ProductSaleInfo />
+        <ProductImageRegister />
+        <DeliveryCharge />
+        <OptionRegistration />
+      </div>
+
+      <div className="fixed bottom-6 right-6 z-50">
+        <div className="bg-white rounded-lg shadow-lg border border-gray-200 p-4">
+          <div className="flex space-x-3">
+            <button
+              type="button"
+              // onClick={() => dispatch(resetProductForm())}
+              className="px-6 py-2 bg-gray-500 text-white text-sm font-medium rounded-md hover:bg-gray-600 transition-colors"
+            >
+              초기화
+            </button>
+            <button
+              type="button"
+              onClick={submitHandler}
+              // disabled={isLoading}
+              className="px-6 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 disabled:bg-blue-300 transition-colors"
+            >
+              상품 등록
+            </button>
+          </div>
         </div>
       </div>
     </div>

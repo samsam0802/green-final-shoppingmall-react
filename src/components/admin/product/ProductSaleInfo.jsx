@@ -1,5 +1,7 @@
 import { ChevronDown, ChevronUp } from "lucide-react";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { updateProductRegisterForm } from "../../../redux/slices/features/admin/product/productRegisterSlice";
 
 const InfoRow = ({ label, required, children, className = "" }) => (
   <div className={`flex border-b border-gray-200 ${className}`}>
@@ -14,6 +16,7 @@ const InfoRow = ({ label, required, children, className = "" }) => (
 );
 
 export default function ProductSaleInfo() {
+  const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(true);
   const [saleInfo, setSaleInfo] = useState({
     saleStatus: "onSale",
@@ -27,12 +30,14 @@ export default function ProductSaleInfo() {
     const { name, value, type, checked } = e.target;
 
     setSaleInfo((prev) => {
-      const temp = {
+      const saleInfoData = {
         ...prev,
         [name]: type === "checkbox" ? checked : value,
       };
-      console.log(temp);
-      return temp;
+      dispatch(
+        updateProductRegisterForm({ section: "saleInfo", data: saleInfoData })
+      );
+      return saleInfoData;
     });
   };
 

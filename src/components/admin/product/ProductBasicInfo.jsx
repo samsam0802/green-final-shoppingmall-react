@@ -1,5 +1,7 @@
 import { ChevronDown, ChevronUp } from "lucide-react";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { updateProductRegisterForm } from "../../../redux/slices/features/admin/product/productRegisterSlice";
 
 // 공통 행 레이아웃 컴포넌트 (뼈대용)
 const InfoRow = ({ label, required, children, className = "" }) => (
@@ -15,6 +17,7 @@ const InfoRow = ({ label, required, children, className = "" }) => (
 );
 
 export default function ProductBasicInfo() {
+  const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(true);
   const [productBasicInfo, setProductBasicInfo] = useState({
     productName: "",
@@ -26,9 +29,14 @@ export default function ProductBasicInfo() {
     const { name, value } = e.target;
 
     setProductBasicInfo((prev) => {
-      const temp = { ...prev, [name]: value };
-      console.log(temp);
-      return temp;
+      const basicInfo = { ...prev, [name]: value };
+      dispatch(
+        updateProductRegisterForm({
+          section: "basicInfo",
+          data: basicInfo,
+        })
+      );
+      return basicInfo;
     });
   };
 

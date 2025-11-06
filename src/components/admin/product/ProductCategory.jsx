@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { ChevronUp, ChevronDown, Trash2 } from "lucide-react";
+import { useDispatch } from "react-redux";
+import { updateProductRegisterForm } from "../../../redux/slices/features/admin/product/productRegisterSlice";
 
 // 임시 데이터
 const categoriesData = [
@@ -82,6 +84,7 @@ const CategorySelector = ({ selectedPath, onSelect, columns }) => {
 };
 
 export default function ProductCategory() {
+  const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(true);
   // 선택된 경로: [{ id: '1', name: '의류', ... }, { id: '2', name: '탑', ... }]
   const [currentSelectedPath, setCurrentSelectedPath] = useState([]);
@@ -114,6 +117,13 @@ export default function ProductCategory() {
       // 최하위 카테고리 하나만 선택되도록 함
       setSelectedCategories([newCategory]);
       setCurrentSelectedPath([]);
+      // Redux state 관리
+      dispatch(
+        updateProductRegisterForm({
+          section: "category",
+          data: newCategory,
+        })
+      );
     }
     console.log("selectedCategories : ", selectedCategories);
   };

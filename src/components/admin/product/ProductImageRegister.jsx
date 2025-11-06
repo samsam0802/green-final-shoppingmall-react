@@ -1,5 +1,7 @@
 import { ChevronDown, ChevronUp, Upload, X, Plus } from "lucide-react";
 import React, { useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { updateProductRegisterForm } from "../../../redux/slices/features/admin/product/productRegisterSlice";
 
 // 초기 이미지 구조
 const initialImages = {
@@ -8,6 +10,8 @@ const initialImages = {
 };
 
 export default function ProductImageRegister() {
+  const dispatch = useDispatch();
+  const { imageData } = useSelector((state) => state.productRegisterSlice);
   const thumbnailRef = useRef(null);
   const galleryRef = useRef(null);
   const [isOpen, setIsOpen] = useState(true);
@@ -21,6 +25,15 @@ export default function ProductImageRegister() {
       setImages((prev) => ({ ...prev, thumbnailImage: file }));
       // 대표 이미지가 선택되면 자동으로 미리보기 상세 정보 표시 (인덱스 0)
       setSelectedPreviewIndex(0);
+      //리덕스 상태관리
+      dispatch(
+        updateProductRegisterForm({
+          section: "images",
+          data: {
+            thumbnailImage: file,
+          },
+        })
+      );
     }
   };
 
@@ -30,10 +43,23 @@ export default function ProductImageRegister() {
     } else {
       const files = Array.from(e.target.files);
       if (files.length > 0) {
-        setImages((prev) => ({
-          ...prev,
-          galleryImages: [...prev.galleryImages, ...files],
-        }));
+        setImages((prev) => {
+          const temp = {
+            ...prev,
+            galleryImages: [...prev.galleryImages, ...files],
+          };
+
+          //리덕스 상태관리
+          const galleryImageData = [...prev.galleryImages, ...files];
+          dispatch(
+            updateProductRegisterForm({
+              section: "images",
+              data: { galleryImages: galleryImageData },
+            })
+          );
+
+          return temp;
+        });
       }
       // 파일 선택 후 input 값 초기화 (같은 파일을 다시 선택해도 onChange 이벤트 발생시키기 위함)
       e.target.value = "";
@@ -44,13 +70,23 @@ export default function ProductImageRegister() {
   const removeImageHandler = (index) => {
     if (index === 0) {
       // 대표 이미지 삭제
-      setImages((prev) => ({ ...prev, thumbnailImage: null }));
+      setImages((prev) => {
+        const data = { ...prev, thumbnailImage: null };
+
+        //리덕스 상태관리
+        dispatch(updateProductRegisterForm({ section: "images", data: data }));
+        return data;
+      });
     } else {
       // 추가 이미지 삭제 (인덱스는 1부터 시작)
-      setImages((prev) => ({
-        ...prev,
-        galleryImages: prev.galleryImages.filter((_, i) => i !== index - 1),
-      }));
+      setImages((prev) => {
+        const data = {
+          ...prev,
+          galleryImages: prev.galleryImages.filter((_, i) => i !== index - 1),
+        };
+        dispatch(updateProductRegisterForm({ section: "images", data: data }));
+        return data;
+      });
     }
 
     // 미리보기 인덱스 재설정
