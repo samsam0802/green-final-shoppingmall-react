@@ -4,9 +4,8 @@ import CheckboxGroup from "../CheckboxGroup";
 import dayjs from "dayjs";
 
 const AdminOrderMgrComponent = () => {
-  // --- 상태 관리 ---
-  const [selectedPreStatuses, setSelectedPreStatuses] = useState([]); //주문상태(출고 전)
-  const [selectedPostStatuses, setSelectedPostStatuses] = useState([]); //주문상태(출고 후)
+  const [selectedPreStatuses, setSelectedPreStatuses] = useState([]); //주문상태
+  const [selectedPostStatuses, setSelectedPostStatuses] = useState([]); //배송상태
   const [selectedDelivery, setSelectedDelivery] = useState([]); //배송방법 state
   const [selectedPayment, setSelectedPayment] = useState([]); //주문결제 state
   const [selectedOrderType, setSelectedOrderType] = useState([]); //주문유형 state
@@ -27,14 +26,21 @@ const AdminOrderMgrComponent = () => {
     "출고완료",
     "배송중",
     "배송완료",
-    "반품신청",
-    "반품완료",
+    "반품/환불신청",
+    "반품/환불완료",
     "전체",
   ];
   const allDelivery = ["대한통운", "우체국", "직접입력", "해외국가"];
   const allPayment = ["무통장입금", "신용카드", "휴대폰결제"];
   const allOrderType = ["고객주문", "관리자주문"];
-  const allPaymentStatus = ["무통장입금 대기", "카드결제완료", "소액결제완료"];
+  const allPaymentStatus = [
+    "무통장입금 대기",
+    "카드결제입금 대기",
+    "소액결제입금 대기",
+    "무통장입금완료",
+    "카드결제완료",
+    "소액결제완료",
+  ];
 
   const dateHandler = (label) => {
     let today = dayjs(); //오늘 기준
@@ -139,16 +145,16 @@ const AdminOrderMgrComponent = () => {
           </div>
         </div>
 
-        {/* 체크박스 그룹: 출고 전/후 */}
+        {/* 체크박스 그룹 */}
         <CheckboxGroup
-          title="주문상태(출고 전)"
+          title="주문상태"
           options={allPreStatuses}
           selectedOptions={selectedPreStatuses}
           setSelectedOptions={setSelectedPreStatuses}
           showAll={true}
         />
         <CheckboxGroup
-          title="주문상태(출고 후)"
+          title="배송상태"
           options={allPostStatuses}
           selectedOptions={selectedPostStatuses}
           setSelectedOptions={setSelectedPostStatuses}
