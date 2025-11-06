@@ -4,17 +4,15 @@ import CheckboxGroup from "../CheckboxGroup";
 import dayjs from "dayjs";
 
 const UserInfoMgr = () => {
-  // --- 체크박스 상태 관리 ---
   const [signupMethods, setSignupMethods] = useState([]); //회원가입 방법 state
   const [smsOptions, setSmsOptions] = useState([]); //SMS 수신 state
   const [emailOptions, setEmailOptions] = useState([]); //email 수신 state
   const [memberStatus, setMemberStatus] = useState([]); //회원 상태 state
 
-  // --- 옵션 정의 (CheckboxGroup용) ---
   const signupOptions = ["쇼핑몰", "네이버", "카카오", "기타", "전체"];
   const smsOptionList = ["동의", "거부", "전체"];
   const emailOptionList = ["동의", "거부", "전체"];
-  const memberStatusOptions = ["정상", "탈퇴", "휴먼", "전체"];
+  const memberStatusOptions = ["정상", "탈퇴", "휴면", "전체"];
 
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -115,10 +113,9 @@ const UserInfoMgr = () => {
           </div>
         </div>
 
-        {/* 등급 */}
         <div className="flex border-b border-gray-300 items-stretch">
           <div className="w-40 bg-gray-50 border-r border-gray-300 text-gray-700 font-semibold flex items-center justify-center p-2">
-            등급
+            권한
           </div>
           <div className="flex items-center flex-grow p-2 gap-2">
             <select className="border border-gray-300 p-1 bg-white cursor-pointer rounded-md">
