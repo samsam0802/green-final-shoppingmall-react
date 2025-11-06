@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import products from "../../data/products";
 import { CATEGORY_DATA } from "../../data/categories";
+import { ChevronRight } from "lucide-react";
 
 import ProductCard from "../../components/product/ProductCard";
 import ProductSortBar from "./ProductSortBar";
@@ -72,95 +73,157 @@ const ProductListComponent = () => {
   const sideCategory = CATEGORY_DATA.find((c) => c.main === decodedMain);
 
   return (
-    <div className="max-w-6xl mx-auto p-8 flex gap-8 text-[#111111]">
+    <div className="max-w-7xl mx-auto px-4 md:px-8 py-8 flex flex-col lg:flex-row gap-8">
       {/* ✅ 사이드바 */}
-      <aside className="w-56 text-sm border-r pr-5">
-        <h2 className="text-[18px] font-bold pb-3 border-b border-gray-300">
-          {decodedMain}
-        </h2>
+      <aside className="w-full lg:w-64 shrink-0">
+        <div className="sticky top-4 bg-white rounded-2xl border-2 border-gray-200 p-6 shadow-sm">
+          <h2 className="text-xl font-bold text-gray-900 pb-4 border-b-2 border-gray-900">
+            {decodedMain}
+          </h2>
 
-        <ul className="mt-4 space-y-3">
-          {sideCategory?.subs.map((item) => {
-            const isActiveSub = decodedSub === item.name;
-            return (
-              <li key={item.name}>
-                <Link
-                  to={`/category/${main}/${encodeURIComponent(
-                    item.name.replace(/\//g, "-")
-                  )}`}
-                  className={`block ${
-                    isActiveSub ? "text-black font-semibold" : "text-gray-600"
-                  } hover:text-black hover:font-semibold transition`}
-                >
-                  {item.name}
-                </Link>
+          <ul className="mt-5 space-y-2">
+            {sideCategory?.subs.map((item) => {
+              const isActiveSub = decodedSub === item.name;
+              return (
+                <li key={item.name}>
+                  <Link
+                    to={`/category/${main}/${encodeURIComponent(
+                      item.name.replace(/\//g, "-")
+                    )}`}
+                    className={`block px-4 py-2.5 rounded-lg transition-all ${
+                      isActiveSub
+                        ? "bg-gray-900 text-white font-semibold"
+                        : "text-gray-700 hover:bg-gray-100 font-medium"
+                    }`}
+                  >
+                    {item.name}
+                  </Link>
 
-                {isActiveSub && item.children?.length > 0 && (
-                  <ul className="mt-2 space-y-1 ml-3 border-l pl-3 border-gray-200">
-                    {item.children.map((child) => (
-                      <li key={child}>
-                        <Link
-                          to={`/category/${main}/${encodeURIComponent(
-                            item.name.replace(/\//g, "-")
-                          )}/${encodeURIComponent(child.replace(/\//g, "-"))}`}
-                          className={`block ${
-                            decodedDeep === child
-                              ? "text-black font-semibold"
-                              : "text-gray-400"
-                          } hover:text-black transition`}
-                        >
-                          {child}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </li>
-            );
-          })}
-        </ul>
+                  {isActiveSub && item.children?.length > 0 && (
+                    <ul className="mt-2 space-y-1 ml-4 pl-4 border-l-2 border-gray-300">
+                      {item.children.map((child) => (
+                        <li key={child}>
+                          <Link
+                            to={`/category/${main}/${encodeURIComponent(
+                              item.name.replace(/\//g, "-")
+                            )}/${encodeURIComponent(
+                              child.replace(/\//g, "-")
+                            )}`}
+                            className={`block px-3 py-2 rounded-lg text-sm transition-all ${
+                              decodedDeep === child
+                                ? "bg-gray-100 text-gray-900 font-semibold"
+                                : "text-gray-500 hover:text-gray-900 hover:bg-gray-50"
+                            }`}
+                          >
+                            {child}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        </div>
       </aside>
 
       {/* ✅ 오른쪽 상품 목록 영역 */}
-      <div className="flex-1">
-        <h1 className="text-xl font-bold mb-6">
-          {decodedMain}
-          {decodedSub && ` > ${decodedSub}`}
-          {decodedDeep && ` > ${decodedDeep}`}
-        </h1>
-
-        {/* 필터 / 정렬 */}
-        <ProductFilterBar
-          filters={filters}
-          setFilters={setFilters}
-          brandOptions={brandOptions}
-        />
-        <ProductSortBar sort={sort} setSort={setSort} />
-
-        {/* ✅ 상품 그리드 */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-6">
-          {pagedProducts.map((product) => (
-            <div
-              key={product.id}
-              className="rounded-lg overflow-hidden hover:shadow-md transition"
-            >
-              <ProductCard product={product} />
-            </div>
-          ))}
-
-          {pagedProducts.length === 0 && (
-            <p className="text-gray-500 text-sm mt-6">
-              등록된 상품이 없습니다.
-            </p>
+      <div className="flex-1 min-w-0">
+        {/* 브레드크럼 */}
+        <nav className="flex items-center gap-2 text-sm text-gray-600 mb-6">
+          <span className="font-medium text-gray-900">{decodedMain}</span>
+          {decodedSub && (
+            <>
+              <ChevronRight className="w-4 h-4 text-gray-400" />
+              <span className="font-medium text-gray-900">{decodedSub}</span>
+            </>
           )}
+          {decodedDeep && (
+            <>
+              <ChevronRight className="w-4 h-4 text-gray-400" />
+              <span className="font-medium text-gray-900">{decodedDeep}</span>
+            </>
+          )}
+        </nav>
+
+        {/* 카테고리 제목 */}
+        <div className="mb-6">
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            {decodedDeep || decodedSub || decodedMain}
+          </h1>
+          <p className="text-sm text-gray-500">
+            총{" "}
+            <span className="font-semibold text-gray-900">
+              {sortedProducts.length}
+            </span>
+            개의 상품
+          </p>
         </div>
 
+        {/* 🔹 필터 / 정렬 - 수정된 부분 */}
+        <div className="mb-6 p-4 bg-gray-50 rounded-xl border border-gray-200">
+          <div className="flex flex-col gap-4">
+            {/* 브랜드 필터 */}
+            <ProductFilterBar
+              filters={filters}
+              setFilters={setFilters}
+              brandOptions={brandOptions}
+            />
+
+            {/* 정렬 바 */}
+            <ProductSortBar sort={sort} setSort={setSort} />
+          </div>
+        </div>
+
+        {/* ✅ 상품 그리드 */}
+        {pagedProducts.length > 0 ? (
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+            {pagedProducts.map((product) => (
+              <div
+                key={product.id}
+                className="group rounded-2xl overflow-hidden bg-white border border-gray-200 hover:border-gray-300 hover:shadow-lg transition-all duration-300"
+              >
+                <ProductCard product={product} />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="flex flex-col items-center justify-center py-20 px-4">
+            <div className="w-20 h-20 mb-4 rounded-full bg-gray-100 flex items-center justify-center">
+              <svg
+                className="w-10 h-10 text-gray-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                />
+              </svg>
+            </div>
+            <p className="text-gray-600 text-lg font-medium mb-1">
+              등록된 상품이 없습니다
+            </p>
+            <p className="text-gray-400 text-sm">
+              다른 카테고리를 선택해보세요
+            </p>
+          </div>
+        )}
+
         {/* ✅ 페이지네이션 */}
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          setCurrentPage={setCurrentPage}
-        />
+        {totalPages > 1 && (
+          <div className="mt-12">
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              setCurrentPage={setCurrentPage}
+            />
+          </div>
+        )}
       </div>
     </div>
   );

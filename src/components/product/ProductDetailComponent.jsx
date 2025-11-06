@@ -2,17 +2,17 @@ import React, { useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import products from "../../data/products";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+import { ChevronRight } from "lucide-react"; // breadcrumb 화살표용
 
 import ProductDetailBuy from "./detail/ProductDetailBuy";
-// import ProductDetailReview from "./detail/ProductDetailReview";
-import ProductDetailQnA from "./detail/ProductDetailQnA";
 import ProductDetailInfo from "./detail/ProductDetailInfo";
-// import RestockAlertModal from "./RestockAlertModal";
 import ProductDetailOptions from "./detail/ProductDetailOptions";
 import ReviewListComponent from "../review/ReviewListComponent";
-import { useDispatch, useSelector } from "react-redux";
-import { addItem, changeQty, removeItem } from "../../store/cartSlice";
+import { useDispatch } from "react-redux";
+import { addItem } from "../../store/cartSlice";
 import ProductDetailQuantity from "./detail/ProductDetailQuantity";
+import ProductQuestion from "../productquestion/ProductQuestion";
+import ProductPurchaseInfo from "./detail/ProductPurchaseInfo";
 
 export default function ProductDetailComponent() {
   const { id } = useParams();
@@ -20,13 +20,10 @@ export default function ProductDetailComponent() {
   const navigate = useNavigate();
 
   const [liked, setLiked] = useState(false);
-  const [selectedItems, setSelectedItems] = useState([]); // ✅ 옵션 선택 상태는 여기 딱 하나만
-
+  const [selectedItems, setSelectedItems] = useState([]);
   const [tab, setTab] = useState("info");
-  //옵션 없는 상품의 수량을 구하기 위한 state
   const [qty, setQty] = useState(1);
 
-  // cartSlice에 action을 전달할 dispatch 불러오기
   const dispatch = useDispatch();
 
   const handleClickOrderOption = () => {
@@ -52,7 +49,6 @@ export default function ProductDetailComponent() {
   };
 
   const handleClickOrder = () => {
-    console.log("handleClickOrder");
     navigate("/order", {
       state: {
         items: [
@@ -104,41 +100,62 @@ export default function ProductDetailComponent() {
     );
   };
 
-  return (
-    <div className="max-w-7xl mx-auto px-8 mt-12 pb-32 text-[#111111]">
-      {/* 경로 */}
-      <div className="text-sm text-gray-500 mb-6 flex gap-2">
-        <Link to="/" className="hover:underline">
-          홈
-        </Link>{" "}
-        /<span>{product.categoryMain}</span> /<span>{product.categorySub}</span>
-      </div>
+  const tabs = [
+    { key: "info", label: "상품설명" },
+    { key: "buy", label: "구매정보" },
+    { key: "review", label: "리뷰" },
+    { key: "qna", label: "Q&A" },
+  ];
 
-      {/* 상품 상단영역 */}
-      <div className="grid grid-cols-2 gap-12 mb-16">
-        <div>
-          <img
-            src={product.image}
-            className="w-full h-[480px] object-cover rounded-lg border"
-          />
+  return (
+    <div className="max-w-7xl mx-auto px-4 md:px-8 mt-8 md:mt-12 pb-32">
+      {/* 🔹 개선된 경로 (Breadcrumb) */}
+      <nav className="flex items-center gap-2 text-sm text-gray-500 mb-6 md:mb-8">
+        <Link to="/" className="hover:text-gray-900 transition-colors">
+          홈
+        </Link>
+        <span className="text-gray-300">/</span>
+        <span className="hover:text-gray-900 transition-colors cursor-pointer">
+          {product.categoryMain}
+        </span>
+        <span className="text-gray-300">/</span>
+        <span className="text-gray-900 font-medium">{product.categorySub}</span>
+      </nav>
+
+      {/* 🔹 개선된 상품 상단영역 */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mb-12 md:mb-16">
+        {/* 상품 이미지 */}
+        <div className="relative group">
+          <div className="aspect-square overflow-hidden rounded-2xl bg-gray-50 border border-gray-200 shadow-sm">
+            <img
+              src={product.image}
+              alt={product.name}
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+            />
+          </div>
         </div>
 
-        <div className="space-y-5">
-          <div className="text-sm text-gray-500">{product.brand}</div>
-          <h1 className="text-2xl font-bold">{product.name}</h1>
-
-          <div>
-            <p className="text-[#111111]">{product.price.toLocaleString()}원</p>
-            {/* <p className="text-3xl font-bold text-[#111111]">
-              {product.discountPrice.toLocaleString()}원
-              <span className="text-[#ff5c00] text-lg ml-2">
-                {product.discountRate}%↓
-              </span>
-            </p> */}
+        {/* 상품 정보 */}
+        <div className="space-y-6">
+          {/* 브랜드 */}
+          <div className="inline-block px-4 py-1.5 bg-gradient-to-r from-gray-100 to-gray-50 rounded-full text-sm text-gray-700 font-semibold border border-gray-200">
+            {product.brand}
           </div>
 
-          {/* ✅ 옵션 UI */}
-          {/* 옵션이 있을 때 뜨는 옵션 선택창 */}
+          {/* 상품명 */}
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 leading-tight">
+            {product.name}
+          </h1>
+
+          {/* 가격 */}
+          <div className="py-5 border-y-2 border-gray-900">
+            <p className="text-3xl md:text-4xl font-bold text-gray-900">
+              {product.price.toLocaleString()}
+              <span className="text-lg font-normal text-gray-600 ml-2">원</span>
+            </p>
+          </div>
+
+          {/* 옵션 선택 */}
           {product.options.length > 0 && (
             <ProductDetailOptions
               product={product}
@@ -147,7 +164,7 @@ export default function ProductDetailComponent() {
             />
           )}
 
-          {/* 옵션이 없을때 뜨는 수량 조절창 */}
+          {/* 수량 선택 (옵션 없을 때) */}
           {product.options.length === 0 && (
             <ProductDetailQuantity
               qty={qty}
@@ -156,87 +173,94 @@ export default function ProductDetailComponent() {
             />
           )}
 
-          {/* 버튼 */}
-          {product.options.length > 0 && (
-            <div className="flex gap-3 pt-4">
-              <button
-                className="flex-1 py-3 rounded-md border border-[#111111] text-[#111111] hover:bg-gray-100"
-                onClick={() => handleAddCartOption(selectedItems)}
-              >
-                장바구니
-              </button>
+          {/* 🔹 개선된 버튼 영역 */}
+          <div className="flex gap-3 pt-6">
+            {product.options.length > 0 ? (
+              <>
+                <button
+                  className="flex-1 py-4 rounded-xl border-2 border-gray-900 text-gray-900 font-semibold hover:bg-gray-900 hover:text-white transition-all duration-300 active:scale-95"
+                  onClick={() => handleAddCartOption(selectedItems)}
+                >
+                  장바구니
+                </button>
+                <button
+                  className="flex-1 py-4 rounded-xl bg-gray-900 text-white font-semibold hover:bg-black transition-all duration-300 active:scale-95 shadow-lg hover:shadow-xl"
+                  onClick={() => handleClickOrderOption()}
+                >
+                  바로구매
+                </button>
+              </>
+            ) : (
+              <>
+                <button
+                  className="flex-1 py-4 rounded-xl border-2 border-gray-900 text-gray-900 font-semibold hover:bg-gray-900 hover:text-white transition-all duration-300 active:scale-95"
+                  onClick={() => handleAddCart(product)}
+                >
+                  장바구니
+                </button>
+                <button
+                  className="flex-1 py-4 rounded-xl bg-gray-900 text-white font-semibold hover:bg-black transition-all duration-300 active:scale-95 shadow-lg hover:shadow-xl"
+                  onClick={() => handleClickOrder()}
+                >
+                  바로구매
+                </button>
+              </>
+            )}
+            <button
+              onClick={() => setLiked(!liked)}
+              className="p-4 rounded-xl border-2 border-gray-200 hover:border-red-400 hover:bg-red-50 transition-all duration-300 active:scale-95"
+            >
+              {liked ? (
+                <AiFillHeart className="w-6 h-6 text-red-500" />
+              ) : (
+                <AiOutlineHeart className="w-6 h-6 text-gray-400" />
+              )}
+            </button>
+          </div>
 
-              <button
-                className="flex-1 py-3 rounded-md bg-[#111111] text-white hover:bg-black"
-                onClick={() => handleClickOrderOption()}
-              >
-                바로구매
-              </button>
-              <button onClick={() => setLiked(!liked)} className="text-3xl">
-                {liked ? (
-                  <AiFillHeart className="text-[#ff5c00]" />
-                ) : (
-                  <AiOutlineHeart className="text-gray-400" />
-                )}
-              </button>
+          {/* 🔹 배송 정보 추가 */}
+          <div className="mt-8 p-5 bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl border border-gray-200 space-y-3 text-sm">
+            <div className="flex justify-between items-center">
+              <span className="text-gray-600 font-medium">배송비</span>
+              <span className="font-bold text-gray-900">무료배송</span>
             </div>
-          )}
-          {product.options.length === 0 && (
-            <div className="flex gap-3 pt-4">
-              <button
-                className="flex-1 py-3 rounded-md border border-[#111111] text-[#111111] hover:bg-gray-100"
-                onClick={() => handleAddCart(product)}
-              >
-                장바구니
-              </button>
-
-              <button
-                className="flex-1 py-3 rounded-md bg-[#111111] text-white hover:bg-black"
-                onClick={() => handleClickOrder()}
-              >
-                바로구매
-              </button>
-
-              <button onClick={() => setLiked(!liked)} className="text-3xl">
-                {liked ? (
-                  <AiFillHeart className="text-[#ff5c00]" />
-                ) : (
-                  <AiOutlineHeart className="text-gray-400" />
-                )}
-              </button>
+            <div className="flex justify-between items-center">
+              <span className="text-gray-600 font-medium">배송기간</span>
+              <span className="font-bold text-gray-900">평균 1~3일</span>
             </div>
-          )}
+          </div>
         </div>
       </div>
 
-      {/* ✅ 탭 */}
-      <div className="border-b flex gap-10 text-lg font-semibold py-3">
-        {["info", "buy", "review", "qna"].map((key) => (
-          <button
-            key={key}
-            onClick={() => setTab(key)}
-            className={
-              tab === key
-                ? "text-[#111111] border-b-2 border-[#111111]"
-                : "text-gray-400"
-            }
-          >
-            {key === "info"
-              ? "상품설명"
-              : key === "buy"
-              ? "구매정보"
-              : key === "review"
-              ? "리뷰"
-              : "Q&A"}
-          </button>
-        ))}
+      {/* 🔹 개선된 탭 메뉴 */}
+      <div className="sticky top-0 bg-white z-10 border-b-2 border-gray-200 shadow-sm">
+        <div className="flex gap-0 overflow-x-auto">
+          {tabs.map((t) => (
+            <button
+              key={t.key}
+              onClick={() => setTab(t.key)}
+              className={`flex-1 min-w-[100px] py-5 text-base font-bold transition-all relative ${
+                tab === t.key
+                  ? "text-gray-900"
+                  : "text-gray-400 hover:text-gray-600"
+              }`}
+            >
+              {t.label}
+              {tab === t.key && (
+                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gray-900 rounded-t-full" />
+              )}
+            </button>
+          ))}
+        </div>
       </div>
 
-      {tab === "info" && <ProductDetailInfo />}
-      {tab === "buy" && <ProductDetailBuy product={product} />}
-      {/* {tab === "review" && <ProductDetailReview />} */}
-      {tab === "review" && <ReviewListComponent />}
-      {tab === "qna" && <ProductDetailQnA />}
+      {/* 탭 컨텐츠 */}
+      <div className="mt-8">
+        {tab === "info" && <ProductDetailInfo />}
+        {tab === "buy" && <ProductPurchaseInfo />}
+        {tab === "review" && <ReviewListComponent />}
+        {tab === "qna" && <ProductQuestion />}
+      </div>
     </div>
   );
 }
