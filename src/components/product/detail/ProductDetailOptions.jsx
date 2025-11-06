@@ -2,7 +2,12 @@ import React, { useState } from "react";
 import { ChevronDown, X } from "lucide-react";
 
 const ProductDetailOptions = ({ product, selectedItems, setSelectedItems }) => {
+  if (!product) {
+    return null;
+  }
   const [isOpen, setIsOpen] = useState(false);
+
+  const options = product.options || [];
 
   const handleSelect = (option) => {
     setSelectedItems((prev) => {
@@ -18,8 +23,15 @@ const ProductDetailOptions = ({ product, selectedItems, setSelectedItems }) => {
   };
 
   const handleQtyChange = (option, delta) => {
+    // console.log("selectedItems", selectedItems);
     setSelectedItems((prev) => {
-      return [...prev, { ...option, qty: qty + delta }];
+      // console.log("prev", prev);
+      return prev.map((item) => {
+        // console.log("item", item);
+        return item.id === option.id
+          ? { ...item, qty: Math.max(1, item.qty + delta) }
+          : item;
+      });
     });
   };
 
@@ -42,18 +54,18 @@ const ProductDetailOptions = ({ product, selectedItems, setSelectedItems }) => {
         {/* 드롭다운 리스트 */}
         {isOpen && (
           <ul className="absolute z-20 w-full mt-2 max-h-64 overflow-y-auto bg-white border-2 border-gray-200 rounded-xl shadow-xl">
-            {product.options.map((o, idx) => (
+            {options.map((o, idx) => (
               <li
                 key={o.id}
-                className={`flex items-center justify-between px-5 py-4 cursor-pointer transition-colors ${
-                  idx !== product.options.length - 1
-                    ? "border-b border-gray-100"
-                    : ""
-                } ${
-                  o.stock === 0
-                    ? "bg-gray-50 opacity-50 cursor-not-allowed"
-                    : "hover:bg-gray-50"
-                }`}
+                className={`flex items-center justify-between px-5 py-4 cursor-pointer transition-colors 
+                  ${
+                    idx !== options.length - 1 ? "border-b border-gray-100" : ""
+                  } 
+                    ${
+                      o.stock === 0
+                        ? "bg-gray-50 opacity-50 cursor-not-allowed"
+                        : "hover:bg-gray-50"
+                    }`}
                 onClick={() => o.stock !== 0 && handleSelect(o)}
               >
                 <div className="flex flex-col gap-1">
@@ -86,29 +98,29 @@ const ProductDetailOptions = ({ product, selectedItems, setSelectedItems }) => {
       {/* 옵션 선택하면 아래 구매리스트에 뜨도록 설계 */}
       {selectedItems.length > 0 && (
         <div className="space-y-3 p-4 bg-gray-50 rounded-xl border border-gray-200">
-          {selectedItems.map((item) => (
+          {selectedItems.map((option) => (
             <div
-              key={item.id}
+              key={option.id}
               className="flex items-center justify-between gap-4 p-4 bg-white border border-gray-200 rounded-xl shadow-sm"
             >
               {/* 제품명 */}
               <div className="flex-1 text-sm font-medium text-gray-900">
-                {item.label}
+                {option.label}
               </div>
 
               {/* 수량 조절 */}
               <div className="flex items-center border-2 border-gray-200 rounded-lg overflow-hidden">
                 <button
-                  onClick={() => handleQtyChange(item, -1)}
+                  onClick={() => handleQtyChange(option, -1)}
                   className="w-10 h-10 flex justify-center items-center text-gray-600 hover:bg-gray-100 transition-colors"
                 >
                   -
                 </button>
                 <span className="w-12 h-10 flex justify-center items-center text-sm font-semibold text-gray-900 bg-gray-50">
-                  {item.qty}
+                  {option.qty}
                 </span>
                 <button
-                  onClick={() => handleQtyChange(item, +1)}
+                  onClick={() => handleQtyChange(option, +1)}
                   className="w-10 h-10 flex justify-center items-center text-gray-600 hover:bg-gray-100 transition-colors"
                 >
                   +
@@ -117,14 +129,16 @@ const ProductDetailOptions = ({ product, selectedItems, setSelectedItems }) => {
 
               {/* 가격 */}
               <div className="text-sm font-bold text-gray-900 min-w-[80px] text-right">
-                {product.price.toLocaleString()}원
+                {product.price
+                  ? product.price.toLocaleString() + "원"
+                  : "가격 정보 없음"}
               </div>
 
               {/* 삭제 버튼 */}
               <button
                 onClick={() =>
                   setSelectedItems((prev) =>
-                    prev.filter((i) => i.id !== item.id)
+                    prev.filter((i) => i.id !== option.id)
                   )
                 }
                 className="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all"
