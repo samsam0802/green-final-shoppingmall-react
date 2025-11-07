@@ -8,32 +8,34 @@ const products = [
     categorySub: "베이스",
     categoryDeep: "쿠션",
     images: {
-      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      thumbnail:
+        "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
       gallery: [
-        "/images/cosmetics-7512332_1280.jpg",
-        "/images/chanel-4743979_1280.jpg",
+        "https://cdn.pixabay.com/photo/2020/02/08/10/35/soap-4829708_640.jpg",
+        "https://cdn.pixabay.com/photo/2016/10/22/20/55/makeup-brushes-1761648_640.jpg",
       ],
-      detail: ["/images/beauty-6837031_1280.jpg"],
     },
     detailImages: [
-      "/images/beauty-6837031_1280.jpg",
-      "/images/chanel-4743979_1280.jpg",
-      "/images/cosmetics-7512332_1280.jpg",
-      "/images/lipstick-8587707_1280.jpg",
+      "https://cdn.pixabay.com/photo/2021/01/06/07/52/lipsticks-5893480_640.jpg",
+      "https://cdn.pixabay.com/photo/2021/10/10/21/52/makeup-6698881_640.jpg",
+      "https://cdn.pixabay.com/photo/2017/06/26/23/47/perfume-2445617_640.jpg",
+      "https://cdn.pixabay.com/photo/2015/11/26/00/54/cosmetics-1063134_640.jpg",
     ],
     options: [
       {
         id: 1,
         option_name: "21N 아이보리",
         price: 8000,
-        image_url: "/images/beauty-6837031_1280.jpg",
+        image_url:
+          "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
         stock: 0,
       },
       {
         id: 2,
         option_name: "23N 베이지",
         price: 7000,
-        image_url: "/images/beauty-6837031_1280.jpg",
+        image_url:
+          "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
         stock: 4,
       },
     ],
@@ -46,32 +48,36 @@ const products = [
     categorySub: "베이스",
 
     images: {
-      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      thumbnail:
+        "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
       gallery: [
-        "/images/cosmetics-7512332_1280.jpg",
-        "/images/chanel-4743979_1280.jpg",
+        "https://cdn.pixabay.com/photo/2020/02/08/10/35/soap-4829708_640.jpg",
+        "https://cdn.pixabay.com/photo/2016/10/22/20/55/makeup-brushes-1761648_640.jpg",
       ],
-      detail: "/images/beauty-6837031_1280.jpg",
     },
     detailImages: [
-      "/images/beauty-6837031_1280.jpg",
-      "/images/chanel-4743979_1280.jpg",
-      "/images/cosmetics-7512332_1280.jpg",
-      "/images/lipstick-8587707_1280.jpg",
+      "https://cdn.pixabay.com/photo/2021/01/06/07/52/lipsticks-5893480_640.jpg",
+      "https://cdn.pixabay.com/photo/2021/10/10/21/52/makeup-6698881_640.jpg",
+      "https://cdn.pixabay.com/photo/2017/06/26/23/47/perfume-2445617_640.jpg",
+      "https://cdn.pixabay.com/photo/2015/11/26/00/54/cosmetics-1063134_640.jpg",
     ],
     options: [
       {
         id: 1,
         option_name: "21호 아이보리",
         price: 6000,
-        image_url: "/images/beauty-6837031_1280.jpg",
+        image_url:
+          "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
+
         stock: 8,
       },
       {
         id: 2,
         option_name: "23호 내추럴",
         price: 5000,
-        image_url: "/images/beauty-6837031_1280.jpg",
+        image_url:
+          "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
+
         stock: 6,
       },
     ],
@@ -87,18 +93,18 @@ const products = [
     categoryDeep: "컨실러",
 
     images: {
-      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      thumbnail:
+        "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
       gallery: [
-        "/images/cosmetics-7512332_1280.jpg",
-        "/images/chanel-4743979_1280.jpg",
+        "https://cdn.pixabay.com/photo/2020/02/08/10/35/soap-4829708_640.jpg",
+        "https://cdn.pixabay.com/photo/2016/10/22/20/55/makeup-brushes-1761648_640.jpg",
       ],
-      detail: "/images/beauty-6837031_1280.jpg",
     },
     detailImages: [
-      "/images/beauty-6837031_1280.jpg",
-      "/images/chanel-4743979_1280.jpg",
-      "/images/cosmetics-7512332_1280.jpg",
-      "/images/lipstick-8587707_1280.jpg",
+      "https://cdn.pixabay.com/photo/2021/01/06/07/52/lipsticks-5893480_640.jpg",
+      "https://cdn.pixabay.com/photo/2021/10/10/21/52/makeup-6698881_640.jpg",
+      "https://cdn.pixabay.com/photo/2017/06/26/23/47/perfume-2445617_640.jpg",
+      "https://cdn.pixabay.com/photo/2015/11/26/00/54/cosmetics-1063134_640.jpg",
     ],
 
     options: [
@@ -106,14 +112,16 @@ const products = [
         id: 1,
         option_name: "1호 클리어 베이지",
         price: 6000,
-        image_url: "/images/beauty-6837031_1280.jpg",
-        stock: 15,
+        image_url:
+          "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
       },
       {
         id: 2,
         option_name: "1.5호 내추럴 베이지",
         price: 16900,
-        image_url: "/images/beauty-6837031_1280.jpg",
+        image_url:
+          "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
+
         stock: 9,
       },
     ],
@@ -127,25 +135,27 @@ const products = [
     categoryDeep: "파우더",
 
     images: {
-      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      thumbnail:
+        "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
       gallery: [
-        "/images/cosmetics-7512332_1280.jpg",
-        "/images/chanel-4743979_1280.jpg",
+        "https://cdn.pixabay.com/photo/2020/02/08/10/35/soap-4829708_640.jpg",
+        "https://cdn.pixabay.com/photo/2016/10/22/20/55/makeup-brushes-1761648_640.jpg",
       ],
-      detail: "/images/beauty-6837031_1280.jpg",
     },
     detailImages: [
-      "/images/beauty-6837031_1280.jpg",
-      "/images/chanel-4743979_1280.jpg",
-      "/images/cosmetics-7512332_1280.jpg",
-      "/images/lipstick-8587707_1280.jpg",
+      "https://cdn.pixabay.com/photo/2021/01/06/07/52/lipsticks-5893480_640.jpg",
+      "https://cdn.pixabay.com/photo/2021/10/10/21/52/makeup-6698881_640.jpg",
+      "https://cdn.pixabay.com/photo/2017/06/26/23/47/perfume-2445617_640.jpg",
+      "https://cdn.pixabay.com/photo/2015/11/26/00/54/cosmetics-1063134_640.jpg",
     ],
     options: [
       {
         id: 1,
         option_name: "파우더 기획 1+1",
         price: 12000,
-        image_url: "/images/beauty-6837031_1280.jpg",
+        image_url:
+          "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
+
         stock: 4,
       },
     ],
@@ -161,32 +171,36 @@ const products = [
     categoryDeep: "틴트",
 
     images: {
-      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      thumbnail:
+        "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
       gallery: [
-        "/images/cosmetics-7512332_1280.jpg",
-        "/images/chanel-4743979_1280.jpg",
+        "https://cdn.pixabay.com/photo/2020/02/08/10/35/soap-4829708_640.jpg",
+        "https://cdn.pixabay.com/photo/2016/10/22/20/55/makeup-brushes-1761648_640.jpg",
       ],
-      detail: "/images/beauty-6837031_1280.jpg",
     },
     detailImages: [
-      "/images/beauty-6837031_1280.jpg",
-      "/images/chanel-4743979_1280.jpg",
-      "/images/cosmetics-7512332_1280.jpg",
-      "/images/lipstick-8587707_1280.jpg",
+      "https://cdn.pixabay.com/photo/2021/01/06/07/52/lipsticks-5893480_640.jpg",
+      "https://cdn.pixabay.com/photo/2021/10/10/21/52/makeup-6698881_640.jpg",
+      "https://cdn.pixabay.com/photo/2017/06/26/23/47/perfume-2445617_640.jpg",
+      "https://cdn.pixabay.com/photo/2015/11/26/00/54/cosmetics-1063134_640.jpg",
     ],
     options: [
       {
         id: 1,
         option_name: "01 로지밀크티",
         price: 7000,
-        image_url: "/images/beauty-6837031_1280.jpg",
+        image_url:
+          "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
+
         stock: 6,
       },
       {
         id: 2,
         option_name: "03 뉴트로코랄",
         price: 6000,
-        image_url: "/images/beauty-6837031_1280.jpg",
+        image_url:
+          "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
+
         stock: 5,
       },
     ],
@@ -200,32 +214,36 @@ const products = [
     categoryDeep: "립스틱",
 
     images: {
-      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      thumbnail:
+        "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
       gallery: [
-        "/images/cosmetics-7512332_1280.jpg",
-        "/images/chanel-4743979_1280.jpg",
+        "https://cdn.pixabay.com/photo/2020/02/08/10/35/soap-4829708_640.jpg",
+        "https://cdn.pixabay.com/photo/2016/10/22/20/55/makeup-brushes-1761648_640.jpg",
       ],
-      detail: "/images/beauty-6837031_1280.jpg",
     },
     detailImages: [
-      "/images/beauty-6837031_1280.jpg",
-      "/images/chanel-4743979_1280.jpg",
-      "/images/cosmetics-7512332_1280.jpg",
-      "/images/lipstick-8587707_1280.jpg",
+      "https://cdn.pixabay.com/photo/2021/01/06/07/52/lipsticks-5893480_640.jpg",
+      "https://cdn.pixabay.com/photo/2021/10/10/21/52/makeup-6698881_640.jpg",
+      "https://cdn.pixabay.com/photo/2017/06/26/23/47/perfume-2445617_640.jpg",
+      "https://cdn.pixabay.com/photo/2015/11/26/00/54/cosmetics-1063134_640.jpg",
     ],
     options: [
       {
         id: 1,
         option_name: "422 로지수",
         price: 7000,
-        image_url: "/images/beauty-6837031_1280.jpg",
+        image_url:
+          "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
+
         stock: 3,
       },
       {
         id: 2,
         option_name: "465 어도러블",
         price: 7000,
-        image_url: "/images/beauty-6837031_1280.jpg",
+        image_url:
+          "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
+
         stock: 4,
       },
     ],
@@ -241,25 +259,27 @@ const products = [
     categoryDeep: "아이섀도우/팔레트",
 
     images: {
-      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      thumbnail:
+        "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
       gallery: [
-        "/images/cosmetics-7512332_1280.jpg",
-        "/images/chanel-4743979_1280.jpg",
+        "https://cdn.pixabay.com/photo/2020/02/08/10/35/soap-4829708_640.jpg",
+        "https://cdn.pixabay.com/photo/2016/10/22/20/55/makeup-brushes-1761648_640.jpg",
       ],
-      detail: "/images/beauty-6837031_1280.jpg",
     },
     detailImages: [
-      "/images/beauty-6837031_1280.jpg",
-      "/images/chanel-4743979_1280.jpg",
-      "/images/cosmetics-7512332_1280.jpg",
-      "/images/lipstick-8587707_1280.jpg",
+      "https://cdn.pixabay.com/photo/2021/01/06/07/52/lipsticks-5893480_640.jpg",
+      "https://cdn.pixabay.com/photo/2021/10/10/21/52/makeup-6698881_640.jpg",
+      "https://cdn.pixabay.com/photo/2017/06/26/23/47/perfume-2445617_640.jpg",
+      "https://cdn.pixabay.com/photo/2015/11/26/00/54/cosmetics-1063134_640.jpg",
     ],
     options: [
       {
         id: 1,
         option_name: "옵션",
         price: 10000,
-        image_url: "/images/beauty-6837031_1280.jpg",
+        image_url:
+          "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
+
         stock: 1,
       },
     ],
@@ -273,25 +293,27 @@ const products = [
     categoryDeep: "마스카라",
 
     images: {
-      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      thumbnail:
+        "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
       gallery: [
-        "/images/cosmetics-7512332_1280.jpg",
-        "/images/chanel-4743979_1280.jpg",
+        "https://cdn.pixabay.com/photo/2020/02/08/10/35/soap-4829708_640.jpg",
+        "https://cdn.pixabay.com/photo/2016/10/22/20/55/makeup-brushes-1761648_640.jpg",
       ],
-      detail: "/images/beauty-6837031_1280.jpg",
     },
     detailImages: [
-      "/images/beauty-6837031_1280.jpg",
-      "/images/chanel-4743979_1280.jpg",
-      "/images/cosmetics-7512332_1280.jpg",
-      "/images/lipstick-8587707_1280.jpg",
+      "https://cdn.pixabay.com/photo/2021/01/06/07/52/lipsticks-5893480_640.jpg",
+      "https://cdn.pixabay.com/photo/2021/10/10/21/52/makeup-6698881_640.jpg",
+      "https://cdn.pixabay.com/photo/2017/06/26/23/47/perfume-2445617_640.jpg",
+      "https://cdn.pixabay.com/photo/2015/11/26/00/54/cosmetics-1063134_640.jpg",
     ],
     options: [
       {
         id: 1,
         option_name: "옵션",
         price: 10000,
-        image_url: "/images/beauty-6837031_1280.jpg",
+        image_url:
+          "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
+
         stock: 1,
       },
     ],
@@ -307,32 +329,36 @@ const products = [
     categoryDeep: "블러셔",
 
     images: {
-      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      thumbnail:
+        "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
       gallery: [
-        "/images/cosmetics-7512332_1280.jpg",
-        "/images/chanel-4743979_1280.jpg",
+        "https://cdn.pixabay.com/photo/2020/02/08/10/35/soap-4829708_640.jpg",
+        "https://cdn.pixabay.com/photo/2016/10/22/20/55/makeup-brushes-1761648_640.jpg",
       ],
-      detail: "/images/beauty-6837031_1280.jpg",
     },
     detailImages: [
-      "/images/beauty-6837031_1280.jpg",
-      "/images/chanel-4743979_1280.jpg",
-      "/images/cosmetics-7512332_1280.jpg",
-      "/images/lipstick-8587707_1280.jpg",
+      "https://cdn.pixabay.com/photo/2021/01/06/07/52/lipsticks-5893480_640.jpg",
+      "https://cdn.pixabay.com/photo/2021/10/10/21/52/makeup-6698881_640.jpg",
+      "https://cdn.pixabay.com/photo/2017/06/26/23/47/perfume-2445617_640.jpg",
+      "https://cdn.pixabay.com/photo/2015/11/26/00/54/cosmetics-1063134_640.jpg",
     ],
     options: [
       {
         id: 1,
         option_name: "01 유리조각",
         price: 7000,
-        image_url: "/images/beauty-6837031_1280.jpg",
+        image_url:
+          "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
+
         stock: 7,
       },
       {
         id: 2,
         option_name: "03 웜모먼트",
         price: 7000,
-        image_url: "/images/beauty-6837031_1280.jpg",
+        image_url:
+          "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
+
         stock: 4,
       },
     ],
@@ -346,25 +372,27 @@ const products = [
     categoryDeep: "하이라이터/쉐딩",
 
     images: {
-      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      thumbnail:
+        "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
       gallery: [
-        "/images/cosmetics-7512332_1280.jpg",
-        "/images/chanel-4743979_1280.jpg",
+        "https://cdn.pixabay.com/photo/2020/02/08/10/35/soap-4829708_640.jpg",
+        "https://cdn.pixabay.com/photo/2016/10/22/20/55/makeup-brushes-1761648_640.jpg",
       ],
-      detail: "/images/beauty-6837031_1280.jpg",
     },
     detailImages: [
-      "/images/beauty-6837031_1280.jpg",
-      "/images/chanel-4743979_1280.jpg",
-      "/images/cosmetics-7512332_1280.jpg",
-      "/images/lipstick-8587707_1280.jpg",
+      "https://cdn.pixabay.com/photo/2021/01/06/07/52/lipsticks-5893480_640.jpg",
+      "https://cdn.pixabay.com/photo/2021/10/10/21/52/makeup-6698881_640.jpg",
+      "https://cdn.pixabay.com/photo/2017/06/26/23/47/perfume-2445617_640.jpg",
+      "https://cdn.pixabay.com/photo/2015/11/26/00/54/cosmetics-1063134_640.jpg",
     ],
     options: [
       {
         id: 1,
         option_name: "옵션",
         price: 10000,
-        image_url: "/images/beauty-6837031_1280.jpg",
+        image_url:
+          "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
+
         stock: 1,
       },
     ],
@@ -377,40 +405,42 @@ const products = [
     categorySub: "로션/크림",
     categoryDeep: "로션",
     images: {
-      thumbnail: "/images/1.jpg",
+      thumbnail:
+        "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
       gallery: [
-        "/images/2.jpg",
-        "/images/3.jpg",
-        "/images/4.jpg",
-        "/images/5.jpg",
+        "https://cdn.pixabay.com/photo/2020/02/08/10/35/soap-4829708_640.jpg",
+        "https://cdn.pixabay.com/photo/2016/10/22/20/55/makeup-brushes-1761648_640.jpg",
       ],
     },
     detailImages: [
-      "/images/beauty-6837031_1280.jpg",
-      "/images/chanel-4743979_1280.jpg",
-      "/images/cosmetics-7512332_1280.jpg",
-      "/images/lipstick-8587707_1280.jpg",
+      "https://cdn.pixabay.com/photo/2021/01/06/07/52/lipsticks-5893480_640.jpg",
+      "https://cdn.pixabay.com/photo/2021/10/10/21/52/makeup-6698881_640.jpg",
+      "https://cdn.pixabay.com/photo/2017/06/26/23/47/perfume-2445617_640.jpg",
+      "https://cdn.pixabay.com/photo/2015/11/26/00/54/cosmetics-1063134_640.jpg",
     ],
     options: [
       {
         id: 1,
         option_name: "150ml 단품",
         price: 9900,
-        image_url: "/images/beauty-6837031_1280.jpg",
+        image_url:
+          "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
         stock: 8,
       },
       {
         id: 2,
         option_name: "150ml 1+1 기획",
         price: 16900,
-        image_url: "/images/beauty-6837031_1280.jpg",
+        image_url:
+          "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
         stock: 9,
       },
       {
         id: 3,
         option_name: "+30ml 증정기획",
         price: 8000,
-        image_url: "/images/beauty-6837031_1280.jpg",
+        image_url:
+          "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
         stock: 0,
       },
     ],
@@ -426,25 +456,26 @@ const products = [
     categoryDeep: "에센스",
 
     images: {
-      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      thumbnail:
+        "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
       gallery: [
-        "/images/cosmetics-7512332_1280.jpg",
-        "/images/chanel-4743979_1280.jpg",
+        "https://cdn.pixabay.com/photo/2020/02/08/10/35/soap-4829708_640.jpg",
+        "https://cdn.pixabay.com/photo/2016/10/22/20/55/makeup-brushes-1761648_640.jpg",
       ],
-      detail: "/images/beauty-6837031_1280.jpg",
     },
     detailImages: [
-      "/images/beauty-6837031_1280.jpg",
-      "/images/chanel-4743979_1280.jpg",
-      "/images/cosmetics-7512332_1280.jpg",
-      "/images/lipstick-8587707_1280.jpg",
+      "https://cdn.pixabay.com/photo/2021/01/06/07/52/lipsticks-5893480_640.jpg",
+      "https://cdn.pixabay.com/photo/2021/10/10/21/52/makeup-6698881_640.jpg",
+      "https://cdn.pixabay.com/photo/2017/06/26/23/47/perfume-2445617_640.jpg",
+      "https://cdn.pixabay.com/photo/2015/11/26/00/54/cosmetics-1063134_640.jpg",
     ],
     options: [
       {
         id: 1,
         option_name: "옵션",
         price: 10000,
-        image_url: "/images/beauty-6837031_1280.jpg",
+        image_url:
+          "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
         stock: 1,
       },
     ],
@@ -457,25 +488,26 @@ const products = [
     categorySub: "세럼/에센스",
     categoryDeep: "세럼",
     images: {
-      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      thumbnail:
+        "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
       gallery: [
-        "/images/cosmetics-7512332_1280.jpg",
-        "/images/chanel-4743979_1280.jpg",
+        "https://cdn.pixabay.com/photo/2020/02/08/10/35/soap-4829708_640.jpg",
+        "https://cdn.pixabay.com/photo/2016/10/22/20/55/makeup-brushes-1761648_640.jpg",
       ],
-      detail: "/images/beauty-6837031_1280.jpg",
     },
     detailImages: [
-      "/images/beauty-6837031_1280.jpg",
-      "/images/chanel-4743979_1280.jpg",
-      "/images/cosmetics-7512332_1280.jpg",
-      "/images/lipstick-8587707_1280.jpg",
+      "https://cdn.pixabay.com/photo/2021/01/06/07/52/lipsticks-5893480_640.jpg",
+      "https://cdn.pixabay.com/photo/2021/10/10/21/52/makeup-6698881_640.jpg",
+      "https://cdn.pixabay.com/photo/2017/06/26/23/47/perfume-2445617_640.jpg",
+      "https://cdn.pixabay.com/photo/2015/11/26/00/54/cosmetics-1063134_640.jpg",
     ],
     options: [
       {
         id: 1,
         option_name: "옵션",
         price: 10000,
-        image_url: "/images/beauty-6837031_1280.jpg",
+        image_url:
+          "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
         stock: 1,
       },
     ],
@@ -490,25 +522,26 @@ const products = [
     categorySub: "세럼/에센스",
     categoryDeep: "앰플",
     images: {
-      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      thumbnail:
+        "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
       gallery: [
-        "/images/cosmetics-7512332_1280.jpg",
-        "/images/chanel-4743979_1280.jpg",
+        "https://cdn.pixabay.com/photo/2020/02/08/10/35/soap-4829708_640.jpg",
+        "https://cdn.pixabay.com/photo/2016/10/22/20/55/makeup-brushes-1761648_640.jpg",
       ],
-      detail: "/images/beauty-6837031_1280.jpg",
     },
     detailImages: [
-      "/images/beauty-6837031_1280.jpg",
-      "/images/chanel-4743979_1280.jpg",
-      "/images/cosmetics-7512332_1280.jpg",
-      "/images/lipstick-8587707_1280.jpg",
+      "https://cdn.pixabay.com/photo/2021/01/06/07/52/lipsticks-5893480_640.jpg",
+      "https://cdn.pixabay.com/photo/2021/10/10/21/52/makeup-6698881_640.jpg",
+      "https://cdn.pixabay.com/photo/2017/06/26/23/47/perfume-2445617_640.jpg",
+      "https://cdn.pixabay.com/photo/2015/11/26/00/54/cosmetics-1063134_640.jpg",
     ],
     options: [
       {
         id: 1,
         option_name: "옵션",
         price: 10000,
-        image_url: "/images/beauty-6837031_1280.jpg",
+        image_url:
+          "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
         stock: 1,
       },
     ],
@@ -521,25 +554,26 @@ const products = [
     categorySub: "세럼/에센스",
     categoryDeep: "앰플",
     images: {
-      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      thumbnail:
+        "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
       gallery: [
-        "/images/cosmetics-7512332_1280.jpg",
-        "/images/chanel-4743979_1280.jpg",
+        "https://cdn.pixabay.com/photo/2020/02/08/10/35/soap-4829708_640.jpg",
+        "https://cdn.pixabay.com/photo/2016/10/22/20/55/makeup-brushes-1761648_640.jpg",
       ],
-      detail: "/images/beauty-6837031_1280.jpg",
     },
     detailImages: [
-      "/images/beauty-6837031_1280.jpg",
-      "/images/chanel-4743979_1280.jpg",
-      "/images/cosmetics-7512332_1280.jpg",
-      "/images/lipstick-8587707_1280.jpg",
+      "https://cdn.pixabay.com/photo/2021/01/06/07/52/lipsticks-5893480_640.jpg",
+      "https://cdn.pixabay.com/photo/2021/10/10/21/52/makeup-6698881_640.jpg",
+      "https://cdn.pixabay.com/photo/2017/06/26/23/47/perfume-2445617_640.jpg",
+      "https://cdn.pixabay.com/photo/2015/11/26/00/54/cosmetics-1063134_640.jpg",
     ],
     options: [
       {
         id: 1,
         option_name: "옵션",
         price: 10000,
-        image_url: "/images/beauty-6837031_1280.jpg",
+        image_url:
+          "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
         stock: 1,
       },
     ],
@@ -554,25 +588,26 @@ const products = [
     categorySub: "토너/미스트",
     categoryDeep: "토너",
     images: {
-      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      thumbnail:
+        "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
       gallery: [
-        "/images/cosmetics-7512332_1280.jpg",
-        "/images/chanel-4743979_1280.jpg",
+        "https://cdn.pixabay.com/photo/2020/02/08/10/35/soap-4829708_640.jpg",
+        "https://cdn.pixabay.com/photo/2016/10/22/20/55/makeup-brushes-1761648_640.jpg",
       ],
-      detail: "/images/beauty-6837031_1280.jpg",
     },
     detailImages: [
-      "/images/beauty-6837031_1280.jpg",
-      "/images/chanel-4743979_1280.jpg",
-      "/images/cosmetics-7512332_1280.jpg",
-      "/images/lipstick-8587707_1280.jpg",
+      "https://cdn.pixabay.com/photo/2021/01/06/07/52/lipsticks-5893480_640.jpg",
+      "https://cdn.pixabay.com/photo/2021/10/10/21/52/makeup-6698881_640.jpg",
+      "https://cdn.pixabay.com/photo/2017/06/26/23/47/perfume-2445617_640.jpg",
+      "https://cdn.pixabay.com/photo/2015/11/26/00/54/cosmetics-1063134_640.jpg",
     ],
     options: [
       {
         id: 1,
         option_name: "옵션",
         price: 10000,
-        image_url: "/images/beauty-6837031_1280.jpg",
+        image_url:
+          "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
         stock: 1,
       },
     ],
@@ -585,25 +620,26 @@ const products = [
     categorySub: "토너/미스트",
     categoryDeep: "미스트",
     images: {
-      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      thumbnail:
+        "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
       gallery: [
-        "/images/cosmetics-7512332_1280.jpg",
-        "/images/chanel-4743979_1280.jpg",
+        "https://cdn.pixabay.com/photo/2020/02/08/10/35/soap-4829708_640.jpg",
+        "https://cdn.pixabay.com/photo/2016/10/22/20/55/makeup-brushes-1761648_640.jpg",
       ],
-      detail: "/images/beauty-6837031_1280.jpg",
     },
     detailImages: [
-      "/images/beauty-6837031_1280.jpg",
-      "/images/chanel-4743979_1280.jpg",
-      "/images/cosmetics-7512332_1280.jpg",
-      "/images/lipstick-8587707_1280.jpg",
+      "https://cdn.pixabay.com/photo/2021/01/06/07/52/lipsticks-5893480_640.jpg",
+      "https://cdn.pixabay.com/photo/2021/10/10/21/52/makeup-6698881_640.jpg",
+      "https://cdn.pixabay.com/photo/2017/06/26/23/47/perfume-2445617_640.jpg",
+      "https://cdn.pixabay.com/photo/2015/11/26/00/54/cosmetics-1063134_640.jpg",
     ],
     options: [
       {
         id: 1,
         option_name: "옵션",
         price: 10000,
-        image_url: "/images/beauty-6837031_1280.jpg",
+        image_url:
+          "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
         stock: 1,
       },
     ],
@@ -618,25 +654,26 @@ const products = [
     categorySub: "로션/크림",
     categoryDeep: "로션",
     images: {
-      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      thumbnail:
+        "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
       gallery: [
-        "/images/cosmetics-7512332_1280.jpg",
-        "/images/chanel-4743979_1280.jpg",
+        "https://cdn.pixabay.com/photo/2020/02/08/10/35/soap-4829708_640.jpg",
+        "https://cdn.pixabay.com/photo/2016/10/22/20/55/makeup-brushes-1761648_640.jpg",
       ],
-      detail: "/images/beauty-6837031_1280.jpg",
     },
     detailImages: [
-      "/images/beauty-6837031_1280.jpg",
-      "/images/chanel-4743979_1280.jpg",
-      "/images/cosmetics-7512332_1280.jpg",
-      "/images/lipstick-8587707_1280.jpg",
+      "https://cdn.pixabay.com/photo/2021/01/06/07/52/lipsticks-5893480_640.jpg",
+      "https://cdn.pixabay.com/photo/2021/10/10/21/52/makeup-6698881_640.jpg",
+      "https://cdn.pixabay.com/photo/2017/06/26/23/47/perfume-2445617_640.jpg",
+      "https://cdn.pixabay.com/photo/2015/11/26/00/54/cosmetics-1063134_640.jpg",
     ],
     options: [
       {
         id: 1,
         option_name: "옵션",
         price: 10000,
-        image_url: "/images/beauty-6837031_1280.jpg",
+        image_url:
+          "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
         stock: 1,
       },
     ],
@@ -650,25 +687,26 @@ const products = [
     categoryDeep: "크림",
 
     images: {
-      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      thumbnail:
+        "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
       gallery: [
-        "/images/cosmetics-7512332_1280.jpg",
-        "/images/chanel-4743979_1280.jpg",
+        "https://cdn.pixabay.com/photo/2020/02/08/10/35/soap-4829708_640.jpg",
+        "https://cdn.pixabay.com/photo/2016/10/22/20/55/makeup-brushes-1761648_640.jpg",
       ],
-      detail: "/images/beauty-6837031_1280.jpg",
     },
     detailImages: [
-      "/images/beauty-6837031_1280.jpg",
-      "/images/chanel-4743979_1280.jpg",
-      "/images/cosmetics-7512332_1280.jpg",
-      "/images/lipstick-8587707_1280.jpg",
+      "https://cdn.pixabay.com/photo/2021/01/06/07/52/lipsticks-5893480_640.jpg",
+      "https://cdn.pixabay.com/photo/2021/10/10/21/52/makeup-6698881_640.jpg",
+      "https://cdn.pixabay.com/photo/2017/06/26/23/47/perfume-2445617_640.jpg",
+      "https://cdn.pixabay.com/photo/2015/11/26/00/54/cosmetics-1063134_640.jpg",
     ],
     options: [
       {
         id: 1,
         option_name: "옵션",
         price: 10000,
-        image_url: "/images/beauty-6837031_1280.jpg",
+        image_url:
+          "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
         stock: 1,
       },
     ],
@@ -684,25 +722,26 @@ const products = [
     categoryDeep: "크림",
 
     images: {
-      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      thumbnail:
+        "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
       gallery: [
-        "/images/cosmetics-7512332_1280.jpg",
-        "/images/chanel-4743979_1280.jpg",
+        "https://cdn.pixabay.com/photo/2020/02/08/10/35/soap-4829708_640.jpg",
+        "https://cdn.pixabay.com/photo/2016/10/22/20/55/makeup-brushes-1761648_640.jpg",
       ],
-      detail: "/images/beauty-6837031_1280.jpg",
     },
     detailImages: [
-      "/images/beauty-6837031_1280.jpg",
-      "/images/chanel-4743979_1280.jpg",
-      "/images/cosmetics-7512332_1280.jpg",
-      "/images/lipstick-8587707_1280.jpg",
+      "https://cdn.pixabay.com/photo/2021/01/06/07/52/lipsticks-5893480_640.jpg",
+      "https://cdn.pixabay.com/photo/2021/10/10/21/52/makeup-6698881_640.jpg",
+      "https://cdn.pixabay.com/photo/2017/06/26/23/47/perfume-2445617_640.jpg",
+      "https://cdn.pixabay.com/photo/2015/11/26/00/54/cosmetics-1063134_640.jpg",
     ],
     options: [
       {
         id: 1,
         option_name: "옵션",
         price: 10000,
-        image_url: "/images/beauty-6837031_1280.jpg",
+        image_url:
+          "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
         stock: 1,
       },
     ],
@@ -716,25 +755,26 @@ const products = [
     categoryDeep: "로션",
 
     images: {
-      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      thumbnail:
+        "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
       gallery: [
-        "/images/cosmetics-7512332_1280.jpg",
-        "/images/chanel-4743979_1280.jpg",
+        "https://cdn.pixabay.com/photo/2020/02/08/10/35/soap-4829708_640.jpg",
+        "https://cdn.pixabay.com/photo/2016/10/22/20/55/makeup-brushes-1761648_640.jpg",
       ],
-      detail: "/images/beauty-6837031_1280.jpg",
     },
     detailImages: [
-      "/images/beauty-6837031_1280.jpg",
-      "/images/chanel-4743979_1280.jpg",
-      "/images/cosmetics-7512332_1280.jpg",
-      "/images/lipstick-8587707_1280.jpg",
+      "https://cdn.pixabay.com/photo/2021/01/06/07/52/lipsticks-5893480_640.jpg",
+      "https://cdn.pixabay.com/photo/2021/10/10/21/52/makeup-6698881_640.jpg",
+      "https://cdn.pixabay.com/photo/2017/06/26/23/47/perfume-2445617_640.jpg",
+      "https://cdn.pixabay.com/photo/2015/11/26/00/54/cosmetics-1063134_640.jpg",
     ],
     options: [
       {
         id: 1,
         option_name: "옵션",
         price: 10000,
-        image_url: "/images/beauty-6837031_1280.jpg",
+        image_url:
+          "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
         stock: 1,
       },
     ],
@@ -749,25 +789,26 @@ const products = [
     categoryDeep: "세럼",
 
     images: {
-      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      thumbnail:
+        "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
       gallery: [
-        "/images/cosmetics-7512332_1280.jpg",
-        "/images/chanel-4743979_1280.jpg",
+        "https://cdn.pixabay.com/photo/2020/02/08/10/35/soap-4829708_640.jpg",
+        "https://cdn.pixabay.com/photo/2016/10/22/20/55/makeup-brushes-1761648_640.jpg",
       ],
-      detail: "/images/beauty-6837031_1280.jpg",
     },
     detailImages: [
-      "/images/beauty-6837031_1280.jpg",
-      "/images/chanel-4743979_1280.jpg",
-      "/images/cosmetics-7512332_1280.jpg",
-      "/images/lipstick-8587707_1280.jpg",
+      "https://cdn.pixabay.com/photo/2021/01/06/07/52/lipsticks-5893480_640.jpg",
+      "https://cdn.pixabay.com/photo/2021/10/10/21/52/makeup-6698881_640.jpg",
+      "https://cdn.pixabay.com/photo/2017/06/26/23/47/perfume-2445617_640.jpg",
+      "https://cdn.pixabay.com/photo/2015/11/26/00/54/cosmetics-1063134_640.jpg",
     ],
     options: [
       {
         id: 1,
         option_name: "옵션",
         price: 10000,
-        image_url: "/images/beauty-6837031_1280.jpg",
+        image_url:
+          "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
         stock: 1,
       },
     ],
@@ -781,25 +822,26 @@ const products = [
     categoryDeep: "세럼",
 
     images: {
-      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      thumbnail:
+        "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
       gallery: [
-        "/images/cosmetics-7512332_1280.jpg",
-        "/images/chanel-4743979_1280.jpg",
+        "https://cdn.pixabay.com/photo/2020/02/08/10/35/soap-4829708_640.jpg",
+        "https://cdn.pixabay.com/photo/2016/10/22/20/55/makeup-brushes-1761648_640.jpg",
       ],
-      detail: "/images/beauty-6837031_1280.jpg",
     },
     detailImages: [
-      "/images/beauty-6837031_1280.jpg",
-      "/images/chanel-4743979_1280.jpg",
-      "/images/cosmetics-7512332_1280.jpg",
-      "/images/lipstick-8587707_1280.jpg",
+      "https://cdn.pixabay.com/photo/2021/01/06/07/52/lipsticks-5893480_640.jpg",
+      "https://cdn.pixabay.com/photo/2021/10/10/21/52/makeup-6698881_640.jpg",
+      "https://cdn.pixabay.com/photo/2017/06/26/23/47/perfume-2445617_640.jpg",
+      "https://cdn.pixabay.com/photo/2015/11/26/00/54/cosmetics-1063134_640.jpg",
     ],
     options: [
       {
         id: 1,
         option_name: "옵션",
         price: 10000,
-        image_url: "/images/beauty-6837031_1280.jpg",
+        image_url:
+          "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
         stock: 1,
       },
     ],
@@ -813,25 +855,26 @@ const products = [
     categoryDeep: "세럼",
 
     images: {
-      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      thumbnail:
+        "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
       gallery: [
-        "/images/cosmetics-7512332_1280.jpg",
-        "/images/chanel-4743979_1280.jpg",
+        "https://cdn.pixabay.com/photo/2020/02/08/10/35/soap-4829708_640.jpg",
+        "https://cdn.pixabay.com/photo/2016/10/22/20/55/makeup-brushes-1761648_640.jpg",
       ],
-      detail: "/images/beauty-6837031_1280.jpg",
     },
     detailImages: [
-      "/images/beauty-6837031_1280.jpg",
-      "/images/chanel-4743979_1280.jpg",
-      "/images/cosmetics-7512332_1280.jpg",
-      "/images/lipstick-8587707_1280.jpg",
+      "https://cdn.pixabay.com/photo/2021/01/06/07/52/lipsticks-5893480_640.jpg",
+      "https://cdn.pixabay.com/photo/2021/10/10/21/52/makeup-6698881_640.jpg",
+      "https://cdn.pixabay.com/photo/2017/06/26/23/47/perfume-2445617_640.jpg",
+      "https://cdn.pixabay.com/photo/2015/11/26/00/54/cosmetics-1063134_640.jpg",
     ],
     options: [
       {
         id: 1,
         option_name: "옵션",
         price: 10000,
-        image_url: "/images/beauty-6837031_1280.jpg",
+        image_url:
+          "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
         stock: 1,
       },
     ],
@@ -845,25 +888,26 @@ const products = [
     categoryDeep: "세럼",
 
     images: {
-      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      thumbnail:
+        "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
       gallery: [
-        "/images/cosmetics-7512332_1280.jpg",
-        "/images/chanel-4743979_1280.jpg",
+        "https://cdn.pixabay.com/photo/2020/02/08/10/35/soap-4829708_640.jpg",
+        "https://cdn.pixabay.com/photo/2016/10/22/20/55/makeup-brushes-1761648_640.jpg",
       ],
-      detail: "/images/beauty-6837031_1280.jpg",
     },
     detailImages: [
-      "/images/beauty-6837031_1280.jpg",
-      "/images/chanel-4743979_1280.jpg",
-      "/images/cosmetics-7512332_1280.jpg",
-      "/images/lipstick-8587707_1280.jpg",
+      "https://cdn.pixabay.com/photo/2021/01/06/07/52/lipsticks-5893480_640.jpg",
+      "https://cdn.pixabay.com/photo/2021/10/10/21/52/makeup-6698881_640.jpg",
+      "https://cdn.pixabay.com/photo/2017/06/26/23/47/perfume-2445617_640.jpg",
+      "https://cdn.pixabay.com/photo/2015/11/26/00/54/cosmetics-1063134_640.jpg",
     ],
     options: [
       {
         id: 1,
         option_name: "옵션",
         price: 10000,
-        image_url: "/images/beauty-6837031_1280.jpg",
+        image_url:
+          "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
         stock: 1,
       },
     ],
@@ -877,25 +921,26 @@ const products = [
     categoryDeep: "세럼",
 
     images: {
-      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      thumbnail:
+        "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
       gallery: [
-        "/images/cosmetics-7512332_1280.jpg",
-        "/images/chanel-4743979_1280.jpg",
+        "https://cdn.pixabay.com/photo/2020/02/08/10/35/soap-4829708_640.jpg",
+        "https://cdn.pixabay.com/photo/2016/10/22/20/55/makeup-brushes-1761648_640.jpg",
       ],
-      detail: "/images/beauty-6837031_1280.jpg",
     },
     detailImages: [
-      "/images/beauty-6837031_1280.jpg",
-      "/images/chanel-4743979_1280.jpg",
-      "/images/cosmetics-7512332_1280.jpg",
-      "/images/lipstick-8587707_1280.jpg",
+      "https://cdn.pixabay.com/photo/2021/01/06/07/52/lipsticks-5893480_640.jpg",
+      "https://cdn.pixabay.com/photo/2021/10/10/21/52/makeup-6698881_640.jpg",
+      "https://cdn.pixabay.com/photo/2017/06/26/23/47/perfume-2445617_640.jpg",
+      "https://cdn.pixabay.com/photo/2015/11/26/00/54/cosmetics-1063134_640.jpg",
     ],
     options: [
       {
         id: 1,
         option_name: "옵션",
         price: 10000,
-        image_url: "/images/beauty-6837031_1280.jpg",
+        image_url:
+          "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
         stock: 1,
       },
     ],
@@ -909,25 +954,26 @@ const products = [
     categoryDeep: "세럼",
 
     images: {
-      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      thumbnail:
+        "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
       gallery: [
-        "/images/cosmetics-7512332_1280.jpg",
-        "/images/chanel-4743979_1280.jpg",
+        "https://cdn.pixabay.com/photo/2020/02/08/10/35/soap-4829708_640.jpg",
+        "https://cdn.pixabay.com/photo/2016/10/22/20/55/makeup-brushes-1761648_640.jpg",
       ],
-      detail: "/images/beauty-6837031_1280.jpg",
     },
     detailImages: [
-      "/images/beauty-6837031_1280.jpg",
-      "/images/chanel-4743979_1280.jpg",
-      "/images/cosmetics-7512332_1280.jpg",
-      "/images/lipstick-8587707_1280.jpg",
+      "https://cdn.pixabay.com/photo/2021/01/06/07/52/lipsticks-5893480_640.jpg",
+      "https://cdn.pixabay.com/photo/2021/10/10/21/52/makeup-6698881_640.jpg",
+      "https://cdn.pixabay.com/photo/2017/06/26/23/47/perfume-2445617_640.jpg",
+      "https://cdn.pixabay.com/photo/2015/11/26/00/54/cosmetics-1063134_640.jpg",
     ],
     options: [
       {
         id: 1,
         option_name: "옵션",
         price: 10000,
-        image_url: "/images/beauty-6837031_1280.jpg",
+        image_url:
+          "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
         stock: 1,
       },
     ],
@@ -941,25 +987,26 @@ const products = [
     categoryDeep: "세럼",
 
     images: {
-      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      thumbnail:
+        "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
       gallery: [
-        "/images/cosmetics-7512332_1280.jpg",
-        "/images/chanel-4743979_1280.jpg",
+        "https://cdn.pixabay.com/photo/2020/02/08/10/35/soap-4829708_640.jpg",
+        "https://cdn.pixabay.com/photo/2016/10/22/20/55/makeup-brushes-1761648_640.jpg",
       ],
-      detail: "/images/beauty-6837031_1280.jpg",
     },
     detailImages: [
-      "/images/beauty-6837031_1280.jpg",
-      "/images/chanel-4743979_1280.jpg",
-      "/images/cosmetics-7512332_1280.jpg",
-      "/images/lipstick-8587707_1280.jpg",
+      "https://cdn.pixabay.com/photo/2021/01/06/07/52/lipsticks-5893480_640.jpg",
+      "https://cdn.pixabay.com/photo/2021/10/10/21/52/makeup-6698881_640.jpg",
+      "https://cdn.pixabay.com/photo/2017/06/26/23/47/perfume-2445617_640.jpg",
+      "https://cdn.pixabay.com/photo/2015/11/26/00/54/cosmetics-1063134_640.jpg",
     ],
     options: [
       {
         id: 1,
         option_name: "옵션",
         price: 10000,
-        image_url: "/images/beauty-6837031_1280.jpg",
+        image_url:
+          "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
         stock: 1,
       },
     ],
@@ -973,25 +1020,26 @@ const products = [
     categoryDeep: "세럼",
 
     images: {
-      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      thumbnail:
+        "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
       gallery: [
-        "/images/cosmetics-7512332_1280.jpg",
-        "/images/chanel-4743979_1280.jpg",
+        "https://cdn.pixabay.com/photo/2020/02/08/10/35/soap-4829708_640.jpg",
+        "https://cdn.pixabay.com/photo/2016/10/22/20/55/makeup-brushes-1761648_640.jpg",
       ],
-      detail: "/images/beauty-6837031_1280.jpg",
     },
     detailImages: [
-      "/images/beauty-6837031_1280.jpg",
-      "/images/chanel-4743979_1280.jpg",
-      "/images/cosmetics-7512332_1280.jpg",
-      "/images/lipstick-8587707_1280.jpg",
+      "https://cdn.pixabay.com/photo/2021/01/06/07/52/lipsticks-5893480_640.jpg",
+      "https://cdn.pixabay.com/photo/2021/10/10/21/52/makeup-6698881_640.jpg",
+      "https://cdn.pixabay.com/photo/2017/06/26/23/47/perfume-2445617_640.jpg",
+      "https://cdn.pixabay.com/photo/2015/11/26/00/54/cosmetics-1063134_640.jpg",
     ],
     options: [
       {
         id: 1,
         option_name: "옵션",
         price: 10000,
-        image_url: "/images/beauty-6837031_1280.jpg",
+        image_url:
+          "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
         stock: 1,
       },
     ],
@@ -1005,25 +1053,26 @@ const products = [
     categoryDeep: "세럼",
 
     images: {
-      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      thumbnail:
+        "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
       gallery: [
-        "/images/cosmetics-7512332_1280.jpg",
-        "/images/chanel-4743979_1280.jpg",
+        "https://cdn.pixabay.com/photo/2020/02/08/10/35/soap-4829708_640.jpg",
+        "https://cdn.pixabay.com/photo/2016/10/22/20/55/makeup-brushes-1761648_640.jpg",
       ],
-      detail: "/images/beauty-6837031_1280.jpg",
     },
     detailImages: [
-      "/images/beauty-6837031_1280.jpg",
-      "/images/chanel-4743979_1280.jpg",
-      "/images/cosmetics-7512332_1280.jpg",
-      "/images/lipstick-8587707_1280.jpg",
+      "https://cdn.pixabay.com/photo/2021/01/06/07/52/lipsticks-5893480_640.jpg",
+      "https://cdn.pixabay.com/photo/2021/10/10/21/52/makeup-6698881_640.jpg",
+      "https://cdn.pixabay.com/photo/2017/06/26/23/47/perfume-2445617_640.jpg",
+      "https://cdn.pixabay.com/photo/2015/11/26/00/54/cosmetics-1063134_640.jpg",
     ],
     options: [
       {
         id: 1,
         option_name: "옵션",
         price: 10000,
-        image_url: "/images/beauty-6837031_1280.jpg",
+        image_url:
+          "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
         stock: 1,
       },
     ],
@@ -1037,25 +1086,26 @@ const products = [
     categoryDeep: "세럼",
 
     images: {
-      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      thumbnail:
+        "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
       gallery: [
-        "/images/cosmetics-7512332_1280.jpg",
-        "/images/chanel-4743979_1280.jpg",
+        "https://cdn.pixabay.com/photo/2020/02/08/10/35/soap-4829708_640.jpg",
+        "https://cdn.pixabay.com/photo/2016/10/22/20/55/makeup-brushes-1761648_640.jpg",
       ],
-      detail: "/images/beauty-6837031_1280.jpg",
     },
     detailImages: [
-      "/images/beauty-6837031_1280.jpg",
-      "/images/chanel-4743979_1280.jpg",
-      "/images/cosmetics-7512332_1280.jpg",
-      "/images/lipstick-8587707_1280.jpg",
+      "https://cdn.pixabay.com/photo/2021/01/06/07/52/lipsticks-5893480_640.jpg",
+      "https://cdn.pixabay.com/photo/2021/10/10/21/52/makeup-6698881_640.jpg",
+      "https://cdn.pixabay.com/photo/2017/06/26/23/47/perfume-2445617_640.jpg",
+      "https://cdn.pixabay.com/photo/2015/11/26/00/54/cosmetics-1063134_640.jpg",
     ],
     options: [
       {
         id: 1,
         option_name: "옵션",
         price: 10000,
-        image_url: "/images/beauty-6837031_1280.jpg",
+        image_url:
+          "https://cdn.pixabay.com/photo/2024/02/21/13/15/lipstick-8587707_640.jpg",
         stock: 1,
       },
     ],
