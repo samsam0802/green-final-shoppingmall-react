@@ -187,36 +187,36 @@ export const reviewTemplates = {
 
 export const categoryTemplateMapping = {
   //메이크업
-  베이스: makeupBase,
-  베이스파우더: makeupBasePowder,
-  립: makeupColor,
-  아이: makeupColor,
-  치크컨투어링: makeupColor,
+  베이스: reviewTemplates.makeupBase,
+  베이스파우더: reviewTemplates.makeupBasePowder,
+  립: reviewTemplates.makeupColor,
+  아이: reviewTemplates.makeupColor,
+  치크컨투어링: reviewTemplates.makeupColor,
 
   //스킨케어
-  세럼에센스: skincare,
-  토너미스트: skincare,
-  로션크림: skincare,
+  세럼에센스: reviewTemplates.skincare,
+  토너미스트: reviewTemplates.skincare,
+  로션크림: reviewTemplates.skincare,
 
   //마스크-팩
-  마스크팩: mask,
+  마스크팩: reviewTemplates.mask,
 
   //선케어
-  선크림: suncare,
-  선스틱: suncare,
-  선세럼: suncare,
+  선크림: reviewTemplates.suncare,
+  선스틱: reviewTemplates.suncare,
+  선세럼: reviewTemplates.suncare,
 
   //클렌징
-  클렌징폼: cleansing,
-  오일밤: cleansing,
-  패드: cleansing,
+  클렌징폼: reviewTemplates.cleansing,
+  오일밤: reviewTemplates.cleansing,
+  패드: reviewTemplates.cleansing,
 
   // 바디케어
-  핸드크림: "body",
-  바디워시: "body",
-  바디미스트: "body",
+  핸드크림: reviewTemplates.body,
+  바디워시: reviewTemplates.body,
+  바디미스트: reviewTemplates.body,
 
   // 헤어케어
-  샴푸트리트먼트: "haircare",
-  헤어오일: "haircareOil",
+  샴푸트리트먼트: reviewTemplates.haircare,
+  헤어오일: reviewTemplates.haircareOil,
 };
