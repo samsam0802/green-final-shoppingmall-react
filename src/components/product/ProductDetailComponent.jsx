@@ -72,7 +72,7 @@ export default function ProductDetailComponent() {
           brand: product.brand,
           price: option.price,
           qty: option.qty,
-          image: product.images.thumbnailImage,
+          image: option.image_url,
         })),
       },
     });
@@ -88,7 +88,7 @@ export default function ProductDetailComponent() {
             brand: product.brand,
             price: product.options[0].price,
             qty: qty,
-            image: product.images.thumbnail,
+            image: product.options[0].image_url,
           },
         ],
       },
@@ -111,7 +111,7 @@ export default function ProductDetailComponent() {
           brand: product.brand,
           price: option.price,
           qty: option.qty,
-          image: product.images.thumbnail,
+          image: option.image_url,
         })
       )
     );
