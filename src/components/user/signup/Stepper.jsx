@@ -16,32 +16,32 @@ export default function Stepper({ step }) {
             <li
               key={s.id}
               className={`px-6 py-4 flex items-center gap-3 border-r last:border-r-0 ${
-                active ? "bg-zinc-100" : "bg-white"
+                active ? "bg-emerald-50" : "bg-white" // 📌 활성 스텝 배경색 변경
               }`}
             >
               <span
                 className={`flex size-8 items-center justify-center rounded-full text-sm font-semibold
-                ${
-                  done
-                    ? "bg-emerald-500 text-white"
-                    : active
-                    ? "bg-black text-white"
-                    : "bg-zinc-200 text-zinc-700"
-                }`}
+        ${
+          done
+            ? "bg-emerald-600 text-white" // 📌 완료된 스텝 에메랄드 적용
+            : active
+            ? "bg-emerald-500 text-white" // 📌 활성 스텝 에메랄드 적용
+            : "bg-zinc-200 text-zinc-700"
+        }`}
               >
                 {s.id}
               </span>
               <div className="leading-tight">
                 <p
                   className={`text-xs ${
-                    active ? "text-black" : "text-zinc-500"
+                    active ? "text-emerald-600 font-bold" : "text-zinc-500" // 📌 활성 스텝 텍스트 색상 변경
                   }`}
                 >
                   {s.label}
                 </p>
                 <p
                   className={`text-[12px] ${
-                    active ? "text-black" : "text-zinc-500"
+                    active ? "text-emerald-700" : "text-zinc-500" // 📌 활성 스텝 텍스트 색상 변경
                   }`}
                 >
                   {s.sub}

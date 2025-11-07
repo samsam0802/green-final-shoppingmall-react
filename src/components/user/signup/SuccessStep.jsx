@@ -24,7 +24,7 @@ export default function SuccessStep() {
           </button>
           <button
             onClick={() => navigate("/loginpage")}
-            className="px-6 h-11 rounded-md bg-zinc-900 text-white text-sm font-semibold hover:opacity-90"
+            className="px-6 h-11 rounded-md bg-emerald-600 text-white text-sm font-semibold hover:bg-emerald-700" // 📌 에메랄드 적용
           >
             로그인하기
           </button>

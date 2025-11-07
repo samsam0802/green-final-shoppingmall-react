@@ -1,4 +1,3 @@
-// src/pages/join/JoinPage.jsx
 import React, { useEffect, useMemo, useState } from "react";
 import AgreementStep from "../../components/user/signup/AgreementStep";
 import InfoStep from "../../components/user/signup/InfoStep";
@@ -6,7 +5,7 @@ import SuccessStep from "../../components/user/signup/SuccessStep";
 import HomeBar from "../../layouts/mainpage/HomeBar";
 import SignUpChoiceModal from "../../components/user/signup/SignUpChoiceModal";
 
-export default function JoinPage() {
+export default function SignUpPage() {
   const [step, setStep] = useState(1);
   const [modalOpen, setModalOpen] = useState(true);
 
@@ -14,17 +13,17 @@ export default function JoinPage() {
     tos: false,
     privacy: false,
     age14: false,
-    sms: false,
-    email: false,
+    // sms: false,
+    // email: false,
   });
 
   const [form, setForm] = useState({
-    username: "",
-    password: "",
-    password2: "",
+    login_id: "", //
+    password_1: "",
+    password_2: "",
     name: "",
     email: "",
-    phone: "",
+    phone_number: "",
     birthY: "",
     birthM: "",
     birthD: "",
@@ -39,12 +38,13 @@ export default function JoinPage() {
     return () => document.body.classList.remove("overflow-hidden");
   }, [modalOpen]);
 
-  const handleNormalJoin = () => {
+  // 일반가입 클릭버튼
+  const handleSignUpBtn = () => {
     setModalOpen(false); // 모달 닫고
     setStep(1); // 약관 단계부터 시작
   };
 
-  const handleSNS = (type) => {
+  const handleSnsBtn = (type) => {
     // TODO: 실제 SNS 연동 로직 필요 시 추가
     alert(`${type.toUpperCase()} 연동은 추후 추가`);
   };
@@ -80,8 +80,8 @@ export default function JoinPage() {
         <SignUpChoiceModal
           open
           onClose={() => setModalOpen(false)}
-          onNormalJoin={handleNormalJoin}
-          onSNS={handleSNS}
+          onNormalJoin={handleSignUpBtn}
+          onSNS={handleSnsBtn}
         />
       )}
 
