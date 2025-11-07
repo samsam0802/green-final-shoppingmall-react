@@ -6,11 +6,36 @@ const products = [
     brand: "CLIO",
     categoryMain: "메이크업",
     categorySub: "베이스",
-    price: 32000,
-    image: "/images/placeholder.jpg",
+    categoryDeep: "쿠션",
+    images: {
+      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      gallery: [
+        "/images/cosmetics-7512332_1280.jpg",
+        "/images/chanel-4743979_1280.jpg",
+      ],
+      detail: ["/images/beauty-6837031_1280.jpg"],
+    },
+    detailImages: [
+      "/images/beauty-6837031_1280.jpg",
+      "/images/chanel-4743979_1280.jpg",
+      "/images/cosmetics-7512332_1280.jpg",
+      "/images/lipstick-8587707_1280.jpg",
+    ],
     options: [
-      { id: 1, label: "21N 아이보리", stock: 0 },
-      { id: 2, label: "23N 베이지", stock: 4 },
+      {
+        id: 1,
+        option_name: "21N 아이보리",
+        price: 8000,
+        image_url: "/images/beauty-6837031_1280.jpg",
+        stock: 0,
+      },
+      {
+        id: 2,
+        option_name: "23N 베이지",
+        price: 7000,
+        image_url: "/images/beauty-6837031_1280.jpg",
+        stock: 4,
+      },
     ],
   },
   {
@@ -19,11 +44,36 @@ const products = [
     brand: "ESPOIR",
     categoryMain: "메이크업",
     categorySub: "베이스",
-    price: 34000,
-    image: "/images/placeholder.jpg",
+
+    images: {
+      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      gallery: [
+        "/images/cosmetics-7512332_1280.jpg",
+        "/images/chanel-4743979_1280.jpg",
+      ],
+      detail: "/images/beauty-6837031_1280.jpg",
+    },
+    detailImages: [
+      "/images/beauty-6837031_1280.jpg",
+      "/images/chanel-4743979_1280.jpg",
+      "/images/cosmetics-7512332_1280.jpg",
+      "/images/lipstick-8587707_1280.jpg",
+    ],
     options: [
-      { id: 1, label: "21호 아이보리", stock: 8 },
-      { id: 2, label: "23호 내추럴", stock: 6 },
+      {
+        id: 1,
+        option_name: "21호 아이보리",
+        price: 6000,
+        image_url: "/images/beauty-6837031_1280.jpg",
+        stock: 8,
+      },
+      {
+        id: 2,
+        option_name: "23호 내추럴",
+        price: 5000,
+        image_url: "/images/beauty-6837031_1280.jpg",
+        stock: 6,
+      },
     ],
   },
 
@@ -35,11 +85,37 @@ const products = [
     categoryMain: "메이크업",
     categorySub: "베이스",
     categoryDeep: "컨실러",
-    price: 6000,
-    image: "/images/placeholder.jpg",
+
+    images: {
+      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      gallery: [
+        "/images/cosmetics-7512332_1280.jpg",
+        "/images/chanel-4743979_1280.jpg",
+      ],
+      detail: "/images/beauty-6837031_1280.jpg",
+    },
+    detailImages: [
+      "/images/beauty-6837031_1280.jpg",
+      "/images/chanel-4743979_1280.jpg",
+      "/images/cosmetics-7512332_1280.jpg",
+      "/images/lipstick-8587707_1280.jpg",
+    ],
+
     options: [
-      { id: 1, label: "1호 클리어 베이지", stock: 15 },
-      { id: 2, label: "1.5호 내추럴 베이지", stock: 9 },
+      {
+        id: 1,
+        option_name: "1호 클리어 베이지",
+        price: 6000,
+        image_url: "/images/beauty-6837031_1280.jpg",
+        stock: 15,
+      },
+      {
+        id: 2,
+        option_name: "1.5호 내추럴 베이지",
+        price: 16900,
+        image_url: "/images/beauty-6837031_1280.jpg",
+        stock: 9,
+      },
     ],
   },
   {
@@ -49,9 +125,30 @@ const products = [
     categoryMain: "메이크업",
     categorySub: "베이스",
     categoryDeep: "파우더",
-    price: 7000,
-    image: "/images/placeholder.jpg",
-    options: [],
+
+    images: {
+      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      gallery: [
+        "/images/cosmetics-7512332_1280.jpg",
+        "/images/chanel-4743979_1280.jpg",
+      ],
+      detail: "/images/beauty-6837031_1280.jpg",
+    },
+    detailImages: [
+      "/images/beauty-6837031_1280.jpg",
+      "/images/chanel-4743979_1280.jpg",
+      "/images/cosmetics-7512332_1280.jpg",
+      "/images/lipstick-8587707_1280.jpg",
+    ],
+    options: [
+      {
+        id: 1,
+        option_name: "파우더 기획 1+1",
+        price: 12000,
+        image_url: "/images/beauty-6837031_1280.jpg",
+        stock: 4,
+      },
+    ],
   },
 
   // ---------- 립 (2개) ----------
@@ -62,11 +159,36 @@ const products = [
     categoryMain: "메이크업",
     categorySub: "립",
     categoryDeep: "틴트",
-    price: 11000,
-    image: "/images/placeholder.jpg",
+
+    images: {
+      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      gallery: [
+        "/images/cosmetics-7512332_1280.jpg",
+        "/images/chanel-4743979_1280.jpg",
+      ],
+      detail: "/images/beauty-6837031_1280.jpg",
+    },
+    detailImages: [
+      "/images/beauty-6837031_1280.jpg",
+      "/images/chanel-4743979_1280.jpg",
+      "/images/cosmetics-7512332_1280.jpg",
+      "/images/lipstick-8587707_1280.jpg",
+    ],
     options: [
-      { id: 1, label: "01 로지밀크티", stock: 6 },
-      { id: 2, label: "03 뉴트로코랄", stock: 5 },
+      {
+        id: 1,
+        option_name: "01 로지밀크티",
+        price: 7000,
+        image_url: "/images/beauty-6837031_1280.jpg",
+        stock: 6,
+      },
+      {
+        id: 2,
+        option_name: "03 뉴트로코랄",
+        price: 6000,
+        image_url: "/images/beauty-6837031_1280.jpg",
+        stock: 5,
+      },
     ],
   },
   {
@@ -76,11 +198,36 @@ const products = [
     categoryMain: "메이크업",
     categorySub: "립",
     categoryDeep: "립스틱",
-    price: 38000,
-    image: "/images/placeholder.jpg",
+
+    images: {
+      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      gallery: [
+        "/images/cosmetics-7512332_1280.jpg",
+        "/images/chanel-4743979_1280.jpg",
+      ],
+      detail: "/images/beauty-6837031_1280.jpg",
+    },
+    detailImages: [
+      "/images/beauty-6837031_1280.jpg",
+      "/images/chanel-4743979_1280.jpg",
+      "/images/cosmetics-7512332_1280.jpg",
+      "/images/lipstick-8587707_1280.jpg",
+    ],
     options: [
-      { id: 1, label: "422 로지수", stock: 3 },
-      { id: 2, label: "465 어도러블", stock: 4 },
+      {
+        id: 1,
+        option_name: "422 로지수",
+        price: 7000,
+        image_url: "/images/beauty-6837031_1280.jpg",
+        stock: 3,
+      },
+      {
+        id: 2,
+        option_name: "465 어도러블",
+        price: 7000,
+        image_url: "/images/beauty-6837031_1280.jpg",
+        stock: 4,
+      },
     ],
   },
 
@@ -92,9 +239,30 @@ const products = [
     categoryMain: "메이크업",
     categorySub: "아이",
     categoryDeep: "아이섀도우/팔레트",
-    price: 32000,
-    image: "/images/placeholder.jpg",
-    options: [],
+
+    images: {
+      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      gallery: [
+        "/images/cosmetics-7512332_1280.jpg",
+        "/images/chanel-4743979_1280.jpg",
+      ],
+      detail: "/images/beauty-6837031_1280.jpg",
+    },
+    detailImages: [
+      "/images/beauty-6837031_1280.jpg",
+      "/images/chanel-4743979_1280.jpg",
+      "/images/cosmetics-7512332_1280.jpg",
+      "/images/lipstick-8587707_1280.jpg",
+    ],
+    options: [
+      {
+        id: 1,
+        option_name: "옵션",
+        price: 10000,
+        image_url: "/images/beauty-6837031_1280.jpg",
+        stock: 1,
+      },
+    ],
   },
   {
     id: 8,
@@ -103,9 +271,30 @@ const products = [
     categoryMain: "메이크업",
     categorySub: "아이",
     categoryDeep: "마스카라",
-    price: 17000,
-    image: "/images/placeholder.jpg",
-    options: [],
+
+    images: {
+      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      gallery: [
+        "/images/cosmetics-7512332_1280.jpg",
+        "/images/chanel-4743979_1280.jpg",
+      ],
+      detail: "/images/beauty-6837031_1280.jpg",
+    },
+    detailImages: [
+      "/images/beauty-6837031_1280.jpg",
+      "/images/chanel-4743979_1280.jpg",
+      "/images/cosmetics-7512332_1280.jpg",
+      "/images/lipstick-8587707_1280.jpg",
+    ],
+    options: [
+      {
+        id: 1,
+        option_name: "옵션",
+        price: 10000,
+        image_url: "/images/beauty-6837031_1280.jpg",
+        stock: 1,
+      },
+    ],
   },
 
   // ---------- 치크/컨투어링 (2개) ----------
@@ -116,11 +305,36 @@ const products = [
     categoryMain: "메이크업",
     categorySub: "치크/컨투어링",
     categoryDeep: "블러셔",
-    price: 17000,
-    image: "/images/placeholder.jpg",
+
+    images: {
+      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      gallery: [
+        "/images/cosmetics-7512332_1280.jpg",
+        "/images/chanel-4743979_1280.jpg",
+      ],
+      detail: "/images/beauty-6837031_1280.jpg",
+    },
+    detailImages: [
+      "/images/beauty-6837031_1280.jpg",
+      "/images/chanel-4743979_1280.jpg",
+      "/images/cosmetics-7512332_1280.jpg",
+      "/images/lipstick-8587707_1280.jpg",
+    ],
     options: [
-      { id: 1, label: "01 유리조각", stock: 7 },
-      { id: 2, label: "03 웜모먼트", stock: 4 },
+      {
+        id: 1,
+        option_name: "01 유리조각",
+        price: 7000,
+        image_url: "/images/beauty-6837031_1280.jpg",
+        stock: 7,
+      },
+      {
+        id: 2,
+        option_name: "03 웜모먼트",
+        price: 7000,
+        image_url: "/images/beauty-6837031_1280.jpg",
+        stock: 4,
+      },
     ],
   },
   {
@@ -130,9 +344,76 @@ const products = [
     categoryMain: "메이크업",
     categorySub: "치크/컨투어링",
     categoryDeep: "하이라이터/쉐딩",
-    price: 18000,
-    image: "/images/placeholder.jpg",
-    options: [],
+
+    images: {
+      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      gallery: [
+        "/images/cosmetics-7512332_1280.jpg",
+        "/images/chanel-4743979_1280.jpg",
+      ],
+      detail: "/images/beauty-6837031_1280.jpg",
+    },
+    detailImages: [
+      "/images/beauty-6837031_1280.jpg",
+      "/images/chanel-4743979_1280.jpg",
+      "/images/cosmetics-7512332_1280.jpg",
+      "/images/lipstick-8587707_1280.jpg",
+    ],
+    options: [
+      {
+        id: 1,
+        option_name: "옵션",
+        price: 10000,
+        image_url: "/images/beauty-6837031_1280.jpg",
+        stock: 1,
+      },
+    ],
+  },
+  {
+    id: 11,
+    name: "[일주일특가][판테놀/속보습]아이디얼포맨 퍼펙트 보습 올인원 (단품/증정기획)",
+    brand: "아이디얼포맨",
+    categoryMain: "스킨케어",
+    categorySub: "로션/크림",
+    categoryDeep: "로션",
+    images: {
+      thumbnail: "/images/1.jpg",
+      gallery: [
+        "/images/2.jpg",
+        "/images/3.jpg",
+        "/images/4.jpg",
+        "/images/5.jpg",
+      ],
+    },
+    detailImages: [
+      "/images/beauty-6837031_1280.jpg",
+      "/images/chanel-4743979_1280.jpg",
+      "/images/cosmetics-7512332_1280.jpg",
+      "/images/lipstick-8587707_1280.jpg",
+    ],
+    options: [
+      {
+        id: 1,
+        option_name: "150ml 단품",
+        price: 9900,
+        image_url: "/images/beauty-6837031_1280.jpg",
+        stock: 8,
+      },
+      {
+        id: 2,
+        option_name: "150ml 1+1 기획",
+        price: 16900,
+        image_url: "/images/beauty-6837031_1280.jpg",
+        stock: 9,
+      },
+      {
+        id: 3,
+        option_name: "+30ml 증정기획",
+        price: 8000,
+        image_url: "/images/beauty-6837031_1280.jpg",
+        stock: 0,
+      },
+    ],
   },
 
   // === 스킨케어: 세럼/에센스 ===
@@ -143,9 +424,30 @@ const products = [
     categoryMain: "스킨케어",
     categorySub: "세럼/에센스",
     categoryDeep: "에센스",
-    price: 28000,
-    image: "/images/skincare_essence_01.jpg",
-    options: [],
+
+    images: {
+      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      gallery: [
+        "/images/cosmetics-7512332_1280.jpg",
+        "/images/chanel-4743979_1280.jpg",
+      ],
+      detail: "/images/beauty-6837031_1280.jpg",
+    },
+    detailImages: [
+      "/images/beauty-6837031_1280.jpg",
+      "/images/chanel-4743979_1280.jpg",
+      "/images/cosmetics-7512332_1280.jpg",
+      "/images/lipstick-8587707_1280.jpg",
+    ],
+    options: [
+      {
+        id: 1,
+        option_name: "옵션",
+        price: 10000,
+        image_url: "/images/beauty-6837031_1280.jpg",
+        stock: 1,
+      },
+    ],
   },
   {
     id: 102,
@@ -154,9 +456,29 @@ const products = [
     categoryMain: "스킨케어",
     categorySub: "세럼/에센스",
     categoryDeep: "세럼",
-    price: 26000,
-    image: "/images/skincare_serum_01.jpg",
-    options: [],
+    images: {
+      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      gallery: [
+        "/images/cosmetics-7512332_1280.jpg",
+        "/images/chanel-4743979_1280.jpg",
+      ],
+      detail: "/images/beauty-6837031_1280.jpg",
+    },
+    detailImages: [
+      "/images/beauty-6837031_1280.jpg",
+      "/images/chanel-4743979_1280.jpg",
+      "/images/cosmetics-7512332_1280.jpg",
+      "/images/lipstick-8587707_1280.jpg",
+    ],
+    options: [
+      {
+        id: 1,
+        option_name: "옵션",
+        price: 10000,
+        image_url: "/images/beauty-6837031_1280.jpg",
+        stock: 1,
+      },
+    ],
   },
 
   // === 스킨케어: 세럼/에센스 → 앰플 ===
@@ -167,9 +489,29 @@ const products = [
     categoryMain: "스킨케어",
     categorySub: "세럼/에센스",
     categoryDeep: "앰플",
-    price: 22000,
-    image: "/images/skincare_ampoule_01.jpg",
-    options: [],
+    images: {
+      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      gallery: [
+        "/images/cosmetics-7512332_1280.jpg",
+        "/images/chanel-4743979_1280.jpg",
+      ],
+      detail: "/images/beauty-6837031_1280.jpg",
+    },
+    detailImages: [
+      "/images/beauty-6837031_1280.jpg",
+      "/images/chanel-4743979_1280.jpg",
+      "/images/cosmetics-7512332_1280.jpg",
+      "/images/lipstick-8587707_1280.jpg",
+    ],
+    options: [
+      {
+        id: 1,
+        option_name: "옵션",
+        price: 10000,
+        image_url: "/images/beauty-6837031_1280.jpg",
+        stock: 1,
+      },
+    ],
   },
   {
     id: 104,
@@ -178,9 +520,29 @@ const products = [
     categoryMain: "스킨케어",
     categorySub: "세럼/에센스",
     categoryDeep: "앰플",
-    price: 24000,
-    image: "/images/skincare_ampoule_02.jpg",
-    options: [],
+    images: {
+      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      gallery: [
+        "/images/cosmetics-7512332_1280.jpg",
+        "/images/chanel-4743979_1280.jpg",
+      ],
+      detail: "/images/beauty-6837031_1280.jpg",
+    },
+    detailImages: [
+      "/images/beauty-6837031_1280.jpg",
+      "/images/chanel-4743979_1280.jpg",
+      "/images/cosmetics-7512332_1280.jpg",
+      "/images/lipstick-8587707_1280.jpg",
+    ],
+    options: [
+      {
+        id: 1,
+        option_name: "옵션",
+        price: 10000,
+        image_url: "/images/beauty-6837031_1280.jpg",
+        stock: 1,
+      },
+    ],
   },
 
   // === 스킨케어: 토너/미스트 ===
@@ -191,9 +553,29 @@ const products = [
     categoryMain: "스킨케어",
     categorySub: "토너/미스트",
     categoryDeep: "토너",
-    price: 17000,
-    image: "/images/skincare_toner_01.jpg",
-    options: [],
+    images: {
+      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      gallery: [
+        "/images/cosmetics-7512332_1280.jpg",
+        "/images/chanel-4743979_1280.jpg",
+      ],
+      detail: "/images/beauty-6837031_1280.jpg",
+    },
+    detailImages: [
+      "/images/beauty-6837031_1280.jpg",
+      "/images/chanel-4743979_1280.jpg",
+      "/images/cosmetics-7512332_1280.jpg",
+      "/images/lipstick-8587707_1280.jpg",
+    ],
+    options: [
+      {
+        id: 1,
+        option_name: "옵션",
+        price: 10000,
+        image_url: "/images/beauty-6837031_1280.jpg",
+        stock: 1,
+      },
+    ],
   },
   {
     id: 106,
@@ -202,9 +584,29 @@ const products = [
     categoryMain: "스킨케어",
     categorySub: "토너/미스트",
     categoryDeep: "미스트",
-    price: 9000,
-    image: "/images/skincare_mist_01.jpg",
-    options: [],
+    images: {
+      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      gallery: [
+        "/images/cosmetics-7512332_1280.jpg",
+        "/images/chanel-4743979_1280.jpg",
+      ],
+      detail: "/images/beauty-6837031_1280.jpg",
+    },
+    detailImages: [
+      "/images/beauty-6837031_1280.jpg",
+      "/images/chanel-4743979_1280.jpg",
+      "/images/cosmetics-7512332_1280.jpg",
+      "/images/lipstick-8587707_1280.jpg",
+    ],
+    options: [
+      {
+        id: 1,
+        option_name: "옵션",
+        price: 10000,
+        image_url: "/images/beauty-6837031_1280.jpg",
+        stock: 1,
+      },
+    ],
   },
 
   // === 스킨케어: 로션/크림 ===
@@ -215,9 +617,29 @@ const products = [
     categoryMain: "스킨케어",
     categorySub: "로션/크림",
     categoryDeep: "로션",
-    price: 21000,
-    image: "/images/skincare_lotion_01.jpg",
-    options: [],
+    images: {
+      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      gallery: [
+        "/images/cosmetics-7512332_1280.jpg",
+        "/images/chanel-4743979_1280.jpg",
+      ],
+      detail: "/images/beauty-6837031_1280.jpg",
+    },
+    detailImages: [
+      "/images/beauty-6837031_1280.jpg",
+      "/images/chanel-4743979_1280.jpg",
+      "/images/cosmetics-7512332_1280.jpg",
+      "/images/lipstick-8587707_1280.jpg",
+    ],
+    options: [
+      {
+        id: 1,
+        option_name: "옵션",
+        price: 10000,
+        image_url: "/images/beauty-6837031_1280.jpg",
+        stock: 1,
+      },
+    ],
   },
   {
     id: 108,
@@ -226,9 +648,30 @@ const products = [
     categoryMain: "스킨케어",
     categorySub: "로션/크림",
     categoryDeep: "크림",
-    price: 26000,
-    image: "/images/skincare_cream_01.jpg",
-    options: [],
+
+    images: {
+      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      gallery: [
+        "/images/cosmetics-7512332_1280.jpg",
+        "/images/chanel-4743979_1280.jpg",
+      ],
+      detail: "/images/beauty-6837031_1280.jpg",
+    },
+    detailImages: [
+      "/images/beauty-6837031_1280.jpg",
+      "/images/chanel-4743979_1280.jpg",
+      "/images/cosmetics-7512332_1280.jpg",
+      "/images/lipstick-8587707_1280.jpg",
+    ],
+    options: [
+      {
+        id: 1,
+        option_name: "옵션",
+        price: 10000,
+        image_url: "/images/beauty-6837031_1280.jpg",
+        stock: 1,
+      },
+    ],
   },
 
   // === 스킨케어: 로션/크림 추가 1개씩 (총 12개 맞추기) ===
@@ -239,9 +682,30 @@ const products = [
     categoryMain: "스킨케어",
     categorySub: "로션/크림",
     categoryDeep: "크림",
-    price: 27000,
-    image: "/images/skincare_cream_02.jpg",
-    options: [],
+
+    images: {
+      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      gallery: [
+        "/images/cosmetics-7512332_1280.jpg",
+        "/images/chanel-4743979_1280.jpg",
+      ],
+      detail: "/images/beauty-6837031_1280.jpg",
+    },
+    detailImages: [
+      "/images/beauty-6837031_1280.jpg",
+      "/images/chanel-4743979_1280.jpg",
+      "/images/cosmetics-7512332_1280.jpg",
+      "/images/lipstick-8587707_1280.jpg",
+    ],
+    options: [
+      {
+        id: 1,
+        option_name: "옵션",
+        price: 10000,
+        image_url: "/images/beauty-6837031_1280.jpg",
+        stock: 1,
+      },
+    ],
   },
   {
     id: 110,
@@ -250,9 +714,30 @@ const products = [
     categoryMain: "스킨케어",
     categorySub: "로션/크림",
     categoryDeep: "로션",
-    price: 19000,
-    image: "/images/skincare_lotion_02.jpg",
-    options: [],
+
+    images: {
+      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      gallery: [
+        "/images/cosmetics-7512332_1280.jpg",
+        "/images/chanel-4743979_1280.jpg",
+      ],
+      detail: "/images/beauty-6837031_1280.jpg",
+    },
+    detailImages: [
+      "/images/beauty-6837031_1280.jpg",
+      "/images/chanel-4743979_1280.jpg",
+      "/images/cosmetics-7512332_1280.jpg",
+      "/images/lipstick-8587707_1280.jpg",
+    ],
+    options: [
+      {
+        id: 1,
+        option_name: "옵션",
+        price: 10000,
+        image_url: "/images/beauty-6837031_1280.jpg",
+        stock: 1,
+      },
+    ],
   },
 
   {
@@ -262,9 +747,30 @@ const products = [
     categoryMain: "스킨케어",
     categorySub: "세럼/에센스",
     categoryDeep: "세럼",
-    price: 26000,
-    image: "/images/sk_essence_01.jpg",
-    options: [],
+
+    images: {
+      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      gallery: [
+        "/images/cosmetics-7512332_1280.jpg",
+        "/images/chanel-4743979_1280.jpg",
+      ],
+      detail: "/images/beauty-6837031_1280.jpg",
+    },
+    detailImages: [
+      "/images/beauty-6837031_1280.jpg",
+      "/images/chanel-4743979_1280.jpg",
+      "/images/cosmetics-7512332_1280.jpg",
+      "/images/lipstick-8587707_1280.jpg",
+    ],
+    options: [
+      {
+        id: 1,
+        option_name: "옵션",
+        price: 10000,
+        image_url: "/images/beauty-6837031_1280.jpg",
+        stock: 1,
+      },
+    ],
   },
   {
     id: 202,
@@ -273,9 +779,30 @@ const products = [
     categoryMain: "스킨케어",
     categorySub: "세럼/에센스",
     categoryDeep: "세럼",
-    price: 24000,
-    image: "/images/sk_serum_02.jpg",
-    options: [],
+
+    images: {
+      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      gallery: [
+        "/images/cosmetics-7512332_1280.jpg",
+        "/images/chanel-4743979_1280.jpg",
+      ],
+      detail: "/images/beauty-6837031_1280.jpg",
+    },
+    detailImages: [
+      "/images/beauty-6837031_1280.jpg",
+      "/images/chanel-4743979_1280.jpg",
+      "/images/cosmetics-7512332_1280.jpg",
+      "/images/lipstick-8587707_1280.jpg",
+    ],
+    options: [
+      {
+        id: 1,
+        option_name: "옵션",
+        price: 10000,
+        image_url: "/images/beauty-6837031_1280.jpg",
+        stock: 1,
+      },
+    ],
   },
   {
     id: 203,
@@ -284,9 +811,30 @@ const products = [
     categoryMain: "스킨케어",
     categorySub: "세럼/에센스",
     categoryDeep: "세럼",
-    price: 32000,
-    image: "/images/sk_serum_03.jpg",
-    options: [],
+
+    images: {
+      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      gallery: [
+        "/images/cosmetics-7512332_1280.jpg",
+        "/images/chanel-4743979_1280.jpg",
+      ],
+      detail: "/images/beauty-6837031_1280.jpg",
+    },
+    detailImages: [
+      "/images/beauty-6837031_1280.jpg",
+      "/images/chanel-4743979_1280.jpg",
+      "/images/cosmetics-7512332_1280.jpg",
+      "/images/lipstick-8587707_1280.jpg",
+    ],
+    options: [
+      {
+        id: 1,
+        option_name: "옵션",
+        price: 10000,
+        image_url: "/images/beauty-6837031_1280.jpg",
+        stock: 1,
+      },
+    ],
   },
   {
     id: 204,
@@ -295,9 +843,30 @@ const products = [
     categoryMain: "스킨케어",
     categorySub: "세럼/에센스",
     categoryDeep: "세럼",
-    price: 23000,
-    image: "/images/sk_serum_04.jpg",
-    options: [],
+
+    images: {
+      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      gallery: [
+        "/images/cosmetics-7512332_1280.jpg",
+        "/images/chanel-4743979_1280.jpg",
+      ],
+      detail: "/images/beauty-6837031_1280.jpg",
+    },
+    detailImages: [
+      "/images/beauty-6837031_1280.jpg",
+      "/images/chanel-4743979_1280.jpg",
+      "/images/cosmetics-7512332_1280.jpg",
+      "/images/lipstick-8587707_1280.jpg",
+    ],
+    options: [
+      {
+        id: 1,
+        option_name: "옵션",
+        price: 10000,
+        image_url: "/images/beauty-6837031_1280.jpg",
+        stock: 1,
+      },
+    ],
   },
   {
     id: 205,
@@ -306,9 +875,30 @@ const products = [
     categoryMain: "스킨케어",
     categorySub: "세럼/에센스",
     categoryDeep: "세럼",
-    price: 21000,
-    image: "/images/sk_serum_05.jpg",
-    options: [],
+
+    images: {
+      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      gallery: [
+        "/images/cosmetics-7512332_1280.jpg",
+        "/images/chanel-4743979_1280.jpg",
+      ],
+      detail: "/images/beauty-6837031_1280.jpg",
+    },
+    detailImages: [
+      "/images/beauty-6837031_1280.jpg",
+      "/images/chanel-4743979_1280.jpg",
+      "/images/cosmetics-7512332_1280.jpg",
+      "/images/lipstick-8587707_1280.jpg",
+    ],
+    options: [
+      {
+        id: 1,
+        option_name: "옵션",
+        price: 10000,
+        image_url: "/images/beauty-6837031_1280.jpg",
+        stock: 1,
+      },
+    ],
   },
   {
     id: 206,
@@ -317,9 +907,30 @@ const products = [
     categoryMain: "스킨케어",
     categorySub: "세럼/에센스",
     categoryDeep: "세럼",
-    price: 28000,
-    image: "/images/sk_serum_06.jpg",
-    options: [],
+
+    images: {
+      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      gallery: [
+        "/images/cosmetics-7512332_1280.jpg",
+        "/images/chanel-4743979_1280.jpg",
+      ],
+      detail: "/images/beauty-6837031_1280.jpg",
+    },
+    detailImages: [
+      "/images/beauty-6837031_1280.jpg",
+      "/images/chanel-4743979_1280.jpg",
+      "/images/cosmetics-7512332_1280.jpg",
+      "/images/lipstick-8587707_1280.jpg",
+    ],
+    options: [
+      {
+        id: 1,
+        option_name: "옵션",
+        price: 10000,
+        image_url: "/images/beauty-6837031_1280.jpg",
+        stock: 1,
+      },
+    ],
   },
   {
     id: 207,
@@ -328,9 +939,30 @@ const products = [
     categoryMain: "스킨케어",
     categorySub: "세럼/에센스",
     categoryDeep: "세럼",
-    price: 35000,
-    image: "/images/sk_serum_07.jpg",
-    options: [],
+
+    images: {
+      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      gallery: [
+        "/images/cosmetics-7512332_1280.jpg",
+        "/images/chanel-4743979_1280.jpg",
+      ],
+      detail: "/images/beauty-6837031_1280.jpg",
+    },
+    detailImages: [
+      "/images/beauty-6837031_1280.jpg",
+      "/images/chanel-4743979_1280.jpg",
+      "/images/cosmetics-7512332_1280.jpg",
+      "/images/lipstick-8587707_1280.jpg",
+    ],
+    options: [
+      {
+        id: 1,
+        option_name: "옵션",
+        price: 10000,
+        image_url: "/images/beauty-6837031_1280.jpg",
+        stock: 1,
+      },
+    ],
   },
   {
     id: 208,
@@ -339,9 +971,30 @@ const products = [
     categoryMain: "스킨케어",
     categorySub: "세럼/에센스",
     categoryDeep: "세럼",
-    price: 19000,
-    image: "/images/sk_serum_08.jpg",
-    options: [],
+
+    images: {
+      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      gallery: [
+        "/images/cosmetics-7512332_1280.jpg",
+        "/images/chanel-4743979_1280.jpg",
+      ],
+      detail: "/images/beauty-6837031_1280.jpg",
+    },
+    detailImages: [
+      "/images/beauty-6837031_1280.jpg",
+      "/images/chanel-4743979_1280.jpg",
+      "/images/cosmetics-7512332_1280.jpg",
+      "/images/lipstick-8587707_1280.jpg",
+    ],
+    options: [
+      {
+        id: 1,
+        option_name: "옵션",
+        price: 10000,
+        image_url: "/images/beauty-6837031_1280.jpg",
+        stock: 1,
+      },
+    ],
   },
   {
     id: 209,
@@ -350,9 +1003,30 @@ const products = [
     categoryMain: "스킨케어",
     categorySub: "세럼/에센스",
     categoryDeep: "세럼",
-    price: 27000,
-    image: "/images/sk_serum_09.jpg",
-    options: [],
+
+    images: {
+      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      gallery: [
+        "/images/cosmetics-7512332_1280.jpg",
+        "/images/chanel-4743979_1280.jpg",
+      ],
+      detail: "/images/beauty-6837031_1280.jpg",
+    },
+    detailImages: [
+      "/images/beauty-6837031_1280.jpg",
+      "/images/chanel-4743979_1280.jpg",
+      "/images/cosmetics-7512332_1280.jpg",
+      "/images/lipstick-8587707_1280.jpg",
+    ],
+    options: [
+      {
+        id: 1,
+        option_name: "옵션",
+        price: 10000,
+        image_url: "/images/beauty-6837031_1280.jpg",
+        stock: 1,
+      },
+    ],
   },
   {
     id: 210,
@@ -361,10 +1035,32 @@ const products = [
     categoryMain: "스킨케어",
     categorySub: "세럼/에센스",
     categoryDeep: "세럼",
-    price: 22000,
-    image: "/images/sk_serum_10.jpg",
-    options: [],
+
+    images: {
+      thumbnail: "/images/lipstick-8587707_1280.jpg",
+      gallery: [
+        "/images/cosmetics-7512332_1280.jpg",
+        "/images/chanel-4743979_1280.jpg",
+      ],
+      detail: "/images/beauty-6837031_1280.jpg",
+    },
+    detailImages: [
+      "/images/beauty-6837031_1280.jpg",
+      "/images/chanel-4743979_1280.jpg",
+      "/images/cosmetics-7512332_1280.jpg",
+      "/images/lipstick-8587707_1280.jpg",
+    ],
+    options: [
+      {
+        id: 1,
+        option_name: "옵션",
+        price: 10000,
+        image_url: "/images/beauty-6837031_1280.jpg",
+        stock: 1,
+      },
+    ],
   },
+
   // 같은 규칙으로 211 ~ 220까지 계속…
 ];
 

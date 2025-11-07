@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ChevronDown, X } from "lucide-react";
+import { ChevronDown, X, Bell } from "lucide-react";
 
 const ProductDetailOptions = ({ product, selectedItems, setSelectedItems }) => {
   if (!product) {
@@ -10,8 +10,9 @@ const ProductDetailOptions = ({ product, selectedItems, setSelectedItems }) => {
   const options = product.options || [];
 
   const handleSelect = (option) => {
+    console.log("selectedItems", selectedItems);
     setSelectedItems((prev) => {
-      console.log("prev", prev);
+      // console.log("prev", prev);
       // 이미 같은 옵션이 들어있다면 그대로 반환 (추가 X)
       const exists = prev.some((item) => item.id === option.id);
       if (exists) return prev;
@@ -35,13 +36,18 @@ const ProductDetailOptions = ({ product, selectedItems, setSelectedItems }) => {
     });
   };
 
+  // 옵션을 제거하는 함수 (기존 로직 유지)
+  const handleRemoveOption = (option) => {
+    setSelectedItems((prev) => prev.filter((i) => i.id !== option.id));
+  };
+
   return (
     <div className="w-full space-y-4">
       {/* 드롭다운 토글 버튼 */}
       <div className="relative">
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="w-full flex justify-between items-center px-5 py-4 bg-white border-2 border-gray-200 rounded-xl hover:border-gray-300 transition-all focus:outline-none focus:border-gray-900"
+          className="w-full flex justify-between items-center px-5 py-4 bg-white border border-gray-300 rounded-lg hover:border-gray-400 transition-all focus:outline-none focus:ring-2 focus:ring-gray-200"
         >
           <span className="text-gray-700 font-medium">옵션을 선택해주세요</span>
           <ChevronDown
@@ -53,42 +59,79 @@ const ProductDetailOptions = ({ product, selectedItems, setSelectedItems }) => {
 
         {/* 드롭다운 리스트 */}
         {isOpen && (
-          <ul className="absolute z-20 w-full mt-2 max-h-64 overflow-y-auto bg-white border-2 border-gray-200 rounded-xl shadow-xl">
-            {options.map((o, idx) => (
+          <ul className="absolute z-20 w-full mt-2 max-h-64 overflow-y-auto bg-white border border-gray-200 rounded-lg shadow-lg">
+            {options.map((option, idx) => (
               <li
-                key={o.id}
-                className={`flex items-center justify-between px-5 py-4 cursor-pointer transition-colors 
+                key={option.id}
+                className={`flex items-center justify-between px-5 py-3.5 transition-colors 
                   ${
                     idx !== options.length - 1 ? "border-b border-gray-100" : ""
                   } 
-                    ${
-                      o.stock === 0
-                        ? "bg-gray-50 opacity-50 cursor-not-allowed"
-                        : "hover:bg-gray-50"
-                    }`}
-                onClick={() => o.stock !== 0 && handleSelect(o)}
+                  ${
+                    option.stock === 0
+                      ? "bg-gray-50 cursor-not-allowed"
+                      : "hover:bg-gray-50 cursor-pointer"
+                  }`}
+                onClick={() => option.stock !== 0 && handleSelect(option)}
               >
-                <div className="flex flex-col gap-1">
-                  <span className="text-sm font-medium text-gray-900">
-                    {o.label}
-                  </span>
+                <div className="flex items-center gap-3 flex-1">
+                  {/* 🖼️ [수정] 옵션 이미지: 작은 크기, 둥근 모서리, 오브젝트 핏 적용 */}
+                  <img
+                    src={option.image_url}
+                    alt={option.option_name}
+                    className="w-10 h-10 object-cover rounded-md flex-shrink-0"
+                    // 이미지 URL이 없을 경우 대비하여 에러 핸들링 추가
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src =
+                        "https://placehold.co/40x40/f3f4f6/a1a1aa?text=NoImg";
+                    }}
+                  />
 
-                  {/* 품절 여부 표시 */}
-                  {o.stock === 0 && (
-                    <span className="text-xs font-semibold text-red-500">
-                      품절
+                  <div className="flex items-center gap-2 min-w-0">
+                    {/* 품절 표시 */}
+                    {option.stock === 0 && (
+                      <span className="px-2 py-0.5 text-xs font-bold text-white bg-gray-400 rounded flex-shrink-0">
+                        품절
+                      </span>
+                    )}
+
+                    {/* 옵션명 */}
+                    <span
+                      className={`text-sm font-medium truncate ${
+                        option.stock === 0 ? "text-gray-400" : "text-gray-900"
+                      }`}
+                    >
+                      {option.option_name}
                     </span>
-                  )}
+                  </div>
                 </div>
 
-                {o.stock === 0 && (
-                  <button
-                    className="px-3 py-1.5 text-xs font-medium text-red-500 border border-red-500 rounded-lg hover:bg-red-50 transition-colors"
-                    onClick={() => alert("재입고 알림 버튼 클릭")}
-                  >
-                    재입고 알림
-                  </button>
-                )}
+                <div className="flex items-center gap-3 flex-shrink-0">
+                  {/* 가격 */}
+                  {option.stock !== 0 && (
+                    <span className="text-sm font-semibold text-gray-900 whitespace-nowrap">
+                      {option.price
+                        ? option.price.toLocaleString() + "원"
+                        : "가격 정보 없음"}
+                    </span>
+                  )}
+
+                  {/* 재입고 알림 버튼 */}
+                  {option.stock === 0 && (
+                    <button
+                      className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-gray-600 bg-white border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        // alert 사용 금지 규정에 따라 console.log로 대체합니다.
+                        console.log("재입고 알림 버튼 클릭");
+                      }}
+                    >
+                      <Bell className="w-3.5 h-3.5" />
+                      재입고 알림
+                    </button>
+                  )}
+                </div>
               </li>
             ))}
           </ul>
@@ -97,53 +140,49 @@ const ProductDetailOptions = ({ product, selectedItems, setSelectedItems }) => {
 
       {/* 옵션 선택하면 아래 구매리스트에 뜨도록 설계 */}
       {selectedItems.length > 0 && (
-        <div className="space-y-3 p-4 bg-gray-50 rounded-xl border border-gray-200">
+        <div className="space-y-2.5 p-4 bg-gray-50 rounded-lg border border-gray-200">
           {selectedItems.map((option) => (
             <div
               key={option.id}
-              className="flex items-center justify-between gap-4 p-4 bg-white border border-gray-200 rounded-xl shadow-sm"
+              className="flex items-center justify-between gap-4 p-4 bg-white border border-gray-200 rounded-lg"
             >
               {/* 제품명 */}
-              <div className="flex-1 text-sm font-medium text-gray-900">
-                {option.label}
+              <div className="flex-1 text-sm font-medium text-gray-900 min-w-0">
+                <div className="truncate">{option.option_name}</div>
               </div>
 
               {/* 수량 조절 */}
-              <div className="flex items-center border-2 border-gray-200 rounded-lg overflow-hidden">
+              <div className="flex items-center border border-gray-300 rounded-md overflow-hidden">
                 <button
                   onClick={() => handleQtyChange(option, -1)}
-                  className="w-10 h-10 flex justify-center items-center text-gray-600 hover:bg-gray-100 transition-colors"
+                  className="w-9 h-9 flex justify-center items-center text-gray-700 hover:bg-gray-100 transition-colors font-medium"
                 >
                   -
                 </button>
-                <span className="w-12 h-10 flex justify-center items-center text-sm font-semibold text-gray-900 bg-gray-50">
+                <span className="w-11 h-9 flex justify-center items-center text-sm font-semibold text-gray-900 border-x border-gray-300">
                   {option.qty}
                 </span>
                 <button
                   onClick={() => handleQtyChange(option, +1)}
-                  className="w-10 h-10 flex justify-center items-center text-gray-600 hover:bg-gray-100 transition-colors"
+                  className="w-9 h-9 flex justify-center items-center text-gray-700 hover:bg-gray-100 transition-colors font-medium"
                 >
                   +
                 </button>
               </div>
 
               {/* 가격 */}
-              <div className="text-sm font-bold text-gray-900 min-w-[80px] text-right">
-                {product.price
-                  ? product.price.toLocaleString() + "원"
+              <div className="text-sm font-bold text-gray-900 min-w-[70px] text-right whitespace-nowrap">
+                {option.price
+                  ? option.price.toLocaleString() + "원"
                   : "가격 정보 없음"}
               </div>
 
               {/* 삭제 버튼 */}
               <button
-                onClick={() =>
-                  setSelectedItems((prev) =>
-                    prev.filter((i) => i.id !== option.id)
-                  )
-                }
-                className="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all"
+                onClick={() => handleRemoveOption(option)}
+                className="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-md transition-all flex-shrink-0"
               >
-                <X className="w-5 h-5" />
+                <X className="w-4 h-4" />
               </button>
             </div>
           ))}
