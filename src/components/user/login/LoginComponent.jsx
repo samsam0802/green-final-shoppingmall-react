@@ -1,11 +1,31 @@
 import { useNavigate } from "react-router-dom";
 import SocialLoginButtons from "../signup/SocialLoginButtons";
+import { useState } from "react";
 
-const LoginPage = () => {
+const LoginComponent = () => {
+  const [loginData, setLoginData] = useState({
+    email: "",
+    password: "",
+  });
+
   const navigate = useNavigate();
 
+  const inputChangeHandler = (e) => {
+    const { name, value } = e.target;
+    setLoginData({
+      ...loginData,
+      [name]: value,
+    });
+    console.log(name, value);
+  };
+
   const loginHandleClick = () => {
-    alert("로그인 버튼이 눌렸습니다.");
+    console.log(loginData);
+
+    // api 설정해야한다.
+    alert(
+      `로그인 버튼이 눌렸습니다. \n 이메일: ${loginData.email} \n 비밀번호: ${loginData.password}`
+    );
   };
 
   const signHandleClick = () => {
@@ -40,6 +60,8 @@ const LoginPage = () => {
                   className="mt-1 w-full h-10 px-3 border border-gray-200 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-gray-900/10"
                   name="email"
                   type="email"
+                  value={loginData.email}
+                  onChange={inputChangeHandler}
                   placeholder="Enter your email address"
                 />
               </div>
@@ -49,6 +71,8 @@ const LoginPage = () => {
                   className="mt-1 w-full h-10 px-3 border border-gray-200 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-gray-900/10"
                   name="password"
                   type="password"
+                  value={loginData.password}
+                  onChange={inputChangeHandler}
                   placeholder="Enter password"
                 />
               </div>
@@ -100,4 +124,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default LoginComponent;
