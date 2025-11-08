@@ -1,12 +1,17 @@
 import React from "react";
-import CouponSearch from "../../../components/admin/coupon/CouponSearch";
+import CouponSearchFilter from "../../../components/admin/coupon/CouponSearchFilter";
+import CouponSearchList from "../../../components/admin/coupon/CouponSearchList";
 
-const CouponSearchPage = () => {
+export default function CouponSearch() {
   return (
-    <div>
-      <CouponSearch />
+    <div className="min-h-screen bg-gray-50 p-6">
+      <div className="max-w-7xl mx-auto space-y-6">
+        <div className="bg-white border rounded-lg  p-6">
+          <h1 className="text-2xl font-bold text-gray-800">쿠폰 조회</h1>
+        </div>
+        <CouponSearchFilter />
+        <CouponSearchList />
+      </div>
     </div>
   );
-};
-
-export default CouponSearchPage;
+}
