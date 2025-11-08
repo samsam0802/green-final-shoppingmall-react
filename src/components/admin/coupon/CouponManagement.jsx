@@ -21,9 +21,6 @@ export default function CouponManagement() {
       <div className="flex items-center justify-between p-4 border-b">
         <div className="flex items-center gap-2">
           <h1 className="text-lg font-semibold">쿠폰 관리</h1>
-          <button className="w-5 h-5 flex items-center justify-center border rounded text-xs">
-            X
-          </button>
         </div>
         <button className="px-6 py-2 bg-gray-800 text-white text-sm">
           저장
