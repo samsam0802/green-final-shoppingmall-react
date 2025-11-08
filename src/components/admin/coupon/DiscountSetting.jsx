@@ -36,10 +36,6 @@ export default function DiscountSetting() {
         fixedDiscountAmount: 0,
         discountPercentage: 0,
       }));
-    } else if (name === "isLimitMinOrder") {
-      setDiscountSetting((prev) => ({ ...prev, minOrderAmount: 0 }));
-    } else if (name === "isLimitMaxDiscount") {
-      setDiscountSetting((prev) => ({ ...prev, maxDiscountAmount: 0 }));
     }
 
     setDiscountSetting((prev) => {
@@ -54,13 +50,7 @@ export default function DiscountSetting() {
     console.log(value);
     const bool = value === "true" ? true : false;
 
-    if (name === "discountType") {
-      setDiscountSetting((prev) => ({
-        ...prev,
-        fixedDiscountAmount: 0,
-        discountPercentage: 0,
-      }));
-    } else if (name === "isLimitMinOrder") {
+    if (name === "isLimitMinOrder") {
       setDiscountSetting((prev) => ({ ...prev, minOrderAmount: 0 }));
     } else if (name === "isLimitMaxDiscount") {
       setDiscountSetting((prev) => ({ ...prev, maxDiscountAmount: 0 }));

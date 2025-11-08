@@ -1,20 +1,64 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ChevronUp, ChevronDown } from "lucide-react";
+import { useDispatch } from "react-redux";
+import { updateCouponRegisterForm } from "../../../redux/slices/features/admin/coupon/couponRegisterSlice";
 
 export default function IssuranceSetting() {
+  const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(true);
-  const [issueAutoType, setIssueAutoType] = useState(false);
 
-  //{MANUAL,NEWUSER,BIRTHDAY,CODE}
+  //issuranceType : {MANUAL,AUTO,CODE}
+  //autoIssueTrigger: {NEWUSER, BIRTHDAY}
   const [issuranceSetting, setIssuranceSetting] = useState({
     issuranceType: "MANUAL",
+    autoIssueTrigger: "NEWUSER",
     couponCode: "",
   });
 
-  const onChangeHandler = (e) => {
+  useEffect(() => {
+    dispatch(
+      updateCouponRegisterForm({
+        section: "issueSetting",
+        data: issuranceSetting,
+      })
+    );
+  }, [issuranceSetting, dispatch]);
+
+  const onIssuranceTypeChangeHandler = (e) => {
     const { name, value } = e.target;
 
-    setIssueAutoType(false);
+    setIssuranceSetting((prev) => {
+      let data;
+      if (value === "MANUAL") {
+        data = { ...prev, autoIssueTrigger: "", couponCode: "", [name]: value };
+      } else if (value === "AUTO") {
+        data = {
+          ...prev,
+          autoIssueTrigger: "NEWUSER",
+          couponCode: "",
+          [name]: value,
+        };
+      } else if (value === "CODE") {
+        data = { ...prev, autoIssueTrigger: "", [name]: value };
+      }
+
+      console.log(data);
+      return data;
+    });
+  };
+
+  const onIssueTriggerChangeHandler = (e) => {
+    const { name, value } = e.target;
+
+    setIssuranceSetting((prev) => {
+      const data = { ...prev, [name]: value };
+      console.log(data);
+      return data;
+    });
+  };
+
+  const onCouponCodeChangeHandler = (e) => {
+    const { name, value } = e.target;
 
     setIssuranceSetting((prev) => {
       const data = { ...prev, [name]: value };
@@ -48,7 +92,7 @@ export default function IssuranceSetting() {
                   name="issuranceType"
                   value="MANUAL"
                   checked={issuranceSetting.issuranceType === "MANUAL"}
-                  onChange={onChangeHandler}
+                  onChange={onIssuranceTypeChangeHandler}
                   className="w-4 h-4"
                 />
                 <span className="text-sm">관리자 수동 발급</span>
@@ -57,9 +101,9 @@ export default function IssuranceSetting() {
                 <input
                   type="radio"
                   name="issuranceType"
-                  // value="AUTO"
-                  checked={issueAutoType}
-                  onChange={(e) => setIssueAutoType(true)}
+                  value="AUTO"
+                  checked={issuranceSetting.issuranceType === "AUTO"}
+                  onChange={onIssuranceTypeChangeHandler}
                   className="w-4 h-4"
                 />
                 <span className="text-sm">특정 조건 자동 발급</span>
@@ -70,7 +114,7 @@ export default function IssuranceSetting() {
                   name="issuranceType"
                   value="CODE"
                   checked={issuranceSetting.issuranceType === "CODE"}
-                  onChange={onChangeHandler}
+                  onChange={onIssuranceTypeChangeHandler}
                   className="w-4 h-4"
                 />
                 <span className="text-sm">쿠폰 코드 입력</span>
@@ -79,7 +123,7 @@ export default function IssuranceSetting() {
           </div>
 
           {/* 특정 조건 자동 발급 설정 - 조건부 표시 */}
-          {issueAutoType && (
+          {issuranceSetting.issuranceType === "AUTO" && (
             <div className="flex">
               <div className="w-48 p-4 bg-gray-50 flex items-center">
                 <span className="text-red-500 mr-1">*</span>
@@ -89,10 +133,10 @@ export default function IssuranceSetting() {
                 <label className="flex items-center gap-2">
                   <input
                     type="radio"
-                    name="issuranceType"
+                    name="autoIssueTrigger"
                     value="NEWUSER"
-                    onChange={onChangeHandler}
-                    checked={issuranceSetting.issuranceType === "NEWUSER"}
+                    onChange={onIssueTriggerChangeHandler}
+                    checked={issuranceSetting.autoIssueTrigger === "NEWUSER"}
                     className="w-4 h-4"
                   />
                   <span className="text-sm">회원가입 완료시</span>
@@ -100,10 +144,10 @@ export default function IssuranceSetting() {
                 <label className="flex items-center gap-2">
                   <input
                     type="radio"
-                    name="issuranceType"
+                    name="autoIssueTrigger"
                     value="BIRTHDAY"
-                    onChange={onChangeHandler}
-                    checked={issuranceSetting.issuranceType === "BIRTHDAY"}
+                    onChange={onIssueTriggerChangeHandler}
+                    checked={issuranceSetting.autoIssueTrigger === "BIRTHDAY"}
                     className="w-4 h-4"
                   />
                   <span className="text-sm">생일</span>
@@ -125,7 +169,7 @@ export default function IssuranceSetting() {
                   type="text"
                   name="couponCode"
                   value={issuranceSetting.couponCode}
-                  onChange={onChangeHandler}
+                  onChange={onCouponCodeChangeHandler}
                   className="w-100 px-3 py-2 border rounded bg-gray-100"
                 />
                 {/* <label className="flex items-center gap-2">
