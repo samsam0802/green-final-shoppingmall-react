@@ -24,26 +24,26 @@ export default function SignUpChoiceModal({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       {/* 배경 클릭: 그냥 닫기만 */}
-      <div className="absolute inset-0 bg-black/40" onClick={onClose} />
+      <div className="absolute inset-0 bg-black/40" />
 
       <div className="relative w-[560px] bg-white rounded-2xl shadow-xl p-8">
         {/* X 버튼: 닫고 뒤로가기 */}
         <button
           onClick={handleCloseAndBack}
-          className="absolute right-4 top-4 text-zinc-400 hover:text-black text-xl"
+          className="cursor-pointer absolute right-4 top-4 text-zinc-400 hover:text-black text-xl"
           aria-label="close"
         >
           X
         </button>
 
         <div className="text-center">
-          <h3 className="text-xl font-bold">일반 회원가입</h3>
+          <h3 className=" text-xl font-bold">일반 회원가입</h3>
           <p className="text-sm text-zinc-500 mt-1">
             일반 양식으로 회원가입을 합니다.
           </p>
           <button
             onClick={onNormalJoin}
-            className="mt-4 block mx-auto h-12 w-72 rounded-md bg-amber-800 text-white font-semibold hover:opacity-90"
+            className="cursor-pointer mt-4 block mx-auto h-12 w-72 rounded-md bg-amber-800 text-white font-semibold hover:opacity-90"
           >
             회원가입
           </button>
@@ -60,7 +60,7 @@ export default function SignUpChoiceModal({
           <div className="mt-4 flex justify-center gap-3">
             <button
               onClick={() => onSNS("naver")}
-              className="h-11 min-w-[88px] rounded-md bg-[#2DB400] text-white font-semibold px-4
+              className="cursor-pointer h-11 min-w-[88px] rounded-md bg-[#2DB400] text-white font-semibold px-4
             focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2DB400]/60"
               title="네이버"
             >
@@ -68,7 +68,7 @@ export default function SignUpChoiceModal({
             </button>
             <button
               onClick={() => onSNS("kakao")}
-              className="h-11 min-w-[88px] rounded-md bg-[#FEE500] text-black font-semibold px-4
+              className="cursor-pointer h-11 min-w-[88px] rounded-md bg-[#FEE500] text-black font-semibold px-4
             focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FEE500]/60"
               title="카카오"
             >
@@ -76,7 +76,7 @@ export default function SignUpChoiceModal({
             </button>
             <button
               onClick={() => onSNS("google")}
-              className="h-11 min-w-[88px] rounded-md bg-[#4285F4] text-white font-semibold px-4
+              className="cursor-pointer h-11 min-w-[88px] rounded-md bg-[#4285F4] text-white font-semibold px-4
             focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]/60"
               title="구글"
             >

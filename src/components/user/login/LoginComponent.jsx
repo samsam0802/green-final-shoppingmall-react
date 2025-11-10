@@ -1,10 +1,17 @@
 import { useNavigate } from "react-router-dom";
 import SocialLoginButtons from "../signup/SocialLoginButtons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  clearError,
+  login,
+} from "../../../redux/slices/features/user/userSlice";
 
 const LoginComponent = () => {
+  const dispatch = useDispatch();
+  const { isLoggedIn, error } = useSelector((state) => state.userSlice);
   const [loginData, setLoginData] = useState({
-    email: "",
+    login_Id: "",
     password: "",
   });
 
@@ -19,13 +26,30 @@ const LoginComponent = () => {
     console.log(name, value);
   };
 
-  const loginHandleClick = () => {
-    console.log(loginData);
+  useEffect(() => {
+    if (error) {
+      alert(`로그인 실패: ${error}`);
+      dispatch(clearError());
+    }
+  }, [error, dispatch]);
 
-    // api 설정해야한다.
-    alert(
-      `로그인 버튼이 눌렸습니다. \n 이메일: ${loginData.email} \n 비밀번호: ${loginData.password}`
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/");
+      alert("로그인에 성공하였습니다.");
+    }
+  }, [isLoggedIn, navigate]);
+
+  // prettier-ignore
+  const loginHandleClick = () => {
+    console.log("여기는 로그인컴포넌트 로그인클릭 실행되었다:", loginData);
+    dispatch( // dispatch는 action = payload로 전달된다.
+      login({ // action을 취할 reducer login을 호출
+        login_Id: loginData.login_Id, // {login_Id : 데이터} 형식으로 전달
+        password: loginData.password, // {password : 데이터} 형식으로 전달
+      })
     );
+    console.log(`로그인 버튼이 눌렸습니다. \n 이메일: ${loginData.login_Id} \n 비밀번호: ${loginData.password}`);
   };
 
   const signHandleClick = () => {
@@ -58,11 +82,11 @@ const LoginComponent = () => {
                 <label className="text-xs text-gray-500">아이디</label>
                 <input
                   className="mt-1 w-full h-10 px-3 border border-gray-200 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-gray-900/10"
-                  name="email"
-                  type="email"
-                  value={loginData.email}
+                  name="login_Id"
+                  type="text"
+                  value={loginData.login_Id}
                   onChange={inputChangeHandler}
-                  placeholder="Enter your email address"
+                  placeholder="Enter your Id address"
                 />
               </div>
               <div>

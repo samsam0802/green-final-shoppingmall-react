@@ -1,18 +1,22 @@
 // src/components/user/mypage/ProfileForm.jsx
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 
 export default function ProfileForm() {
+  const { user } = useSelector((state) => state.userSlice);
+
+  // 11 - 10 사용자정보 form 미완성
   const [form, setForm] = useState({
-    name: "홍길동",
-    email: "test@example.com",
-    phone: "01012345678",
-    birthYmd: "19900101",
-    marketingSms: true,
-    marketingEmail: false,
-    zipCode: "",
-    roadAddress: "",
-    detailAddress: "",
-    currentPassword: "",
+    name: user.name,
+    email: user.email,
+    phone_Number: user.phone_Number,
+    birthYmd: user.birthY + user.birthM + user.birhthD,
+    marketingSms: user.marketingSms,
+    marketingEmail: user.marketingEmail,
+    postal_Code: user.postal_Code,
+    address: user.address,
+    address_Detail: user.address_Detail,
+    password_1: "",
   });
 
   const handleChange = (e) => {
@@ -46,8 +50,8 @@ export default function ProfileForm() {
           <input
             name="name"
             className="w-full border border-zinc-200 rounded-lg h-11 px-3 focus:outline-none focus:ring-2 focus:ring-zinc-900/10"
-            value={form.name}
-            onChange={handleChange}
+            value={user.name}
+            readOnly
           />
         </div>
         <div>
@@ -56,17 +60,17 @@ export default function ProfileForm() {
             name="email"
             type="email"
             className="w-full border border-zinc-200 rounded-lg h-11 px-3 focus:outline-none focus:ring-2 focus:ring-zinc-900/10"
-            value={form.email}
+            value={user.email}
             onChange={handleChange}
           />
         </div>
         <div>
           <label className="block text-sm font-medium mb-1">휴대전화번호</label>
           <input
-            name="phone"
+            name="phone_Number"
             maxLength={11}
             className="w-full border border-zinc-200 rounded-lg h-11 px-3 focus:outline-none focus:ring-2 focus:ring-zinc-900/10"
-            value={form.phone}
+            value={user.phone_Number}
             onChange={handleChange}
           />
         </div>
@@ -78,8 +82,8 @@ export default function ProfileForm() {
             name="birthYmd"
             maxLength={8}
             className="w-full border border-zinc-200 rounded-lg h-11 px-3 focus:outline-none focus:ring-2 focus:ring-zinc-900/10"
-            value={form.birthYmd}
-            onChange={handleChange}
+            value={user.birthYmd}
+            readOnly
           />
         </div>
       </div>
@@ -90,10 +94,10 @@ export default function ProfileForm() {
         <p className="text-sm font-semibold mb-3 text-zinc-800">거주지 주소</p>
         <div className="flex flex-col sm:flex-row gap-2 mb-3">
           <input
-            name="zipCode"
+            name="postal_Code"
             placeholder="우편번호"
             className="sm:w-48 border border-zinc-200 rounded-lg h-11 px-3 focus:outline-none focus:ring-2 focus:ring-zinc-900/10"
-            value={form.zipCode}
+            value={user.postal_Code}
             onChange={handleChange}
           />
           <button
@@ -106,19 +110,19 @@ export default function ProfileForm() {
         </div>
         <div className="mb-3">
           <input
-            name="roadAddress"
+            name="address"
             placeholder="도로명주소"
             className="w-full border border-zinc-200 rounded-lg h-11 px-3 focus:outline-none focus:ring-2 focus:ring-zinc-900/10"
-            value={form.roadAddress}
+            value={user.address}
             onChange={handleChange}
           />
         </div>
         <div>
           <input
-            name="detailAddress"
+            name="address_Detail"
             placeholder="상세주소"
             className="w-full border border-zinc-200 rounded-lg h-11 px-3 focus:outline-none focus:ring-2 focus:ring-zinc-900/10"
-            value={form.detailAddress}
+            value={user.address_Detail}
             onChange={handleChange}
           />
         </div>
@@ -130,7 +134,7 @@ export default function ProfileForm() {
           <input
             type="checkbox"
             name="marketingSms"
-            checked={form.marketingSms}
+            checked={user.marketingSms}
             onChange={handleChange}
             className="w-4 h-4"
           />
@@ -140,7 +144,7 @@ export default function ProfileForm() {
           <input
             type="checkbox"
             name="marketingEmail"
-            checked={form.marketingEmail}
+            checked={user.marketingEmail}
             onChange={handleChange}
             className="w-4 h-4"
           />
@@ -155,10 +159,10 @@ export default function ProfileForm() {
         </label>
         <input
           type="password"
-          name="currentPassword"
+          name="password"
           placeholder="정보를 수정하려면 현재 비밀번호를 입력하세요."
           className="w-full border border-zinc-200 rounded-lg h-11 px-3 focus:outline-none focus:ring-2 focus:ring-red-400/30"
-          value={form.currentPassword}
+          value={user.password_1}
           onChange={handleChange}
         />
         <p className="text-xs text-zinc-400 mt-1">
