@@ -238,7 +238,7 @@ export default function ProductDetailComponent() {
                   상품금액 합계
                 </span>
                 {/* **[디자인 적용]** 올리브영 스타일의 빨간색 금액 강조 */}
-                <span className="text-2xl font-extrabold text-red-500">
+                <span className="text-2xl font-extrabold text-[#ff6e18]">
                   {(product.options[0].price * qty).toLocaleString()}원
                   {/* 이 금액이 계산된 총액을 표시하게 됩니다. */}
                 </span>
@@ -252,7 +252,7 @@ export default function ProductDetailComponent() {
                   상품금액 합계
                 </span>
                 {/* **[디자인 적용]** 올리브영 스타일의 빨간색 금액 강조 */}
-                <span className="text-2xl font-extrabold text-red-500">
+                <span className="text-2xl font-extrabold text-[#ff6e18]">
                   {totalPrice.toLocaleString()}원
                   {/* 이 금액이 계산된 총액을 표시하게 됩니다. */}
                 </span>
