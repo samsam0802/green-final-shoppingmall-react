@@ -172,25 +172,6 @@ export default function IssuranceSetting() {
                   onChange={onCouponCodeChangeHandler}
                   className="w-100 px-3 py-2 border rounded bg-gray-100"
                 />
-                {/* <label className="flex items-center gap-2">
-                  <input
-                    type="radio"
-                    name="downloadExposure"
-                    value="show"
-                    defaultChecked
-                    className="w-4 h-4"
-                  />
-                  <span className="text-sm">상품 상세에 쿠폰 노출</span>
-                </label>
-                <label className="flex items-center gap-2">
-                  <input
-                    type="radio"
-                    name="downloadExposure"
-                    value="hide"
-                    className="w-4 h-4"
-                  />
-                  <span className="text-sm">상품 상세에 쿠폰 미노출</span>
-                </label> */}
               </div>
             </div>
           )}

@@ -2,10 +2,12 @@ import React from "react";
 
 // RestockNotification.jsx
 import { useState } from "react";
+import MessageModal from "./MessageModal";
 
 const NotiUserList = () => {
   const [selectedItems, setSelectedItems] = useState([]);
   const [currentTab, setCurrentTab] = useState("all");
+  const [onModal, setOnModal] = useState(false);
 
   // 더미 데이터
   const notifications = [
@@ -46,12 +48,34 @@ const NotiUserList = () => {
     }
   };
 
-  const handleSelectItem = (id, checked) => {
+  const handleSelectItem = (notification, checked) => {
     if (checked) {
-      setSelectedItems((prev) => [...prev, id]);
+      setSelectedItems((prev) => {
+        const data = [...prev, notification];
+        console.log(data);
+        return data;
+      });
     } else {
-      setSelectedItems((prev) => prev.filter((itemId) => itemId !== id));
+      setSelectedItems((prev) => {
+        const data = prev.filter((prevnoti) => prevnoti.id !== notification.id);
+        console.log(data);
+        return data;
+      });
     }
+  };
+
+  const sendCheckedNotiHandler = (notification) => {
+    setSelectedItems((prev) => {
+      const notis = prev.filter((noti) => noti.id !== notification.id);
+      const data = [...notis, notification];
+      return data;
+    });
+    setOnModal(true);
+  };
+
+  const sendAllNotifiHandler = () => {
+    setSelectedItems([...notifications]);
+    setOnModal(true);
   };
 
   const tabs = [
@@ -60,9 +84,18 @@ const NotiUserList = () => {
     { key: "sent", label: "발송완료", count: 1 },
     { key: "failed", label: "발송실패", count: 1 },
   ];
-
+  // /{ selectedUsers, restockProductId, onClose }
   return (
     <div className="min-h-screen bg-gray-50 p-6">
+      {onModal ? (
+        <MessageModal
+          selectedUsers={selectedItems}
+          productId={"1"}
+          onClose={setOnModal}
+        ></MessageModal>
+      ) : (
+        <></>
+      )}
       <div className="max-w-6xl mx-auto">
         {/* 헤더 */}
         <div className="mb-6">
@@ -144,7 +177,10 @@ const NotiUserList = () => {
               </div>
 
               <div className="flex items-center space-x-3">
-                <button className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">
+                <button
+                  onClick={sendAllNotifiHandler}
+                  className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
+                >
                   알림 일괄 발송
                 </button>
               </div>
@@ -185,9 +221,11 @@ const NotiUserList = () => {
                     <td className="px-6 py-4 whitespace-nowrap">
                       <input
                         type="checkbox"
-                        checked={selectedItems.includes(notification.id)}
+                        checked={selectedItems
+                          .map((noti) => noti.id)
+                          .includes(notification.id)}
                         onChange={(e) =>
-                          handleSelectItem(notification.id, e.target.checked)
+                          handleSelectItem(notification, e.target.checked)
                         }
                         className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                       />
@@ -221,7 +259,10 @@ const NotiUserList = () => {
                       {notification.restockDate}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                      <button className="text-blue-600 hover:text-blue-900 mr-3">
+                      <button
+                        onClick={() => sendCheckedNotiHandler(notification)}
+                        className="text-blue-600 hover:text-blue-900 mr-3"
+                      >
                         알림발송
                       </button>
                     </td>
