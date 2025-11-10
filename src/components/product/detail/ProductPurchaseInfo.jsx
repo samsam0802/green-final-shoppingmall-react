@@ -70,7 +70,7 @@ export default function ProductPurchaseInfo() {
 
             <tr className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
               <th className="bg-gradient-to-r from-gray-50 to-gray-100 p-4 font-semibold text-gray-700 text-left align-top">
-                전성분
+                화장품법에 따라 기재해야 하는 모든 성분
               </th>
               <td className="p-4 text-gray-600 leading-relaxed align-top">
                 정제수, 티타늄디옥사이드(CI 77891), 부틸렌글라이콜,
