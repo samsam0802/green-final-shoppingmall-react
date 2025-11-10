@@ -50,15 +50,16 @@ export default function CouponSearchList() {
         <div className="text-sm">
           목록<span className="text-green-500">(총 {coupons.length}개)</span>
         </div>
-        <select
+        {/* 몇개씩 조회할건지 */}
+        {/* <select
           className="px-3 py-1 border rounded text-sm"
           value={itemsPerPage}
-          // onChange={(e) => setItemsPerPage(Number(e.target.value))}
+          onChange={(e) => setItemsPerPage(Number(e.target.value))}
         >
           <option>25</option>
           <option>50</option>
           <option>100</option>
-        </select>
+        </select> */}
       </div>
 
       {/* Table */}

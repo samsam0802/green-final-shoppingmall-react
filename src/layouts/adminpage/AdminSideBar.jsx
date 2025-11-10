@@ -1,28 +1,56 @@
 import { Link } from "lucide-react";
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 // 컴포넌트 외부에서 Arrow Up/Down 아이콘을 위한 TailwindCSS 클래스명을 정의합니다.
 const iconClass = "transform transition-transform duration-200";
 
 const AdminSideBar = ({ activeTab, onTabClick }) => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   // 어떤 메뉴 그룹이 펼쳐져 있는지 관리하는 상태
-  const [expandedMenus, setExpandedMenus] = useState(["products"]); // '상품 관리' 기본 펼침
+  const [expandedMenus, setExpandedMenus] = useState(["products"]);
+
+  useEffect(() => {
+    const menuTab = getMenuFromUrl();
+
+    setExpandedMenus((prev) => {
+      const filteredPrev = prev.filter((menu) => menu !== menuTab);
+      const newMenus = [...filteredPrev, menuTab];
+      console.log(newMenus);
+      return newMenus;
+    });
+  }, [location]);
+
+  const getMenuFromUrl = () => {
+    const path = location.pathname;
+
+    const pathMap = {
+      "/admin/products": "products",
+      "/admin/product/add": "products",
+      "/admin/restock/noti": "products",
+      "/admin/order/search": "transactions",
+      "/admin/user/search": "user-management",
+      "/admin/coupon/register": "coupon-management",
+      "/admin/coupon/search": "coupon-management",
+      "/admin/statistics": "statistics",
+    };
+    return pathMap[path] || "products";
+  };
 
   // 메뉴 그룹의 펼침/접힘을 토글하는 함수
-  const toggleMenu = (menuId) => {
+  const toggleMenu = (menuTab) => {
     setExpandedMenus(
       (prev) =>
-        prev.includes(menuId)
-          ? prev.filter((id) => id !== menuId) // 이미 펼쳐져 있으면 제거 (접기)
-          : [...prev, menuId] // 없으면 추가 (펼치기)
+        prev.includes(menuTab)
+          ? prev.filter((id) => id !== menuTab) // 이미 펼쳐져 있으면 제거 (접기)
+          : [...prev, menuTab] // 없으면 추가 (펼치기)
     );
   };
 
   // 특정 메뉴 그룹이 현재 펼쳐져 있는지 확인
-  const isMenuExpanded = (menuId) => expandedMenus.includes(menuId);
+  const isMenuExpanded = (menuTab) => expandedMenus.includes(menuTab);
 
   // 서브 아이템 클릭 핸들러
   const handleSubItemClick = (e, itemId, path) => {
@@ -44,7 +72,7 @@ const AdminSideBar = ({ activeTab, onTabClick }) => {
   const activeSubMenuClass = "bg-blue-500 text-white font-medium";
 
   return (
-    <aside className="w-64 bg-gray-800 text-white overflow-y-auto min-h-screen">
+    <aside className="w-48 bg-gray-800 text-white overflow-y-auto min-h-screen">
       <nav className="sidebar-nav">
         <ul className="py-2">
           {/* === 1. 상품 관리 (products) === */}
