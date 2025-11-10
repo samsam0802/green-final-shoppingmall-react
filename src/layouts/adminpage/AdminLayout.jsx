@@ -1,11 +1,34 @@
 import React, { useState } from "react";
 import AdminSideBar from "./AdminSideBar";
+import { useLocation } from "react-router-dom";
 
 const AdminLayout = ({ children }) => {
-  const [activeTab, setActiveTab] = useState("product-search"); // 기본 선택 탭
+  // const [activeTab, setActiveTab] = useState("product-search"); // 기본 선택 탭
+
+  const location = useLocation();
+  console.log(location.pathname);
+
+  const getActiveTabFromUrl = () => {
+    const path = location.pathname;
+
+    const pathMap = {
+      "/admin/products": "product-search",
+      "/admin/product/add": "product-add",
+      "/admin/restock/noti": "restock-notification",
+      "/admin/order/search": "order-history",
+      "/admin/user/search": "user-search",
+      "/admin/coupon/register": "coupon-register",
+      "/admin/coupon/search": "coupon-search",
+      "/admin/statistics": "sales-statistics",
+    };
+
+    return pathMap[path] || "product-search";
+  };
+
+  const activeTab = getActiveTabFromUrl();
 
   const handleTabClick = (tabId) => {
-    setActiveTab(tabId);
+    // setActiveTab(tabId);
   };
 
   return (
