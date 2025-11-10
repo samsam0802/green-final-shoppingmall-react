@@ -1,14 +1,11 @@
 import React, { useRef, useState } from "react";
-import { reviewTemplates, categoryTemplateMapping } from "./ReviewTemplate";
 
 const ReviewAddComponent = ({ closeModal }) => {
   const [currentRating, setCurrentRating] = useState(0);
-  const [answers, setAnswers] = useState({});
   const uploadRef = useRef();
   const [images, setImages] = useState([]);
 
-  const template = categoryTemplateMapping["세럼에센스"];
-
+  //사진 첨부 핸들러
   const imageAddHandler = () => {
     const files = uploadRef.current.files;
     if (!files) return;
@@ -22,6 +19,7 @@ const ReviewAddComponent = ({ closeModal }) => {
     }
   };
 
+  //첨부 이미지 삭제 핸들러
   const imageRemoveHandler = (idx) => {
     setImages((prev) => prev.filter((img, i) => i != idx));
   };
@@ -71,33 +69,6 @@ const ReviewAddComponent = ({ closeModal }) => {
           </div>
         </div>
 
-        <div className="pt-3">
-          {template.map((q) => (
-            <div key={q.id} className="mb-8">
-              <p className="text-sm font-bold text-gray-700 mb-2">
-                {q.question}
-              </p>
-              <div className="flex flex-wrap gap-x-4">
-                {q.options.map((opt, idx) => (
-                  <label
-                    key={idx}
-                    className="flex items-center space-x-1 cursor-pointer"
-                  >
-                    <input
-                      type="radio"
-                      name={q.id}
-                      value={opt}
-                      checked={answers[q.id] === opt}
-                      onChange={() => setAnswers({ ...answers, [q.id]: opt })}
-                    />
-                    <span className="text-sm text-gray-700">{opt}</span>
-                  </label>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-
         {/* 리뷰 입력 */}
         <textarea
           className="w-full border border-gray-300 rounded-lg p-3 text-sm focus:border-green-500 focus:ring-green-500 resize-none placeholder:text-gray-400 mt-4"
@@ -105,7 +76,7 @@ const ReviewAddComponent = ({ closeModal }) => {
           placeholder="상품에 대한 솔직한 의견을 작성해주세요."
         />
 
-        {/* 버튼 */}
+        {/* 사진 첨부 */}
         <div className="flex justify-between items-center pt-2 border-t mt-4">
           <button
             type="button"
@@ -139,6 +110,8 @@ const ReviewAddComponent = ({ closeModal }) => {
             등록하기
           </button>
         </div>
+
+        {/* 첨부 이미지 미리보기 */}
         <div className="flex gap-2 mt-3 overflow-x-auto">
           {images.map((img, idx) => {
             return (
@@ -147,7 +120,7 @@ const ReviewAddComponent = ({ closeModal }) => {
                 className="relative w-16 h-16 rounded-md overflow-hidden border border-gray-300 flex-shrink-0"
               >
                 <button
-                  onClick={() => imageRemoveHandler(idx)}
+                  onClick={() => imageRemoveHandler(idx)} //첨부된 이미지 삭제
                   className="absolute top-0 right-0 bg-black/70 text-white text-xs 
                    w-5 h-5 flex justify-center cursor-pointer"
                 >

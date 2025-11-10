@@ -1,9 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ReviewRatingComponent from "./ReviewRatingComponent";
 
 const ReviewListComponent = () => {
-  const [showComments, setShowComments] = useState(false); // 댓글창 열림 상태
-  // 댓글 더미데이터
+  const [openDropdown, setOpenDropdown] = useState(null); // 'sort', 'option', null
+  const [selectedSort, setSelectedSort] = useState("최신순");
+  const [selectedOption, setSelectedOption] = useState("옵션");
+  const [showComments, setShowComments] = useState(false); //리뷰 댓글의 열림/닫힘(on/off) 여부
+  const sortRef = useRef();
+  const optionRef = useRef();
+
+  const sortOptions = ["최신순", "좋아요순", "높은별점순", "낮은별점순"];
+  const options = ["옵션", "옵션1", "옵션2", "옵션3", "옵션4"];
+
   const initialComments = [
     {
       id: 1,
@@ -28,19 +36,87 @@ const ReviewListComponent = () => {
     },
   ];
 
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (sortRef.current && !sortRef.current.contains(e.target)) {
+        setOpenDropdown((prev) => (prev === "sort" ? null : prev));
+      }
+      if (optionRef.current && !optionRef.current.contains(e.target)) {
+        setOpenDropdown((prev) => (prev === "option" ? null : prev));
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
     <div className="w-full min-h-screen">
-      <div className="w-full mx-auto my-25">
+      <div className="w-full mx-auto my-6">
         <ReviewRatingComponent />
-        <div className="flex justify-between items-center py-10 text-sm text-gray-600">
-          <div className="flex items-center space-x-2 text-gray-800 font-semibold text-base"></div>
-          <select className="px-2 py-1 text-xs bg-white text-gray-700 rounded-md focus:ring-0 focus:outline-none">
-            <option>최신순</option>
-            <option>좋아요순</option>
-            <option>높은별점순</option>
-            <option>낮은별점순</option>
-          </select>
+
+        {/* 드롭다운 영역 */}
+        <div className="flex items-center space-x-3 py-4 text-sm text-gray-600">
+          {/* 정렬 */}
+          <div className="relative" ref={sortRef}>
+            <button
+              onClick={() =>
+                setOpenDropdown(openDropdown === "sort" ? null : "sort")
+              }
+              className="px-2 py-0.5 text-xs bg-white border border-gray-300 rounded-md text-gray-700 cursor-pointer hover:border-gray-400 transition focus:outline-none flex items-center justify-between min-w-[90px]"
+            >
+              <span>{selectedSort}</span>
+              <span className="ml-2 text-gray-600 text-lg">▾</span>
+            </button>
+            {openDropdown === "sort" && (
+              <div className="absolute mt-1 w-full bg-white border border-gray-300 rounded-md shadow-lg z-10 overflow-hidden">
+                {sortOptions.map((option) => (
+                  <div
+                    key={option}
+                    className="px-3 py-2 hover:bg-gray-50 cursor-pointer text-xs transition-colors"
+                    onClick={() => {
+                      setSelectedSort(option);
+                      setOpenDropdown(null);
+                    }}
+                  >
+                    {option}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* 옵션 */}
+          <div className="relative" ref={optionRef}>
+            <button
+              onClick={() =>
+                setOpenDropdown(openDropdown === "option" ? null : "option")
+              }
+              className="px-2 py-0.5 text-xs bg-white border border-gray-300 rounded-md text-gray-700 cursor-pointer hover:border-gray-400 transition focus:outline-none flex items-center justify-between min-w-[90px]"
+            >
+              <span>{selectedOption}</span>
+              <span className="ml-2 text-gray-600 text-lg">▾</span>
+            </button>
+            {openDropdown === "option" && (
+              <div className="absolute mt-1 w-full bg-white border border-gray-300 rounded-md shadow-lg z-10 overflow-hidden">
+                {options.map((option) => (
+                  <div
+                    key={option}
+                    className="px-3 py-2 hover:bg-gray-50 cursor-pointer text-xs transition-colors"
+                    onClick={() => {
+                      setSelectedOption(option);
+                      setOpenDropdown(null);
+                    }}
+                  >
+                    {option}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
+
+        <div className="border-t border-gray-300 mb-4"></div>
 
         {/* 리뷰 1 */}
         <div className="bg-white pb-4 mb-4 border-b border-gray-300">
@@ -61,7 +137,6 @@ const ReviewListComponent = () => {
               <p>구매옵션</p>
             </div>
 
-            {/* 이미지 + 텍스트 */}
             <div className="flex flex-col sm:flex-row gap-4 mb-3">
               <div className="w-full sm:w-64 sm:flex-shrink-0">
                 <div className="aspect-square bg-gray-300 flex items-center justify-center rounded">
@@ -75,11 +150,11 @@ const ReviewListComponent = () => {
               </p>
             </div>
 
-            {/* 도움 / 댓글 버튼 */}
             <div className="flex items-center justify-end space-x-4 text-sm text-gray-500 pt-3">
               <button className="flex items-center space-x-1 cursor-pointer hover:text-gray-900 transition duration-150">
                 <span>👍 도움이 돼요 1</span>
               </button>
+
               <button
                 onClick={() => setShowComments(!showComments)}
                 className={`flex items-center space-x-1 cursor-pointer transition duration-150 ${
@@ -92,7 +167,6 @@ const ReviewListComponent = () => {
               </button>
             </div>
 
-            {/* 댓글 목록 */}
             {showComments && (
               <div className="mt-4 border-t border-gray-200 pt-3">
                 {initialComments.map((comment) => {
@@ -133,7 +207,6 @@ const ReviewListComponent = () => {
                   );
                 })}
 
-                {/* 댓글 페이지네이션 */}
                 <div className="flex justify-center space-x-1 mt-5 text-sm">
                   <button className="px-2 py-1 text-gray-500 border border-gray-200 rounded-md cursor-pointer hover:bg-gray-100 transition duration-150">
                     이전
@@ -152,6 +225,8 @@ const ReviewListComponent = () => {
             )}
           </div>
         </div>
+
+        {/* 리뷰 2 */}
         <div className="bg-white pb-4 border-b border-gray-300">
           <div>
             <div className="flex justify-between items-center mb-2 pt-4">
@@ -167,6 +242,7 @@ const ReviewListComponent = () => {
             <div className="mb-2 text-sm text-gray-500">
               <p>구매옵션</p>
             </div>
+
             <div className="flex flex-col sm:flex-row gap-4 mb-3">
               <div className="w-full sm:w-64 sm:flex-shrink-0">
                 <div className="aspect-square bg-gray-300 flex items-center justify-center rounded">
