@@ -26,6 +26,7 @@ export default function DeliveryCharge() {
       return temp;
     });
   };
+
   const onDeliveryFeeChangeHandler = (e) => {
     const { name, value } = e.target;
 
@@ -38,72 +39,74 @@ export default function DeliveryCharge() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto border border-gray-200 bg-white shadow-lg mt-6">
-      {/* 섹션 헤더 */}
+    <div className="w-full bg-white p-6 text-sm font-['Inter']">
       <div
         onClick={() => setIsOpen(!isOpen)}
         className="flex justify-between items-center p-3 border-b"
       >
         <h2 className="text-lg font-semibold text-gray-800">배송비 설정</h2>
+
         <button className="text-gray-600 hover:text-gray-900 transition-colors">
           {isOpen ? <ChevronUp size={24} /> : <ChevronDown size={24} />}
         </button>
       </div>
 
-      {/* 배송비 유형 선택 */}
       {isOpen && (
         <div>
-          <div className="flex border-b border-gray-200">
-            <div className="w-1/4 py-3 px-4 bg-gray-50 text-sm font-medium text-gray-800">
-              배송비 유형
-            </div>
-            <div className="w-3/4 py-3 px-4">
-              <div className="flex gap-6">
-                <label className="flex items-center">
+          {/* 필터 전체 영역 */}
+          <div className="border border-gray-300 mb-6 mt-6 rounded-lg overflow-hidden shadow-lg">
+            {/* 배송비 유형 */}
+            <div className="flex border-b border-gray-300 items-stretch">
+              <div className="w-40 bg-gray-50 border-r border-gray-300 text-gray-700 font-semibold flex items-center justify-center p-2">
+                배송비 유형
+              </div>
+              <div className="flex items-center flex-grow p-2 gap-6">
+                <label className="flex items-center cursor-pointer">
                   <input
                     type="radio"
                     name="deliveryType"
                     value="paid"
                     onChange={onDeliveryTypeChangeHandler}
-                    className="mr-2 text-blue-600 focus:ring-blue-500"
-                    defaultChecked
+                    checked={deliveryInfo.deliveryType === "paid"}
+                    className="mr-2 accent-blue-600 cursor-pointer"
                   />
-                  <span className="text-sm text-gray-700">유료</span>
+                  <span>유료</span>
                 </label>
-                <label className="flex items-center">
+                <label className="flex items-center cursor-pointer">
                   <input
                     type="radio"
                     name="deliveryType"
                     value="free"
                     onChange={onDeliveryTypeChangeHandler}
-                    className="mr-2 text-blue-600 focus:ring-blue-500"
+                    checked={deliveryInfo.deliveryType === "free"}
+                    className="mr-2 accent-blue-600 cursor-pointer"
                   />
-                  <span className="text-sm text-gray-700">무료</span>
+                  <span>무료</span>
                 </label>
               </div>
             </div>
-          </div>
 
-          {/* 기본 배송비 */}
-          <div className="flex border-b border-gray-200">
-            <div className="w-1/4 py-3 px-4 bg-gray-50 text-sm font-medium text-gray-800">
-              기본 배송비
-            </div>
-            <div className="w-3/4 py-3 px-4">
-              <div className="flex items-center space-x-2 max-w-xs">
-                <input
-                  name="deliveryFee"
-                  type="number"
-                  onChange={onDeliveryFeeChangeHandler}
-                  value={deliveryInfo.deliveryFee}
-                  className="border border-gray-300 rounded-sm p-2 w-32 focus:ring-blue-500 focus:border-blue-500"
-                  aria-label="기본 배송비"
-                />
-                <span className="text-sm text-gray-700">원</span>
+            {/* 기본 배송비 */}
+            <div className="flex items-stretch">
+              <div className="w-40 bg-gray-50 border-r border-gray-300 text-gray-700 font-semibold flex items-center justify-center p-2">
+                기본 배송비
               </div>
-              <p className="text-xs text-gray-500 mt-2">
-                * 제주/도서산간 지역은 추가 배송비가 발생할 수 있습니다
-              </p>
+              <div className="flex flex-col flex-grow p-2">
+                <div className="flex items-center gap-2">
+                  <input
+                    name="deliveryFee"
+                    type="number"
+                    onChange={onDeliveryFeeChangeHandler}
+                    value={deliveryInfo.deliveryFee}
+                    className="border border-gray-300 rounded-md p-1 w-32"
+                    disabled={deliveryInfo.deliveryType === "free"}
+                  />
+                  <span>원</span>
+                </div>
+                <p className="text-xs text-gray-500 mt-2">
+                  * 제주/도서산간 지역은 추가 배송비가 발생할 수 있습니다
+                </p>
+              </div>
             </div>
           </div>
         </div>

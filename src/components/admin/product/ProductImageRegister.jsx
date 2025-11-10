@@ -1,4 +1,4 @@
-import { ChevronDown, ChevronUp, Upload, X, Plus } from "lucide-react";
+import { X, Plus, ChevronUp, ChevronDown } from "lucide-react";
 import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateProductRegisterForm } from "../../../redux/slices/features/admin/product/productRegisterSlice";
@@ -91,16 +91,16 @@ export default function ProductImageRegister() {
 
     // 미리보기 인덱스 재설정
     if (selectedPreviewIndex === index) {
-      setSelectedPreviewIndex(0); // 삭제된 이미지가 현재 미리보기라면 대표 이미지로 포커스 이동
+      setSelectedPreviewIndex(0);
     } else if (selectedPreviewIndex > index) {
-      setSelectedPreviewIndex((prev) => prev - 1); // 뒤쪽 이미지가 삭제되면 인덱스 조정
+      setSelectedPreviewIndex((prev) => prev - 1);
     }
   };
 
   // 미리보기 목록
   const previewList = [images.thumbnailImage, ...images.galleryImages].filter(
     (file) => Boolean(file)
-  ); // 예상하지 못한 falsy 값 제거
+  );
 
   // 현재 선택된 미리보기 파일
   const currentPreviewFile = previewList[selectedPreviewIndex];
@@ -121,60 +121,49 @@ export default function ProductImageRegister() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto border border-gray-200 bg-white shadow-lg mt-6">
-      {/* 1. 상품 사진 섹션 헤더 */}
+    <div className="w-full bg-white p-6 text-sm font-['Inter']">
       <div
         onClick={() => setIsOpen(!isOpen)}
-        className="flex justify-between items-center p-4 border-b bg-gray-50 cursor-pointer"
+        className="flex justify-between items-center p-3 border-b"
       >
-        <h2 className="text-xl font-bold text-gray-800 flex items-center">
-          상품 사진
-          <span className="ml-4 text-sm font-normal text-blue-600">등록</span>
-        </h2>
+        <h2 className="text-lg font-semibold text-gray-800">상품 사진</h2>
+
         <button className="text-gray-600 hover:text-gray-900 transition-colors">
           {isOpen ? <ChevronUp size={24} /> : <ChevronDown size={24} />}
         </button>
       </div>
 
       {isOpen && (
-        <div className="p-4">
-          {/* 2. 사진 상세 (테이블) 영역 */}
-          <div className="mb-8">
-            <h3 className="text-lg font-semibold text-gray-700 mb-3">
-              상품 이미지 등록
-            </h3>
-            <div className="flex justify-start items-center mb-3">
-              <p className="text-sm text-gray-500">- 대표 사진은 필수입니다.</p>
-            </div>
+        <div>
+          {/* 안내 메시지 */}
+          <div className="mb-4 mt-4 px-2">
+            <p className="text-sm text-gray-500">- 대표 사진은 필수입니다.</p>
+          </div>
 
-            <table className="min-w-full divide-y divide-gray-200 border border-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-3 py-2 text-center text-xs font-medium text-gray-500 uppercase w-1/10">
-                    순서
-                  </th>
-                  <th className="px-3 py-2 text-center text-xs font-medium text-gray-500 uppercase w-1/10">
-                    이미지 파일명
-                  </th>
-                  <th className="px-3 py-2 text-center text-xs font-medium text-gray-500 uppercase w-4/10">
-                    사진 수정
-                  </th>
-                  <th className="px-3 py-2 text-center text-xs font-medium text-gray-500 uppercase w-5/10">
-                    상세보기
-                  </th>
+          {/* 이미지 등록 테이블 */}
+          <div className="border border-gray-300 mb-6 rounded-lg overflow-hidden shadow-lg">
+            <table className="min-w-full border-collapse text-sm">
+              <thead className="bg-gray-100 border-b border-gray-300">
+                <tr className="text-gray-700 font-semibold text-sm divide-x divide-gray-300">
+                  <th className="px-3 py-3 text-center w-[80px]">순서</th>
+                  <th className="px-3 py-3 text-center">이미지 파일명</th>
+                  <th className="px-3 py-3 text-center">사진 수정</th>
+                  <th className="px-3 py-3 text-center w-[100px]">상세보기</th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {/* 0번 인덱스: 대표 이미지 */}
+                {/* 대표 이미지 */}
                 <tr
-                  className={selectedPreviewIndex === 0 ? "bg-blue-50/50" : ""}
+                  className={`hover:bg-gray-50 transition divide-x divide-gray-200 ${
+                    selectedPreviewIndex === 0 ? "bg-blue-50" : ""
+                  }`}
                 >
-                  <td className="px-3 py-2 whitespace-nowrap text-center text-sm font-medium text-gray-900">
-                    1
+                  <td className="px-3 py-3 text-center">1</td>
+                  <td className="px-3 py-3">
+                    {images.thumbnailImage?.name || "-"}
                   </td>
-                  <td>{images.thumbnailImage?.name}</td>
-                  <td className="px-3 py-2 whitespace-nowrap text-center text-sm">
-                    <label className="cursor-pointer bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs py-1 px-2 rounded border transition-colors inline-block">
+                  <td className="px-3 py-3 text-center">
+                    <label className="cursor-pointer bg-gray-200 hover:bg-gray-300 text-gray-700 px-3 py-1 rounded-md border border-gray-300 transition shadow-sm inline-block">
                       대표 이미지 선택
                       <input
                         type="file"
@@ -186,38 +175,37 @@ export default function ProductImageRegister() {
                       />
                     </label>
                   </td>
-                  <td className="px-3 py-2 whitespace-nowrap text-center text-sm">
+                  <td className="px-3 py-3 text-center">
                     <button
-                      className="bg-green-500 hover:bg-green-600 text-white text-xs py-1 px-2 rounded transition-colors"
+                      className="bg-green-50 text-green-700 hover:bg-green-100 px-3 py-1 rounded-md border border-green-200 cursor-pointer transition shadow-sm"
                       onClick={() => setSelectedPreviewIndex(0)}
                     >
                       보기
                     </button>
                   </td>
                 </tr>
-                {/* 1번 이후 인덱스: 추가 이미지 */}
+
+                {/* 추가 이미지 */}
                 {images.galleryImages.map((file, index) => (
                   <tr
                     key={index}
-                    className={
-                      selectedPreviewIndex === index + 1 ? "bg-blue-50/50" : ""
-                    }
+                    className={`hover:bg-gray-50 transition divide-x divide-gray-200 ${
+                      selectedPreviewIndex === index + 1 ? "bg-blue-50" : ""
+                    }`}
                   >
-                    <td className="px-3 py-2 whitespace-nowrap text-center text-sm font-medium text-gray-900">
-                      {index + 2}
-                    </td>
-                    <td>{file?.name}</td>
-                    <td className="px-3 py-2 whitespace-nowrap text-center text-sm">
+                    <td className="px-3 py-3 text-center">{index + 2}</td>
+                    <td className="px-3 py-3">{file?.name}</td>
+                    <td className="px-3 py-3 text-center">
                       <button
-                        className="bg-red-500 hover:bg-red-600 text-white text-xs py-1 px-2 rounded transition-colors"
+                        className="bg-red-50 text-red-700 hover:bg-red-100 px-3 py-1 rounded-md border border-red-200 cursor-pointer transition shadow-sm"
                         onClick={() => removeImageHandler(index + 1)}
                       >
                         파일 삭제
                       </button>
                     </td>
-                    <td className="px-3 py-2 whitespace-nowrap text-center text-sm">
+                    <td className="px-3 py-3 text-center">
                       <button
-                        className="bg-green-500 hover:bg-green-600 text-white text-xs py-1 px-2 rounded transition-colors"
+                        className="bg-green-50 text-green-700 hover:bg-green-100 px-3 py-1 rounded-md border border-green-200 cursor-pointer transition shadow-sm"
                         onClick={() => setSelectedPreviewIndex(index + 1)}
                       >
                         보기
@@ -225,10 +213,11 @@ export default function ProductImageRegister() {
                     </td>
                   </tr>
                 ))}
+
                 {/* 파일 추가 버튼 행 */}
-                <tr>
-                  <td colSpan="2" className="py-2 text-center">
-                    <label className="cursor-pointer bg-green-500 hover:bg-green-600 text-white text-sm py-1 px-3 rounded inline-flex items-center transition-colors">
+                <tr className="divide-x divide-gray-200">
+                  <td colSpan="2" className="py-3 text-center bg-gray-50">
+                    <label className="cursor-pointer bg-green-50 hover:bg-green-100 text-green-700 px-3 py-1 rounded-md inline-flex items-center transition border border-green-200 shadow-sm">
                       <Plus size={16} className="mr-1" />
                       추가 파일 선택
                       <input
@@ -242,8 +231,8 @@ export default function ProductImageRegister() {
                     </label>
                   </td>
                   <td
-                    colSpan="8"
-                    className="px-3 py-2 text-left text-sm text-gray-500"
+                    colSpan="2"
+                    className="px-3 py-3 text-left text-gray-500 bg-gray-50"
                   >
                     {images.galleryImages.length}개의 추가 이미지가
                     등록되었습니다.
@@ -253,15 +242,17 @@ export default function ProductImageRegister() {
             </table>
           </div>
 
-          {/* 3. 미리보기 영역 */}
-          <div className="">
-            <h3 className="text-lg font-semibold text-gray-700 mb-3 w-1/6">
-              미리보기
-            </h3>
-            <div className="flex w-5/6 border border-gray-200">
+          {/* 미리보기 영역 */}
+          <div className="border border-gray-300 rounded-lg overflow-hidden shadow-lg">
+            <div className="flex border-b border-gray-300 items-stretch bg-gray-50">
+              <div className="w-full px-4 py-3 text-gray-700 font-semibold">
+                미리보기
+              </div>
+            </div>
+            <div className="flex">
               {/* 선택된 이미지 미리보기 */}
-              <div className="w-2/4 p-4 border-r border-gray-200 flex items-center justify-center">
-                <div className="w-full max-w-xs aspect-square bg-gray-100 rounded-lg overflow-hidden shadow-lg">
+              <div className="w-1/2 p-4 border-r border-gray-300 flex items-center justify-center bg-gray-50">
+                <div className="w-full max-w-xs aspect-square bg-white rounded-lg overflow-hidden shadow-md border border-gray-200">
                   {currentPreviewUrl ? (
                     <img
                       src={currentPreviewUrl}
@@ -269,48 +260,61 @@ export default function ProductImageRegister() {
                       className="w-full h-full object-contain"
                     />
                   ) : (
-                    <span>미리보기</span>
+                    <div className="w-full h-full flex items-center justify-center text-gray-400">
+                      미리보기
+                    </div>
                   )}
                 </div>
               </div>
+
               {/* 이미지 상세 정보 */}
-              <div className="w-2/4 p-4">
-                <div className="grid grid-cols-2 gap-x-6 gap-y-2 text-sm">
-                  <div className="font-medium text-gray-500">이미지 구분</div>
-                  <div className="text-gray-800">
-                    {selectedPreviewIndex === 0
-                      ? "대표 사진"
-                      : `추가 사진 (${selectedPreviewIndex}번째)`}
+              <div className="w-1/2 p-4">
+                <div className="space-y-3 text-sm">
+                  <div className="flex">
+                    <div className="w-32 text-gray-500">이미지 구분</div>
+                    <div className="text-gray-800">
+                      {selectedPreviewIndex === 0
+                        ? "대표 사진"
+                        : `추가 사진 (${selectedPreviewIndex}번째)`}
+                    </div>
                   </div>
 
-                  <div className="font-medium text-gray-500">파일명</div>
-                  <div className="text-gray-800 truncate">
-                    {currentPreviewInfo.fileName}
+                  <div className="flex">
+                    <div className="w-32 text-gray-500">파일명</div>
+                    <div className="text-gray-800 truncate flex-1">
+                      {currentPreviewInfo.fileName}
+                    </div>
                   </div>
 
-                  <div className="font-medium text-gray-500">파일 크기</div>
-                  <div className="text-gray-800">
-                    {currentPreviewInfo.fileSize}
+                  <div className="flex">
+                    <div className="w-32 text-gray-500">파일 크기</div>
+                    <div className="text-gray-800">
+                      {currentPreviewInfo.fileSize}
+                    </div>
                   </div>
 
-                  <div className="font-medium text-gray-500">파일 형식</div>
-                  <div className="text-gray-800">
-                    {currentPreviewInfo.fileType}
+                  <div className="flex">
+                    <div className="w-32 text-gray-500">파일 형식</div>
+                    <div className="text-gray-800">
+                      {currentPreviewInfo.fileType}
+                    </div>
                   </div>
 
-                  <div className="font-medium text-gray-500">주소</div>
-                  <div className="text-gray-800 truncate">
-                    {currentPreviewFile
-                      ? URL.createObjectURL(currentPreviewFile)
-                      : "-"}
+                  <div className="flex">
+                    <div className="w-32 text-gray-500">주소</div>
+                    <div className="text-gray-800 truncate flex-1">
+                      {currentPreviewFile
+                        ? URL.createObjectURL(currentPreviewFile)
+                        : "-"}
+                    </div>
                   </div>
 
-                  <div className="col-span-2 mt-4">
+                  <div className="pt-3">
                     <button
-                      className="bg-red-500 hover:bg-red-600 text-white text-sm py-1 px-3 rounded shadow-md transition-colors mr-2"
+                      className="bg-red-50 text-red-700 hover:bg-red-100 px-3 py-1 rounded-md border border-red-200 cursor-pointer transition shadow-sm inline-flex items-center"
                       onClick={() => removeImageHandler(selectedPreviewIndex)}
                     >
-                      <X size={16} className="inline mr-1" />
+                      <X size={16} className="mr-1" />
                       선택 이미지 삭제
                     </button>
                   </div>
