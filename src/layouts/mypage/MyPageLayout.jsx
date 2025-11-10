@@ -1,7 +1,7 @@
-// src/layouts/mypage/MyPageLayout.jsx
 import React from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import Header from "../mainpage/Header";
+import { useSelector } from "react-redux";
 
 const menuGroups = [
   {
@@ -38,6 +38,8 @@ const menuGroups = [
 ];
 
 export default function MyPageLayout() {
+  const { user } = useSelector((state) => state.userSlice);
+
   return (
     <div className="min-h-screen bg-[#f4f5f7]">
       <Header />
@@ -74,9 +76,9 @@ export default function MyPageLayout() {
               <p className="text-xs uppercase tracking-wide text-slate-400 mb-1">
                 MY PAGE
               </p>
-              <h2 className="text-lg font-bold">홍길동 님</h2>
+              <h2 className="text-lg font-bold">{user.name} 님</h2>
               <p className="text-xs text-slate-400 mt-2">
-                기본등급 · 최근 주문 1건
+                {user.user_level}· 최근 주문 1건
               </p>
             </div>
 
@@ -111,17 +113,6 @@ export default function MyPageLayout() {
                             >
                               {item.label}
                             </span>
-                            {isActive ? (
-                              <span
-                                className={`text-xs ${
-                                  item.danger
-                                    ? "text-white/70"
-                                    : "text-slate-500"
-                                }`}
-                              >
-                                ●
-                              </span>
-                            ) : null}
                           </>
                         )}
                       </NavLink>
@@ -139,7 +130,7 @@ export default function MyPageLayout() {
             <div className="flex-1 bg-slate-900 rounded-2xl px-6 py-5 text-white flex items-center justify-between">
               <div>
                 <p className="text-sm text-slate-200/80 mb-1">
-                  홍길동 님은 <b>기본등급</b>입니다.
+                  {user.name} 님은 <b>{user.user_level}</b>입니다.
                 </p>
                 <p className="text-xs text-slate-300">
                   구매금액 0원 · 쿠폰 2개 · 위시리스트 3건
@@ -148,9 +139,6 @@ export default function MyPageLayout() {
               <div className="flex gap-3 text-xs">
                 <button className="px-3 py-1 rounded-full bg-white/10 hover:bg-white/20">
                   등급혜택 안내
-                </button>
-                <button className="px-3 py-1 rounded-full bg-white text-slate-900">
-                  회원정보 수정
                 </button>
               </div>
             </div>

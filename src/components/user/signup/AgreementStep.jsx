@@ -14,11 +14,11 @@ const PRIVACY_CONTENT = `
 4. 동의 거부권 및 불이익: 귀하는 개인정보 수집 및 이용에 동의를 거부할 권리가 있으나, 필수 항목 미동의 시 회원가입 및 서비스 이용에 제한이 있을 수 있습니다.
 `;
 
-export default function AgreementStep({ value, onChange, onNext }) {
-  const allChecked = value.tos && value.privacy && value.age14;
+export default function AgreementStep({ terms, onChange, onNext }) {
+  const allChecked = terms.tos && terms.privacy && terms.age14;
   const toggleAll = (e) => {
     const v = e.target.checked;
-    onChange({ ...value, tos: v, privacy: v, age14: v });
+    onChange({ ...terms, tos: v, privacy: v, age14: v });
   };
 
   return (
@@ -49,8 +49,8 @@ export default function AgreementStep({ value, onChange, onNext }) {
               id="tos"
               type="checkbox"
               className="size-4 accent-emerald-500" // 📌 에메랄드 토글 적용
-              checked={value.tos}
-              onChange={(e) => onChange({ ...value, tos: e.target.checked })}
+              checked={terms.tos}
+              onChange={(e) => onChange({ ...terms, tos: e.target.checked })}
             />
             <label htmlFor="tos">구매 이용 약관에 동의합니다. (필수)</label>
           </div>
@@ -69,9 +69,9 @@ export default function AgreementStep({ value, onChange, onNext }) {
               id="privacy"
               type="checkbox"
               className="size-4 accent-emerald-500" // 📌 에메랄드 토글 적용
-              checked={value.privacy}
+              checked={terms.privacy}
               onChange={(e) =>
-                onChange({ ...value, privacy: e.target.checked })
+                onChange({ ...terms, privacy: e.target.checked })
               }
             />
             <label htmlFor="privacy">
@@ -84,8 +84,8 @@ export default function AgreementStep({ value, onChange, onNext }) {
             <input
               type="checkbox"
               className="size-4 accent-emerald-500" // 📌 에메랄드 토글 적용
-              checked={value.age14}
-              onChange={(e) => onChange({ ...value, age14: e.target.checked })}
+              checked={terms.age14}
+              onChange={(e) => onChange({ ...terms, age14: e.target.checked })}
             />
             만 14세 이상입니다. (필수)
           </label>

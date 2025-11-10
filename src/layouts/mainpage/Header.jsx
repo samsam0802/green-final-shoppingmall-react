@@ -3,9 +3,14 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import NavBar from "../../layouts/mainpage/NavBar";
 import ProductSearchBar from "../../components/product/ProductSearchBar";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../redux/slices/features/user/userSlice";
 
 export default function Header() {
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+  const { isLoggedIn } = useSelector((state) => state.userSlice);
 
   const notices = [
     "[WELCOME] 공지/이벤트(미정)",
@@ -22,6 +27,13 @@ export default function Header() {
     );
     return () => clearInterval(timer);
   }, [notices.length]);
+
+  const handleLogout = () => {
+    if (window.confirm("로그아웃 하시겠습니까?")) {
+      dispatch(logout());
+      navigate("/");
+    }
+  };
 
   return (
     <header className="w-full bg-white">
@@ -76,12 +88,41 @@ export default function Header() {
                 </svg>
               </button>
 
-              <button
-                onClick={() => navigate("/loginpage")}
-                className="hover:text-gray-400 cursor-pointer transition-colors"
-              >
-                로그인
-              </button>
+              {isLoggedIn ? (
+                <>
+                  <button
+                    onClick={handleLogout}
+                    className="hover:text-white transition-colors"
+                  >
+                    로그아웃
+                  </button>
+                  <span className="text-white/30">|</span>
+                  {/* 회원가입 버튼 숨김 - 대신 마이페이지로 이동 */}
+                  <button
+                    onClick={() => navigate("/mypage")}
+                    className="hover:text-white transition-colors"
+                  >
+                    마이페이지
+                  </button>
+                </>
+              ) : (
+                <>
+                  {/* 로그아웃 상태: 로그인/회원가입 버튼 */}
+                  <button
+                    onClick={() => navigate("/loginpage")}
+                    className="hover:text-white transition-colors"
+                  >
+                    로그인
+                  </button>
+                  <span className="text-white/30">|</span>
+                  <button
+                    onClick={() => navigate("/joinpage")}
+                    className="hover:text-white transition-colors"
+                  >
+                    회원가입
+                  </button>
+                </>
+              )}
               <span className="text-white/30">|</span>
               <button
                 onClick={() => navigate("/joinpage")}
@@ -139,3 +180,21 @@ export default function Header() {
     </header>
   );
 }
+
+// {/* 아래쪽: 오특 | 랭킹 | 신상 | 이벤트 */}
+// <div className="flex items-center gap-4 text-sm">
+//   <button className="text-white/90 hover:text-orange-400 transition-colors">
+//     오특
+//   </button>
+//   <span className="w-[1px] h-4 bg-white/15"></span>
+//   <button className="text-white/90 hover:text-orange-400 transition-colors">
+//     랭킹
+//   </button>
+//   <span className="w-[1px] h-4 bg-white/15"></span>
+//   <button className="text-white/90 hover:text-orange-400 transition-colors">
+//     신상
+//   </button>
+//   <span className="w-[1px] h-4 bg-white/15"></span>
+//   {/* 이벤트는 고정 주황 */}
+//   <button className="text-orange-400 font-medium">이벤트</button>
+// </div>

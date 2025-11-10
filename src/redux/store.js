@@ -5,6 +5,7 @@ import couponRegisterSlice from "./slices/features/admin/coupon/couponRegisterSl
 import couponSearchSlice from "./slices/features/admin/coupon/couponSearchSlice";
 import sendMessageSlice from "./slices/features/admin/message/sendMessageSlice";
 import cartReducer from "./slices/features/cart/cartSlice";
+import userSlice from "./slices/features/user/userSlice";
 
 export default configureStore({
   reducer: {
@@ -13,5 +14,6 @@ export default configureStore({
     couponSearchSlice: couponSearchSlice,
     sendMessageSlice: sendMessageSlice,
     cart: cartReducer,
+    userSlice: userSlice,
   },
 });
