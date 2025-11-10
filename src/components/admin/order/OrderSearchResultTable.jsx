@@ -139,7 +139,7 @@ const OrderSearchResultTable = () => {
                 <td className="px-3 py-3">
                   <select
                     defaultValue={item.shipment}
-                    className="border border-gray-300 px-1 py-[2px] text-sm bg-white cursor-pointer"
+                    className="border border-gray-300 px-1 py-[2px] text-sm bg-white cursor-pointer rounded-md"
                   >
                     <option>미출고</option>
                     <option>출고</option>
@@ -149,7 +149,7 @@ const OrderSearchResultTable = () => {
                 <td className="px-3 py-3">
                   <select
                     defaultValue={item.delivery}
-                    className="border border-gray-300 px-1 py-[2px] text-sm bg-white cursor-pointer"
+                    className="border border-gray-300 px-1 py-[2px] text-sm bg-white cursor-pointer rounded-md"
                   >
                     <option>배송준비중</option>
                     <option>배송중</option>
@@ -160,7 +160,7 @@ const OrderSearchResultTable = () => {
                 <td className="px-3 py-3">
                   <select
                     defaultValue={item.returnStatus}
-                    className="border border-gray-300 px-1 py-[2px] text-sm bg-white cursor-pointer"
+                    className="border border-gray-300 px-1 py-[2px] text-sm bg-white cursor-pointer rounded-md"
                   >
                     <option value="반품/환불신청">반품/환불신청</option>
                     <option value="반품/환불중">반품/환불중</option>
