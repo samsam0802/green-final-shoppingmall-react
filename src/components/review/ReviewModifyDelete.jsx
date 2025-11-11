@@ -1,8 +1,37 @@
 import React, { useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addImage,
+  modifyReview,
+  deleteReview,
+  removeImage,
+} from "../../redux/slices/features/review/reviewSlice";
 
 const ReviewModifyDelete = (props) => {
+  const [currentRating, setCurrentRating] = useState(4);
   const uploadRef = useRef();
-  const [images, setImages] = useState([]);
+  const dispatch = useDispatch();
+  const { images } = useSelector((state) => state.reviewSlice);
+
+  //리뷰 수정(업데이트) 핸들러
+  const reviewUpdatedHandler = (idx, newContent, newRating) => {
+    // dispatch(
+    //   modifyReview({
+    //     idx,
+    //     updatedReview: { content: newContent, rating: newRating },
+    //   })
+    // );
+    alert("리뷰가 수정되었습니다.");
+  };
+
+  //리뷰 삭제 핸들러
+  const reviewDeleteHandler = (idx) => {
+    if (confirm("정말 삭제하시겠습니까?")) {
+      // dispatch(deleteReview(idx));
+      alert("리뷰가 삭제되었습니다.");
+      props.closeModal();
+    }
+  };
 
   //사진 첨부 핸들러
   const imageAddHandler = () => {
@@ -12,7 +41,7 @@ const ReviewModifyDelete = (props) => {
     for (let file of files) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        setImages((prev) => [...prev, e.target.result]);
+        dispatch(addImage(e.target.result));
       };
       reader.readAsDataURL(file);
     }
@@ -20,8 +49,10 @@ const ReviewModifyDelete = (props) => {
 
   //첨부 이미지 삭제 핸들러
   const imageRemoveHandler = (idx) => {
-    setImages((prev) => prev.filter((img, i) => i != idx));
+    dispatch(removeImage(idx));
+    // console.log("삭제 이미지 idx", idx);
   };
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
       <div className="bg-white p-6 rounded-xl shadow-2xl max-w-lg w-full space-y-4">
@@ -49,15 +80,15 @@ const ReviewModifyDelete = (props) => {
               <div className="flex space-x-1 text-2xl">
                 {[1, 2, 3, 4, 5].map((star) => {
                   let starClass = "cursor-pointer transition text-gray-300";
-                  if (props.currentRating >= star)
+                  if (currentRating >= star)
                     starClass = "cursor-pointer transition text-yellow-500";
                   return (
                     <span
                       key={star}
                       className={starClass}
-                      onClick={() => props.setCurrentRating(star)}
+                      onClick={() => setCurrentRating(star)}
                     >
-                      {props.currentRating >= star ? "★" : "☆"}
+                      {currentRating >= star ? "★" : "☆"}
                     </span>
                   );
                 })}
@@ -99,22 +130,14 @@ const ReviewModifyDelete = (props) => {
           <div className="flex space-x-3">
             <button
               className="px-4 py-2 text-sm font-semibold text-red-600 border border-red-400 bg-red-50 rounded-lg cursor-pointer"
-              onClick={() => {
-                if (confirm("정말 삭제하시겠습니까?")) {
-                  alert("리뷰가 삭제되었습니다.");
-                  props.closeModal();
-                }
-              }}
+              onClick={reviewDeleteHandler}
             >
               삭제하기
             </button>
             <button
               className="px-5 py-2 text-sm font-semibold text-white rounded-lg cursor-pointer"
               style={{ backgroundColor: "#111111" }}
-              onClick={() => {
-                alert("수정되었습니다");
-                props.closeModal();
-              }}
+              onClick={reviewUpdatedHandler}
             >
               수정하기
             </button>

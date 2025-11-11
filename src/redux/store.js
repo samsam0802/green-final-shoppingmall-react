@@ -6,6 +6,8 @@ import couponSearchSlice from "./slices/features/admin/coupon/couponSearchSlice"
 import sendMessageSlice from "./slices/features/admin/message/sendMessageSlice";
 import cartReducer from "./slices/features/cart/cartSlice";
 import userSlice from "./slices/features/user/userSlice";
+import reviewRatingSlice from "./slices/features/review/reviewRatingSlice";
+import reviewSlice from "./slices/features/review/reviewSlice";
 
 export default configureStore({
   reducer: {
@@ -15,5 +17,7 @@ export default configureStore({
     sendMessageSlice: sendMessageSlice,
     cart: cartReducer,
     userSlice: userSlice,
+    reviewRatingSlice: reviewRatingSlice,
+    reviewSlice: reviewSlice,
   },
 });

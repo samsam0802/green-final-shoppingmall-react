@@ -1,17 +1,14 @@
 import React from "react";
 import { FaStar } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { setReviewRatingData } from "../../redux/slices/features/review/reviewRatingSlice";
 
 const ReviewRatingComponent = () => {
-  const initialScoreData = [
-    { label: "아주 좋아요 (5점)", count: 115, score: 5 },
-    { label: "맘에 들어요 (4점)", count: 1, score: 4 },
-    { label: "보통이에요 (3점)", count: 0, score: 3 },
-    { label: "그냥 그래요 (2점)", count: 0, score: 2 },
-    { label: "별로예요 (1점)", count: 0, score: 1 },
-  ];
-  const averageScore = "4.8";
-  const positivePercentage = 96;
-  const totalReviews = 116;
+  const dispatch = useDispatch();
+  const { averageScore, positivePercentage, totalReviews, scoreData } =
+    useSelector((state) => state.reviewRatingSlice);
+
+  //setReviewRatingData, dispatch 현재 상태에선 미사용, 추후 사용할 예정
 
   return (
     <div className="p-6 border border-gray-200 rounded-lg mb-6 bg-white">
@@ -39,7 +36,7 @@ const ReviewRatingComponent = () => {
 
         {/* 별점 그래프 */}
         <div className="flex-1 lg:w-2/3 space-y-3 pt-4">
-          {initialScoreData.map((data) => (
+          {scoreData.map((data) => (
             <div key={data.score} className="flex items-center text-sm">
               <div className="w-30 text-gray-700 font-medium">{data.label}</div>
               <div className="flex-1 mx-4 h-2 bg-gray-200 rounded-full overflow-hidden">
