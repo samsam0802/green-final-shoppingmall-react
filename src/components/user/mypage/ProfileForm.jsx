@@ -1,22 +1,17 @@
-// src/components/user/mypage/ProfileForm.jsx
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 
 export default function ProfileForm() {
-  // const { user } = useSelector((state) => state.userSlice);
+  const { user } = useSelector((state) => state.userSlice);
 
-  // 11 - 10 사용자정보 form 미완성
+  // prettier-ignore
   const [form, setForm] = useState({
-    name: "",
-    email: "",
-    phone_Number: "",
-    birthYmd: "",
-    marketingSms: "",
-    marketingEmail: "",
-    postal_Code: "",
-    address: "",
-    address_Detail: "",
-    password_1: "",
+    ...(user || {}),
+    // Y, M, D가 분리되어 있는상태로 문자열 결합하기
+    birth_date: // birth_date 속성 추가
+      user?.birthY && user?.birthM && user?.birthD // user 데이터의 birth Y , M , D 데이터가 전부 있는지
+        ? `${user.birthY} - ${String(user.birthM).padStart(2, "0")} - ${String( user.birthD).padStart(2, "0")}` // 있다면 백틱 객체리터럴사용해서 문자열 결합
+        : "",
   });
 
   const handleChange = (e) => {
@@ -29,7 +24,7 @@ export default function ProfileForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!form.currentPassword) {
+    if (!form.password) {
       alert("수정하려면 현재 비밀번호를 입력하세요.");
       return;
     }
@@ -62,6 +57,7 @@ export default function ProfileForm() {
             className="w-full border border-zinc-200 rounded-lg h-11 px-3 focus:outline-none focus:ring-2 focus:ring-zinc-900/10"
             value={form.email}
             onChange={handleChange}
+            readOnly
           />
         </div>
         <div>
@@ -72,6 +68,7 @@ export default function ProfileForm() {
             className="w-full border border-zinc-200 rounded-lg h-11 px-3 focus:outline-none focus:ring-2 focus:ring-zinc-900/10"
             value={form.phone_Number}
             onChange={handleChange}
+            readOnly
           />
         </div>
         <div>
@@ -79,10 +76,10 @@ export default function ProfileForm() {
             생년월일 (8자리)
           </label>
           <input
-            name="birthYmd"
+            name="birth_date"
             maxLength={8}
             className="w-full border border-zinc-200 rounded-lg h-11 px-3 focus:outline-none focus:ring-2 focus:ring-zinc-900/10"
-            value={form.birthYmd}
+            value={form.birth_date}
             readOnly
           />
         </div>
@@ -99,6 +96,7 @@ export default function ProfileForm() {
             className="sm:w-48 border border-zinc-200 rounded-lg h-11 px-3 focus:outline-none focus:ring-2 focus:ring-zinc-900/10"
             value={form.postal_Code}
             onChange={handleChange}
+            readOnly
           />
           <button
             type="button"
@@ -162,7 +160,7 @@ export default function ProfileForm() {
           name="password"
           placeholder="정보를 수정하려면 현재 비밀번호를 입력하세요."
           className="w-full border border-zinc-200 rounded-lg h-11 px-3 focus:outline-none focus:ring-2 focus:ring-red-400/30"
-          value={form.password_1}
+          value={form.password}
           onChange={handleChange}
         />
         <p className="text-xs text-zinc-400 mt-1">

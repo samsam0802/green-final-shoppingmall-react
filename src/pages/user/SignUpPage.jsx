@@ -24,8 +24,8 @@ export default function SignUpPage() {
   // 회원가입 form
   const [signUpForm, setSignUpForm] = useState({
     login_Id: "", // 로그인아이디
-    password_1: "", // 비밀번호
-    password_2: "", // 비밀번호 확인
+    password: "", // 비밀번호
+    confirmPassword: "", // 비밀번호 확인
     name: "", // 유저이름
     email: "", // 유저이메일
     phone_Number: "", // 핸드폰번호
