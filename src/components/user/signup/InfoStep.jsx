@@ -29,10 +29,10 @@ export default function InfoStep({ form, onChange, onPrev, onSubmit }) {
     const e = {};
     if (!form.login_Id || form.login_Id.length < 4)
       e.login_Id = "아이디는 4자 이상 입력하세요.";
-    if (!form.password_1 || form.password_1.length < 6)
-      e.password_1 = "비밀번호는 6자 이상 입력하세요.";
-    if (form.password_2 !== form.password_1)
-      e.password_2 = "비밀번호가 일치하지 않습니다.";
+    if (!form.password || form.password.length < 6)
+      e.password = "비밀번호는 6자 이상 입력하세요.";
+    if (form.confirmPassword !== form.password)
+      e.confirmPassword = "비밀번호가 일치하지 않습니다.";
     if (!form.name) e.name = "이름을 입력하세요.";
     if (!form.email || !/^\S+@\S+\.\S+$/.test(form.email))
       e.email = "이메일 형식 오류";
@@ -79,15 +79,13 @@ export default function InfoStep({ form, onChange, onPrev, onSubmit }) {
               label="비밀번호(영문,숫자,특수문자 6~15자)"
               required
               type="password"
-              value={form.password_1 || ""}
-              onChange={(e) =>
-                onChange({ ...form, password_1: e.target.value })
-              }
+              value={form.password || ""}
+              onChange={(e) => onChange({ ...form, password: e.target.value })}
               placeholder="••••••"
-              error={errors.password_1}
+              error={errors.password}
             />
-            {errors.password_1 && (
-              <p className="text-xs text-rose-600 mt-1">{errors.password_1}</p>
+            {errors.password && (
+              <p className="text-xs text-rose-600 mt-1">{errors.password}</p>
             )}
           </div>
 
@@ -96,15 +94,17 @@ export default function InfoStep({ form, onChange, onPrev, onSubmit }) {
               label="비밀번호 재입력"
               required
               type="password"
-              value={form.password_2 || ""}
+              value={form.confirmPassword || ""}
               onChange={(e) =>
-                onChange({ ...form, password_2: e.target.value })
+                onChange({ ...form, confirmPassword: e.target.value })
               }
               placeholder="••••••"
-              error={errors.password_2}
+              error={errors.confirmPassword}
             />
-            {errors.password_2 && (
-              <p className="text-xs text-rose-600 mt-1">{errors.password_2}</p>
+            {errors.confirmPassword && (
+              <p className="text-xs text-rose-600 mt-1">
+                {errors.confirmPassword}
+              </p>
             )}
           </div>
         </div>
@@ -196,10 +196,10 @@ export default function InfoStep({ form, onChange, onPrev, onSubmit }) {
             </div>
           </div>
 
-          <div className="grid gap-2">
-            <span className="text-sm font-medium">생년월일</span>
+          <div className="pb-8">
+            <span className="text-sm font-medium mb-2">생년월일</span>
 
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-3 gap-3 mt-2">
               <input
                 placeholder="YYYY"
                 maxLength={4}

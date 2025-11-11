@@ -1,9 +1,11 @@
-// src/components/user/mypage/PasswordChangeBox.jsx
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 
 export default function PasswordChangeBox() {
+  const { user } = useSelector((state) => state.userSlice);
+
   const [pwForm, setPwForm] = useState({
-    currentPassword: "",
+    password: "",
     newPassword: "",
     newPasswordConfirm: "",
   });
@@ -15,11 +17,20 @@ export default function PasswordChangeBox() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log("현재 비밀번호 :", pwForm.password);
+    console.log("새 비밀번호 :", pwForm.newPassword);
+    console.log("새 비밀번호확인 :", pwForm.newPasswordConfirm);
 
-    if (!pwForm.currentPassword) {
+    if (!pwForm.password) {
       alert("현재 비밀번호를 입력하세요.");
       return;
     }
+
+    if (user && pwForm.password !== user.password) {
+      alert("비밀번호가 일치하지 않습니다.");
+      return;
+    }
+
     if (!pwForm.newPassword) {
       alert("새 비밀번호를 입력하세요.");
       return;
@@ -31,9 +42,7 @@ export default function PasswordChangeBox() {
 
     // TODO: axios.post("/api/members/change-password", pwForm, {...})
     console.log("password change payload:", pwForm);
-    alert(
-      "지금은 스케치 단계입니다. 실제 변경은 백엔드 붙인 후에 동작시켜주세요."
-    );
+    alert("저장 완료. 실제 변경은 백엔드 개발 시 테스트 후 수정");
   };
 
   return (
@@ -42,9 +51,9 @@ export default function PasswordChangeBox() {
         <label className="block text-sm font-medium mb-1">현재 비밀번호</label>
         <input
           type="password"
-          name="currentPassword"
+          name="password"
           className="w-full h-10 px-3 border rounded-lg"
-          value={pwForm.currentPassword}
+          value={pwForm.password}
           onChange={handleChange}
         />
       </div>
