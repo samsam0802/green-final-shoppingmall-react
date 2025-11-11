@@ -1,4 +1,3 @@
-// src/components/common/Header.jsx
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import NavBar from "../../layouts/mainpage/NavBar";
@@ -92,7 +91,7 @@ export default function Header() {
                 <>
                   <button
                     onClick={handleLogout}
-                    className="hover:text-gray-400 transition-colors"
+                    className="hover:text-gray-400 cursor-pointer transition-colors"
                   >
                     로그아웃
                   </button>
@@ -100,7 +99,7 @@ export default function Header() {
                   {/* 회원가입 버튼 숨김 - 대신 마이페이지로 이동 */}
                   <button
                     onClick={() => navigate("/mypage")}
-                    className="hover:text-gray-400 transition-colors"
+                    className="hover:text-gray-400 cursor-pointer transition-colors"
                   >
                     마이페이지
                   </button>
@@ -123,13 +122,7 @@ export default function Header() {
                   </button>
                 </>
               )}
-              <span className="text-white/30">|</span>
-              <button
-                onClick={() => navigate("/joinpage")}
-                className="hover:text-gray-400 cursor-pointer transition-colors"
-              >
-                회원가입
-              </button>
+
               <span className="text-white/30">|</span>
               <button
                 onClick={() => navigate("/cart")}
@@ -143,13 +136,6 @@ export default function Header() {
                 className="hover:text-gray-400 cursor-pointer transition-colors"
               >
                 고객센터
-              </button>
-              {/* 마이페이지 아이콘*/}
-              <button
-                onClick={() => navigate("/mypage")}
-                className="w-6 h-6 flex items-center justify-center text-sm hover:text-gray-400 cursor-pointer transition-colors"
-              >
-                👤
               </button>
             </div>
 
@@ -180,21 +166,3 @@ export default function Header() {
     </header>
   );
 }
-
-// {/* 아래쪽: 오특 | 랭킹 | 신상 | 이벤트 */}
-// <div className="flex items-center gap-4 text-sm">
-//   <button className="text-white/90 hover:text-orange-400 transition-colors">
-//     오특
-//   </button>
-//   <span className="w-[1px] h-4 bg-white/15"></span>
-//   <button className="text-white/90 hover:text-orange-400 transition-colors">
-//     랭킹
-//   </button>
-//   <span className="w-[1px] h-4 bg-white/15"></span>
-//   <button className="text-white/90 hover:text-orange-400 transition-colors">
-//     신상
-//   </button>
-//   <span className="w-[1px] h-4 bg-white/15"></span>
-//   {/* 이벤트는 고정 주황 */}
-//   <button className="text-orange-400 font-medium">이벤트</button>
-// </div>
