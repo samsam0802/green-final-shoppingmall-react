@@ -76,9 +76,9 @@ export default function MyPageLayout() {
               <p className="text-xs uppercase tracking-wide text-slate-400 mb-1">
                 MY PAGE
               </p>
-              <h2 className="text-lg font-bold">{user.name} 님</h2>
+              {/* <h2 className="text-lg font-bold">{user.name} 님</h2> */}
               <p className="text-xs text-slate-400 mt-2">
-                {user.user_level}· 최근 주문 1건
+                {/* {user.user_level} 🔹 최근 주문 1건 */}
               </p>
             </div>
 
@@ -130,7 +130,7 @@ export default function MyPageLayout() {
             <div className="flex-1 bg-slate-900 rounded-2xl px-6 py-5 text-white flex items-center justify-between">
               <div>
                 <p className="text-sm text-slate-200/80 mb-1">
-                  {user.name} 님은 <b>{user.user_level}</b>입니다.
+                  {/* {user.name} 님은 <b>{user.user_level}</b>입니다. */}
                 </p>
                 <p className="text-xs text-slate-300">
                   구매금액 0원 · 쿠폰 2개 · 위시리스트 3건
