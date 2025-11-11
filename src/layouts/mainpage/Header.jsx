@@ -92,7 +92,7 @@ export default function Header() {
                 <>
                   <button
                     onClick={handleLogout}
-                    className="hover:text-white transition-colors"
+                    className="hover:text-gray-400 transition-colors"
                   >
                     로그아웃
                   </button>
@@ -100,7 +100,7 @@ export default function Header() {
                   {/* 회원가입 버튼 숨김 - 대신 마이페이지로 이동 */}
                   <button
                     onClick={() => navigate("/mypage")}
-                    className="hover:text-white transition-colors"
+                    className="hover:text-gray-400 transition-colors"
                   >
                     마이페이지
                   </button>
@@ -110,14 +110,14 @@ export default function Header() {
                   {/* 로그아웃 상태: 로그인/회원가입 버튼 */}
                   <button
                     onClick={() => navigate("/loginpage")}
-                    className="hover:text-white transition-colors"
+                    className="hover:text-gray-400 cursor-pointer transition-colors"
                   >
                     로그인
                   </button>
                   <span className="text-white/30">|</span>
                   <button
                     onClick={() => navigate("/joinpage")}
-                    className="hover:text-white transition-colors"
+                    className="hover:text-gray-400 cursor-pointer transition-colors"
                   >
                     회원가입
                   </button>
