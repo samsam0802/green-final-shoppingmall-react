@@ -1,9 +1,30 @@
 import React, { useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addReview,
+  addImage,
+  removeImage,
+} from "../../redux/slices/features/review/reviewSlice";
 
 const ReviewAddComponent = ({ closeModal }) => {
   const [currentRating, setCurrentRating] = useState(0);
   const uploadRef = useRef();
-  const [images, setImages] = useState([]);
+  const dispatch = useDispatch();
+  const { images } = useSelector((state) => state.reviewSlice);
+
+  const reviewAddHandler = () => {
+    dispatch(
+      addReview({
+        //임시 데이터
+        rating: currentRating,
+        content: "사용자가 쓴 리뷰 내용",
+        images: images,
+        createAt: "2025-11-11",
+      })
+    );
+    alert("리뷰가 등록되었습니다");
+    closeModal();
+  };
 
   //사진 첨부 핸들러
   const imageAddHandler = () => {
@@ -13,7 +34,8 @@ const ReviewAddComponent = ({ closeModal }) => {
     for (let file of files) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        setImages((prev) => [...prev, e.target.result]);
+        dispatch(addImage(e.target.result));
+        // console.log("addImage", e.target.result);
       };
       reader.readAsDataURL(file);
     }
@@ -21,7 +43,8 @@ const ReviewAddComponent = ({ closeModal }) => {
 
   //첨부 이미지 삭제 핸들러
   const imageRemoveHandler = (idx) => {
-    setImages((prev) => prev.filter((img, i) => i != idx));
+    dispatch(removeImage(idx));
+    // console.log("삭제 이미지 idx", idx);
   };
 
   return (
@@ -102,10 +125,7 @@ const ReviewAddComponent = ({ closeModal }) => {
           <button
             className="px-5 py-2 text-sm font-semibold text-white rounded-lg cursor-pointer"
             style={{ backgroundColor: "#111111" }}
-            onClick={() => {
-              alert("리뷰가 등록되었습니다");
-              closeModal();
-            }}
+            onClick={reviewAddHandler}
           >
             등록하기
           </button>
