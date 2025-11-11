@@ -153,6 +153,7 @@ const SalesChart = () => {
   // 차트 옵션
   const chartOptions = {
     responsive: true,
+    maintainAspectRatio: false, // 비율 유지 비활성화 - 컨테이너 높이에 맞춤
     plugins: {
       legend: {
         position: "top",
@@ -223,14 +224,6 @@ const SalesChart = () => {
     }
   };
 
-  // 통계 요약 카드 데이터
-  const stats = {
-    totalSales: 312500000,
-    averageOrder: 125000,
-    growthRate: 15.2,
-    totalOrders: 2500,
-  };
-
   return (
     <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
       {/* 헤더 및 컨트롤 부분은 기존과 거의 동일 (Tailwind CSS) */}
@@ -276,7 +269,6 @@ const SalesChart = () => {
 
       {/* 통계 요약 카드 (mockStatsSummary 사용) */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        {/* ... (stats.totalSales 대신 mockStatsSummary.totalSales 사용) ... */}
         <div className="bg-blue-50 rounded-lg p-4 border border-blue-100">
           <div className="text-blue-600 text-sm font-medium">총 매출액</div>
           <div className="text-2xl font-bold text-gray-800 mt-1">
@@ -313,8 +305,8 @@ const SalesChart = () => {
         </div>
       </div>
 
-      {/* 차트 */}
-      <div className="h-80">{renderChart()}</div>
+      {/* 차트 - 높이 제한 및 최대 높이 설정 */}
+      <div className="h-80 max-h-96 mb-6">{renderChart()}</div>
 
       {/* 추가 정보 */}
       <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
