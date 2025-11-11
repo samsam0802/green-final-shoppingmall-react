@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import CouponModal from "./CouponModal";
-import AddressModal from "./AddressModal";
 
 // Helper function to format price with commas and '원'
 const formatPrice = (price) => {
@@ -652,18 +651,6 @@ const OrderComponent = () => {
           onSelect={(coupon) => {
             setSelectedCoupon(coupon);
             setShowCouponModal(false);
-          }}
-        />
-      )}
-
-      {showAddressModal && (
-        <AddressModal
-          onClose={() => setShowAddressModal(false)}
-          onSelectAddress={({ zipCode, address, detailAddress }) => {
-            setZipCode(zipCode);
-            setAddress(address);
-            setDetailAddress(detailAddress);
-            setShowAddressModal(false);
           }}
         />
       )}
