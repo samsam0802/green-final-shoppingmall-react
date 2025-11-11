@@ -63,70 +63,57 @@ export default function OptionRegistration() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto border border-gray-200 bg-white shadow-lg mt-6">
-      {/* 섹션 헤더 */}
+    <div className="w-full bg-white p-6 text-sm font-['Inter']">
       <div
         onClick={() => setIsOpen(!isOpen)}
-        className="flex justify-between items-center p-4 border-b cursor-pointer hover:bg-gray-50 transition-colors"
+        className="flex justify-between items-center p-3 border-b"
       >
         <h2 className="text-lg font-semibold text-gray-800">상품 옵션 등록</h2>
+
         <button className="text-gray-600 hover:text-gray-900 transition-colors">
           {isOpen ? <ChevronUp size={24} /> : <ChevronDown size={24} />}
         </button>
       </div>
 
       {isOpen && (
-        <div className="p-4">
-          {/* 옵션 추가 버튼 */}
-          <div className="flex justify-end mb-4">
-            <button
-              onClick={addOptionHandler}
-              className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 transition-colors"
-            >
-              + 옵션 추가
-            </button>
-          </div>
-
-          {/* 테이블 형식 */}
-          <div className="overflow-x-auto border border-gray-200 rounded-lg">
-            <table className="w-full">
-              <thead className="bg-gray-100 border-b border-gray-200">
-                <tr>
-                  <th className="px-3 py-3 text-center text-xs font-semibold text-gray-700 uppercase tracking-wider w-16">
-                    No.
-                  </th>
-                  <th className="px-3 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider min-w-[180px]">
+        <div>
+          {/* 테이블 영역 */}
+          <div className="overflow-x-auto mt-6 mb-6 border border-gray-300 rounded-lg shadow-md">
+            <table className="min-w-full border-collapse text-sm text-center">
+              <thead className="bg-gray-100 border-b border-gray-300">
+                <tr className="text-gray-700 font-semibold text-sm divide-x divide-gray-300">
+                  <th className="px-3 py-3 whitespace-nowrap w-[60px]">No.</th>
+                  <th className="px-3 py-3 whitespace-nowrap min-w-[180px]">
                     옵션명
                   </th>
-                  <th className="px-3 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-24">
+                  <th className="px-3 py-3 whitespace-nowrap w-[100px]">
                     매입가
                   </th>
-                  <th className="px-3 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-24">
+                  <th className="px-3 py-3 whitespace-nowrap w-[100px]">
                     판매가
                   </th>
-                  <th className="px-3 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-24">
+                  <th className="px-3 py-3 whitespace-nowrap w-[100px]">
                     현재재고
                   </th>
-                  <th className="px-3 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-24">
+                  <th className="px-3 py-3 whitespace-nowrap w-[100px]">
                     초기재고
                   </th>
-                  <th className="px-3 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-24">
+                  <th className="px-3 py-3 whitespace-nowrap w-[100px]">
                     안전재고
                   </th>
-                  <th className="px-3 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider min-w-[280px]">
+                  <th className="px-3 py-3 whitespace-nowrap min-w-[280px]">
                     이미지
                   </th>
-                  <th className="px-3 py-3 text-center text-xs font-semibold text-gray-700 uppercase tracking-wider w-20">
-                    작업
-                  </th>
+                  <th className="px-3 py-3 whitespace-nowrap w-[80px]">작업</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-200 bg-white">
+              <tbody className="bg-white divide-y divide-gray-200">
                 {options.map((option, index) => (
-                  <tr key={index} className="hover:bg-gray-50">
-                    <td className="px-3 py-3 text-center text-sm font-medium text-gray-700">
-                      {index + 1}
-                    </td>
+                  <tr
+                    key={index}
+                    className="hover:bg-gray-50 transition divide-x divide-gray-200"
+                  >
+                    <td className="px-3 py-3">{index + 1}</td>
                     <td className="px-3 py-3">
                       <input
                         type="text"
@@ -138,7 +125,7 @@ export default function OptionRegistration() {
                             e.target.value
                           )
                         }
-                        className="w-full border border-gray-300 rounded px-2 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        className="w-full border border-gray-300 rounded-md px-2 py-1"
                         placeholder="옵션 이름"
                       />
                     </td>
@@ -153,7 +140,7 @@ export default function OptionRegistration() {
                             e.target.value
                           )
                         }
-                        className="w-full border border-gray-300 rounded px-2 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        className="w-full border border-gray-300 rounded-md px-2 py-1"
                         placeholder="0"
                       />
                     </td>
@@ -168,7 +155,7 @@ export default function OptionRegistration() {
                             e.target.value
                           )
                         }
-                        className="w-full border border-gray-300 rounded px-2 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        className="w-full border border-gray-300 rounded-md px-2 py-1"
                         placeholder="0"
                       />
                     </td>
@@ -183,7 +170,7 @@ export default function OptionRegistration() {
                             e.target.value
                           )
                         }
-                        className="w-full border border-gray-300 rounded px-2 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        className="w-full border border-gray-300 rounded-md px-2 py-1"
                         placeholder="0"
                       />
                     </td>
@@ -198,7 +185,7 @@ export default function OptionRegistration() {
                             e.target.value
                           )
                         }
-                        className="w-full border border-gray-300 rounded px-2 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        className="w-full border border-gray-300 rounded-md px-2 py-1"
                         placeholder="0"
                       />
                     </td>
@@ -213,7 +200,7 @@ export default function OptionRegistration() {
                             e.target.value
                           )
                         }
-                        className="w-full border border-gray-300 rounded px-2 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        className="w-full border border-gray-300 rounded-md px-2 py-1"
                         placeholder="0"
                       />
                     </td>
@@ -235,7 +222,7 @@ export default function OptionRegistration() {
                           />
                           <label
                             htmlFor={`file-input-${index}`}
-                            className="cursor-pointer inline-block px-3 py-1.5 bg-gray-500 text-white text-xs rounded hover:bg-gray-600 transition-colors"
+                            className="cursor-pointer inline-block px-3 py-1 bg-gray-200 text-gray-700 text-xs rounded-md hover:bg-gray-300 transition border border-gray-300 shadow-sm"
                           >
                             파일 선택
                           </label>
@@ -248,7 +235,7 @@ export default function OptionRegistration() {
                             </div>
                           )}
                         </div>
-                        <div className="w-16 h-16 border border-gray-300 rounded bg-gray-50 flex items-center justify-center overflow-hidden flex-shrink-0">
+                        <div className="w-16 h-16 border border-gray-300 rounded-md bg-gray-50 flex items-center justify-center overflow-hidden flex-shrink-0">
                           {option.image ? (
                             <img
                               src={URL.createObjectURL(option.image)}
@@ -263,11 +250,11 @@ export default function OptionRegistration() {
                         </div>
                       </div>
                     </td>
-                    <td className="px-3 py-3 text-center">
+                    <td className="px-3 py-3">
                       {options.length > 1 && (
                         <button
                           onClick={() => removeOptionHandler(index)}
-                          className="px-3 py-1.5 bg-red-500 text-white text-xs rounded hover:bg-red-600 transition-colors"
+                          className="bg-red-50 text-red-700 hover:bg-red-100 px-3 py-1 rounded-md border border-red-200 cursor-pointer transition shadow-sm"
                         >
                           삭제
                         </button>
@@ -280,12 +267,12 @@ export default function OptionRegistration() {
           </div>
 
           {/* 도움말 */}
-          <div className="mt-4 p-3 bg-gray-50 rounded-lg">
-            <p className="text-xs text-gray-600">
+          <div className="mt-4 px-4 py-3 bg-blue-50 border border-blue-200 rounded-lg">
+            <p className="text-sm text-gray-700">
               * 옵션은 여러 개 추가할 수 있습니다. 각 옵션별로 가격과 재고를
               설정해주세요.
             </p>
-            <p className="text-xs text-gray-600 mt-1">
+            <p className="text-sm text-gray-700 mt-1">
               * 안전재고는 재고 부족 알림을 받을 최소 수량입니다.
             </p>
           </div>

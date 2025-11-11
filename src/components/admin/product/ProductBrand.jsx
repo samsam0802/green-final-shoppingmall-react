@@ -36,71 +36,83 @@ export default function ProductBrand() {
   };
 
   return (
-    <div className="max-w-6xl mx-auto mt-6">
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-        {/* 브랜드 선택 헤더 */}
-        <div
-          className="flex justify-between items-center px-6 py-4 bg-linear-to-r from-gray-50 to-gray-100 cursor-pointer hover:from-gray-100 hover:to-gray-200 transition-all"
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          <h2 className="text-xl font-bold text-gray-800">브랜드</h2>
-          <button className="text-gray-600 hover:text-gray-900 transition-colors">
-            {isOpen ? <ChevronUp size={24} /> : <ChevronDown size={24} />}
-          </button>
-        </div>
+    <div className="w-full bg-white p-6 text-sm font-['Inter']">
+      <div
+        onClick={() => setIsOpen(!isOpen)}
+        className="flex justify-between items-center p-3 border-b"
+      >
+        <h2 className="text-lg font-semibold text-gray-800">브랜드</h2>
 
-        {isOpen && (
-          <div className="p-6">
-            {/* 브랜드 선택 영역 */}
-            <div className="mb-8">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-gray-800">
-                  브랜드 선택
-                </h3>
+        <button className="text-gray-600 hover:text-gray-900 transition-colors">
+          {isOpen ? <ChevronUp size={24} /> : <ChevronDown size={24} />}
+        </button>
+      </div>
+
+      {isOpen && (
+        <div>
+          {/* 브랜드 선택 영역 */}
+          <div className="border border-gray-300 mb-6 mt-6 rounded-lg overflow-hidden shadow-lg">
+            {/* 브랜드 선택 헤더 */}
+            <div className="flex border-b border-gray-300 items-stretch bg-gray-50">
+              <div className="w-full px-4 py-3 text-gray-700 font-semibold">
+                브랜드 선택
+              </div>
+            </div>
+
+            {/* 브랜드 선택 폼 */}
+            <div className="p-4">
+              <select
+                id="brand-select"
+                value={selectedBrand?.id || ""}
+                onChange={brandChangeHandler}
+                className="w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-white text-gray-700"
+              >
+                <option value="">브랜드를 선택해주세요</option>
+                {brandsData.map((brand) => (
+                  <option key={brand.id} value={brand.id}>
+                    {brand.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          {/* 선택된 브랜드 표시 영역 */}
+          {selectedBrand && (
+            <div className="border border-gray-300 mb-6 rounded-lg overflow-hidden shadow-lg">
+              {/* 헤더 */}
+              <div className="flex border-b border-gray-300 items-stretch bg-gray-50">
+                <div className="w-full px-4 py-3 text-gray-700 font-semibold">
+                  선택된 브랜드
+                </div>
               </div>
 
-              {/* 브랜드 선택 폼 */}
-              <div className="bg-gray-50 rounded-lg border border-gray-200 p-6">
-                <div className="max-w-2xl mx-auto">
-                  <label
-                    htmlFor="brand-select"
-                    className="block text-sm font-medium text-gray-700 mb-2"
-                  >
-                    브랜드 선택
-                  </label>
-                  <select
-                    id="brand-select"
-                    value={selectedBrand?.id || ""}
-                    onChange={brandChangeHandler}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-white"
-                  >
-                    <option value="">브랜드를 선택해주세요</option>
-                    {brandsData.map((brand) => (
-                      <option key={brand.id} value={brand.id}>
-                        {brand.name}
-                      </option>
-                    ))}
-                  </select>
+              {/* 브랜드 정보 */}
+              <div className="p-4">
+                <div className="bg-white border border-gray-200 rounded-md px-4 py-3">
+                  <p className="text-gray-700 font-medium">
+                    {selectedBrand.name}
+                  </p>
                 </div>
               </div>
             </div>
+          )}
 
-            {/* 브랜드 정보 안내 */}
-            <div className="mt-6 px-4 py-3 bg-blue-50 border border-blue-200 rounded-lg">
-              <p className="text-sm text-gray-700">
-                💡 신규 브랜드 등록은{" "}
-                <a
-                  href="#"
-                  className="text-blue-600 hover:text-blue-700 font-medium underline"
-                >
-                  브랜드 관리
-                </a>
-                에서 가능합니다.
-              </p>
-            </div>
+          {/* 안내 메시지 */}
+          <div className="mt-4 px-4 py-3 bg-blue-50 border border-blue-200 rounded-lg">
+            <p className="text-sm text-gray-700">
+              💡 신규 브랜드 등록은{" "}
+              <a
+                href="#"
+                className="text-blue-600 hover:text-blue-700 underline"
+              >
+                브랜드 관리
+              </a>
+              에서 가능합니다.
+            </p>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }

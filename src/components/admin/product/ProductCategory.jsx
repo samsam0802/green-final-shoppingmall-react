@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ChevronUp, ChevronDown, Trash2 } from "lucide-react";
+import { ChevronDown, ChevronUp, Trash2 } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { updateProductRegisterForm } from "../../../redux/slices/features/admin/product/productRegisterSlice";
 
@@ -47,7 +47,7 @@ const CategoryColumn = ({ categories, selectedCategory, onSelect }) => (
           key={category.id}
           className={`px-4 py-2.5 cursor-pointer transition-all duration-150 ${
             selectedCategory?.id === category.id
-              ? "bg-blue-600 text-white font-medium"
+              ? "bg-blue-600 text-white"
               : "hover:bg-blue-50 text-gray-700"
           }`}
           onClick={() => onSelect(category)}
@@ -142,133 +142,128 @@ export default function ProductCategory() {
   };
 
   return (
-    <div className="max-w-6xl mx-auto">
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-        {/* 카테고리 선택 헤더 */}
-        <div
-          className="flex justify-between items-center px-6 py-4 bg-linear-to-r from-gray-50 to-gray-100 cursor-pointer hover:from-gray-100 hover:to-gray-200 transition-all"
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          <h2 className="text-xl font-bold text-gray-800">카테고리</h2>
-          <button className="text-gray-600 hover:text-gray-900 transition-colors">
-            {isOpen ? <ChevronUp size={24} /> : <ChevronDown size={24} />}
-          </button>
-        </div>
+    <div className="w-full bg-white p-6 text-sm font-['Inter']">
+      <div
+        onClick={() => setIsOpen(!isOpen)}
+        className="flex justify-between items-center p-3 border-b"
+      >
+        <h2 className="text-lg font-semibold text-gray-800">카테고리</h2>
 
-        {isOpen && (
-          <div className="p-6">
-            {/* 카테고리 선택 영역 */}
-            <div className="mb-8">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-gray-800">
-                  카테고리 선택
-                </h3>
-                <button className="text-sm text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1 transition-colors">
-                  <span>최근 연결 카테고리</span>
+        <button className="text-gray-600 hover:text-gray-900 transition-colors">
+          {isOpen ? <ChevronUp size={24} /> : <ChevronDown size={24} />}
+        </button>
+      </div>
+
+      {isOpen && (
+        <div>
+          {/* 카테고리 선택 영역 */}
+          <div className="border border-gray-300 mb-6 mt-6 rounded-lg overflow-hidden shadow-lg">
+            {/* 카테고리 선택 헤더 */}
+            <div className="flex border-b border-gray-300 items-stretch bg-gray-50">
+              <div className="w-full px-4 py-3 text-gray-700 font-semibold">
+                카테고리 선택
+              </div>
+            </div>
+
+            {/* 카테고리 목록 */}
+            <div className="p-4">
+              {/* 헤더 */}
+              <div className="flex text-sm font-semibold text-gray-700 mb-3 px-1">
+                <div className="flex-1 text-center">1차 카테고리</div>
+                <div className="flex-1 text-center">2차 카테고리</div>
+                <div className="flex-1 text-center">3차 카테고리</div>
+                <div className="flex-1 text-center">4차 카테고리</div>
+              </div>
+
+              {/* 목록 컨테이너 */}
+              <CategorySelector
+                selectedPath={currentSelectedPath}
+                onSelect={onSelectCategory}
+                columns={4}
+              />
+
+              {/* 선택 버튼 */}
+              <div className="flex justify-center mt-4">
+                <button
+                  className="bg-blue-600 text-white px-8 py-2 cursor-pointer rounded-md shadow-md hover:bg-blue-700 transition font-semibold disabled:bg-gray-300 disabled:cursor-not-allowed"
+                  onClick={addCategoryHandler}
+                  disabled={currentSelectedPath.length === 0}
+                >
+                  선택한 카테고리 추가
                 </button>
               </div>
-
-              {/* 카테고리 목록 */}
-              <div className="bg-gray-50 rounded-lg border border-gray-200 p-4">
-                {/* 헤더 */}
-                <div className="flex text-sm font-semibold text-gray-700 mb-3 px-1">
-                  <div className="flex-1 text-center">1차 카테고리</div>
-                  <div className="flex-1 text-center">2차 카테고리</div>
-                  <div className="flex-1 text-center">3차 카테고리</div>
-                  <div className="flex-1 text-center">4차 카테고리</div>
-                </div>
-
-                {/* 목록 컨테이너 */}
-                <CategorySelector
-                  selectedPath={currentSelectedPath}
-                  onSelect={onSelectCategory}
-                  columns={4}
-                />
-
-                {/* 선택 버튼 */}
-                <div className="flex justify-center mt-5">
-                  <button
-                    className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 px-8 rounded-lg transition-all duration-200 disabled:bg-gray-300 disabled:cursor-not-allowed shadow-sm hover:shadow-md"
-                    onClick={addCategoryHandler}
-                    disabled={currentSelectedPath.length === 0}
-                  >
-                    선택한 카테고리 추가
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {/* 선택한 카테고리 영역 */}
-            <div className="mt-8">
-              <h3 className="text-lg font-semibold text-gray-800 mb-4">
-                선택한 카테고리
-              </h3>
-              <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-                <table className="min-w-full divide-y divide-gray-200">
-                  <thead className="bg-gray-50">
-                    <tr>
-                      <th className="px-6 py-3.5 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-1/6">
-                        대표
-                      </th>
-                      <th className="px-6 py-3.5 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-4/6">
-                        카테고리
-                      </th>
-                      <th className="px-6 py-3.5 text-right text-xs font-semibold text-gray-700 uppercase tracking-wider w-1/6">
-                        삭제
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="bg-white divide-y divide-gray-200">
-                    {selectedCategories.map((category) => (
-                      <tr
-                        key={category.id}
-                        className="hover:bg-gray-50 transition-colors"
-                      >
-                        <td className="px-6 py-4 whitespace-nowrap text-center">
-                          <input
-                            type="radio"
-                            name="representative-category"
-                            checked={category.isRepresentative}
-                            onChange={() =>
-                              setRepresentativeHandler(category.id)
-                            }
-                            className="w-4 h-4 text-blue-600 focus:ring-2 focus:ring-blue-500 cursor-pointer"
-                          />
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                          {category.name}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                          <button
-                            className="text-gray-400 hover:text-red-600 transition-colors p-1 rounded hover:bg-red-50"
-                            onClick={() => deleteCategoryHandler(category.id)}
-                          >
-                            <Trash2 size={18} />
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            {/* 새 카테고리 생성 안내 */}
-            <div className="mt-6 px-4 py-3 bg-blue-50 border border-blue-200 rounded-lg">
-              <p className="text-sm text-gray-700">
-                💡 신규 카테고리 생성은{" "}
-                <a
-                  href="#"
-                  className="text-blue-600 hover:text-blue-700 font-medium underline"
-                >
-                  카테고리 관리
-                </a>
-                에서 가능합니다.
-              </p>
             </div>
           </div>
-        )}
-      </div>
+
+          {/* 선택한 카테고리 영역 */}
+          <div className="border border-gray-300 rounded-lg overflow-hidden shadow-lg">
+            {/* 헤더 */}
+            <div className="flex border-b border-gray-300 items-stretch bg-gray-50">
+              <div className="w-full px-4 py-3 text-gray-700 font-semibold">
+                선택한 카테고리
+              </div>
+            </div>
+
+            {/* 테이블 */}
+            <div className="overflow-x-auto">
+              <table className="min-w-full border-collapse text-sm text-center">
+                <thead className="bg-gray-100 border-b border-gray-300">
+                  <tr className="text-gray-700 font-semibold text-sm divide-x divide-gray-300">
+                    <th className="px-6 py-3 whitespace-nowrap w-[100px]">
+                      대표
+                    </th>
+                    <th className="px-6 py-3 whitespace-nowrap">카테고리</th>
+                    <th className="px-6 py-3 whitespace-nowrap w-[100px]">
+                      삭제
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {selectedCategories.map((category) => (
+                    <tr
+                      key={category.id}
+                      className="hover:bg-gray-50 transition divide-x divide-gray-200"
+                    >
+                      <td className="px-6 py-3">
+                        <input
+                          type="radio"
+                          name="representative-category"
+                          checked={category.isRepresentative}
+                          onChange={() => setRepresentativeHandler(category.id)}
+                          className="w-3.5 h-3.5 accent-blue-600 cursor-pointer"
+                        />
+                      </td>
+                      <td className="px-6 py-3 text-left">{category.name}</td>
+                      <td className="px-6 py-3">
+                        <button
+                          className="text-gray-400 hover:text-red-600 transition p-1"
+                          onClick={() => deleteCategoryHandler(category.id)}
+                        >
+                          <Trash2 size={18} />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* 안내 메시지 */}
+          <div className="mt-4 px-4 py-3 bg-blue-50 border border-blue-200 rounded-lg">
+            <p className="text-sm text-gray-700">
+              💡 신규 카테고리 생성은{" "}
+              <a
+                href="#"
+                className="text-blue-600 hover:text-blue-700 underline"
+              >
+                카테고리 관리
+              </a>
+              에서 가능합니다.
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
