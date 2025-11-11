@@ -137,6 +137,9 @@ export default function Header() {
               >
                 고객센터
               </button>
+              <button onClick={() => navigate("/mypage")}>
+                마이페이지(임시)
+              </button>
             </div>
 
             {/* 아래쪽: 오특 | 랭킹 | 신상 | 이벤트 */}
