@@ -1,12 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import CouponBasicInfo from "../../../components/admin/coupon/CouponBasicInfo";
 import DiscountSetting from "../../../components/admin/coupon/DiscountSetting";
 import IssuranceSetting from "../../../components/admin/coupon/IssuranceSetting";
 import PeriodSetting from "../../../components/admin/coupon/PeriodSetting";
-import { useSelector } from "react-redux";
+
+const initState = {
+  basicInfo: {},
+  discountSetting: {},
+  issueSetting: {},
+  periodSetting: {},
+};
 
 const CouponManagementPage = () => {
-  const couponRegisterForm = useSelector((state) => state.couponRegisterSlice);
+  const [couponRegisterForm, setCouponRegisterForm] = useState({
+    ...initState,
+  });
+
   const submitHandler = () => {
     console.log(couponRegisterForm);
   };
@@ -14,10 +23,29 @@ const CouponManagementPage = () => {
   return (
     <div className="min-h-screen">
       <div className="space-y-8 pb-40">
-        <CouponBasicInfo />
-        <DiscountSetting />
-        <IssuranceSetting />
-        <PeriodSetting />
+        <CouponBasicInfo
+          onChangeForm={(data) =>
+            setCouponRegisterForm((prev) => ({ ...prev, basicInfo: data }))
+          }
+        />
+        <DiscountSetting
+          onChangeForm={(data) =>
+            setCouponRegisterForm((prev) => ({
+              ...prev,
+              discountSetting: data,
+            }))
+          }
+        />
+        <IssuranceSetting
+          onChangeForm={(data) =>
+            setCouponRegisterForm((prev) => ({ ...prev, issueSetting: data }))
+          }
+        />
+        <PeriodSetting
+          onChangeForm={(data) =>
+            setCouponRegisterForm((prev) => ({ ...prev, periodSetting: data }))
+          }
+        />
       </div>
 
       <div className="fixed bottom-6 right-6 z-50">
