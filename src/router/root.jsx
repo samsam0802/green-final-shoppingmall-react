@@ -3,6 +3,7 @@ import { createBrowserRouter } from "react-router-dom";
 import AdminIndex from "../pages/admin/AdminIndex";
 import adminRouter from "./adminRouter";
 import mypageRouter from "./mypageRouter";
+import helpRouter from "./helpRouter";
 
 const Main = lazy(() => import("../pages/user/MainPage"));
 const LoginPage = lazy(() => import("../pages/user/LoginPage"));
@@ -20,11 +21,6 @@ const OrderComplete = lazy(() => import("../pages/order/OrderCompletePage"));
 const Cart = lazy(() => import("../pages/cart/CartPage"));
 
 const Helpcenter = lazy(() => import("../pages/helpcenter/HelpCenterPage"));
-const HelpNoticePage = lazy(() => import("../pages/helpcenter/HelpNoticePage"));
-const HelpInquiryPage = lazy(() =>
-  import("../pages/helpcenter/HelpInquiryPage")
-);
-const HelpFaqPage = lazy(() => import("../pages/helpcenter/HelpFaqPage"));
 const ProductQuestionPage = lazy(() =>
   import("../components/productquestion/ProductQuestion")
 );
@@ -149,11 +145,7 @@ const root = createBrowserRouter([
   {
     path: "/helpcenter",
     element: <Helpcenter />,
-    children: [
-      { index: true, element: <HelpNoticePage /> }, // /helpcenter
-      { path: "faq", element: <HelpFaqPage /> }, // /helpcenter/faq
-      { path: "inquiry", element: <HelpInquiryPage /> }, // /helpcenter/inquiry
-    ],
+    children: helpRouter(),
   },
   {
     path: "productquestion",

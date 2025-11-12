@@ -1,5 +1,3 @@
-// redux/auth/signupSlice.js
-
 export const signupSlice = {
   // prettier-ignore
   signUp: (state, action) => { // signUp Reducer
@@ -23,6 +21,7 @@ export const signupSlice = {
       ...newUserData, // newUserData의 기존데이터를 객체를 벗긴 후에 데이터를 넣고
       terms: action.payload.terms, // terms: 속성에 action.payload로 받은 .terms를 저장
       user_Level: "Bronze", // 생성 시 유저등급을 기본 Bronze로 생성
+      user_Role: "user", // 기본권한 지정
       createdAt: new Date().toISOString(), // 생성일자를 new Date 생성자를 실행과 동시에 toISOString으로 변환
     };
     users.push(userWithId);
@@ -30,7 +29,7 @@ export const signupSlice = {
     // 4. 로컬스토리지에 저장
     localStorage.setItem("users", JSON.stringify(users));
 
-    console.log("✅ 여기는 SignUpSlice: 회원가입 완료", userWithId);
+    console.log("✅ SignUpSlice: 회원가입 완료", userWithId);
     state.error = null; // 성공 시 에러 초기화
   },
 };
