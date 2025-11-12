@@ -1,10 +1,7 @@
 import { ChevronDown, ChevronUp } from "lucide-react";
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { updateProductRegisterForm } from "../../../redux/slices/features/admin/product/productRegisterSlice";
+import React, { useEffect, useState } from "react";
 
-export default function ProductSaleInfo() {
-  const dispatch = useDispatch();
+export default function ProductSaleInfo({ onChangeForm }) {
   const [isOpen, setIsOpen] = useState(true);
   const [saleInfo, setSaleInfo] = useState({
     saleStatus: "onSale",
@@ -14,6 +11,10 @@ export default function ProductSaleInfo() {
     useRestockNoti: false,
   });
 
+  useEffect(() => {
+    onChangeForm({ ...saleInfo });
+  }, [saleInfo]);
+
   const onCheckBoxChangeHandler = (e) => {
     const { name, value, type, checked } = e.target;
 
@@ -22,9 +23,7 @@ export default function ProductSaleInfo() {
         ...prev,
         [name]: type === "checkbox" ? checked : value,
       };
-      dispatch(
-        updateProductRegisterForm({ section: "saleInfo", data: saleInfoData })
-      );
+
       return saleInfoData;
     });
   };

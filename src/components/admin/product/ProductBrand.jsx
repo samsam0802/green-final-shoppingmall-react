@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { ChevronUp, ChevronDown } from "lucide-react";
-import { useDispatch } from "react-redux";
-import { updateProductRegisterForm } from "../../../redux/slices/features/admin/product/productRegisterSlice";
 
 // 임시 브랜드 데이터
 const brandsData = [
@@ -17,8 +15,7 @@ const brandsData = [
   { id: 10, name: "로레알" },
 ];
 
-export default function ProductBrand() {
-  const dispatch = useDispatch();
+export default function ProductBrand({ onChangeForm }) {
   const [isOpen, setIsOpen] = useState(true);
   const [selectedBrand, setSelectedBrand] = useState(null);
 
@@ -27,12 +24,7 @@ export default function ProductBrand() {
     const brand = brandsData.find((b) => b.id === brandId) || null;
     setSelectedBrand(brand);
     console.log("selectedBrand : ", brand);
-    dispatch(
-      updateProductRegisterForm({
-        section: "brand",
-        data: brand,
-      })
-    );
+    onChangeForm({ ...brand });
   };
 
   return (

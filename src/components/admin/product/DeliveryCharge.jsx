@@ -1,15 +1,16 @@
 import { ChevronDown, ChevronUp } from "lucide-react";
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { updateProductRegisterForm } from "../../../redux/slices/features/admin/product/productRegisterSlice";
+import React, { useEffect, useState } from "react";
 
-export default function DeliveryCharge() {
-  const dispatch = useDispatch();
+export default function DeliveryCharge({ onChangeForm }) {
   const [isOpen, setIsOpen] = useState(true);
   const [deliveryInfo, setDeliveryInfo] = useState({
     deliveryType: "paid",
     deliveryFee: 3000,
   });
+
+  useEffect(() => {
+    onChangeForm({ ...deliveryInfo });
+  }, [deliveryInfo]);
 
   const onDeliveryTypeChangeHandler = (e) => {
     const { name, value } = e.target;
@@ -20,9 +21,6 @@ export default function DeliveryCharge() {
 
     setDeliveryInfo((prev) => {
       const temp = { ...prev, [name]: value };
-
-      dispatch(updateProductRegisterForm({ section: "delivery", data: temp }));
-
       return temp;
     });
   };
@@ -32,8 +30,6 @@ export default function DeliveryCharge() {
 
     setDeliveryInfo((prev) => {
       const temp = { ...prev, [name]: value };
-
-      dispatch(updateProductRegisterForm({ section: "delivery", data: temp }));
       return temp;
     });
   };

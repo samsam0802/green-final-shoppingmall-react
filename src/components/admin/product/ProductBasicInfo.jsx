@@ -1,10 +1,7 @@
 import { ChevronDown, ChevronUp } from "lucide-react";
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { updateProductRegisterForm } from "../../../redux/slices/features/admin/product/productRegisterSlice";
+import React, { useEffect, useState } from "react";
 
-export default function ProductBasicInfo() {
-  const dispatch = useDispatch();
+export default function ProductBasicInfo({ onChangeForm }) {
   const [isOpen, setIsOpen] = useState(true);
   const [productBasicInfo, setProductBasicInfo] = useState({
     productName: "",
@@ -12,17 +9,15 @@ export default function ProductBasicInfo() {
     productDescription: "",
   });
 
+  useEffect(() => {
+    onChangeForm({ ...productBasicInfo });
+  }, [productBasicInfo]);
+
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
 
     setProductBasicInfo((prev) => {
       const basicInfo = { ...prev, [name]: value };
-      dispatch(
-        updateProductRegisterForm({
-          section: "basicInfo",
-          data: basicInfo,
-        })
-      );
       return basicInfo;
     });
   };

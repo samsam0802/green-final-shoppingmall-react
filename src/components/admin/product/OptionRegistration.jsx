@@ -1,10 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ChevronUp, ChevronDown } from "lucide-react";
-import { useDispatch } from "react-redux";
-import { updateProductRegisterForm } from "../../../redux/slices/features/admin/product/productRegisterSlice";
 
-export default function OptionRegistration() {
-  const dispatch = useDispatch();
+export default function OptionRegistration({ onChangeForm }) {
   const [isOpen, setIsOpen] = useState(true);
   const [options, setOptions] = useState([
     {
@@ -17,6 +14,10 @@ export default function OptionRegistration() {
       image: null,
     },
   ]);
+
+  useEffect(() => {
+    onChangeForm([...options]);
+  }, [options]);
 
   const addOptionHandler = () => {
     setOptions((prev) => {
@@ -33,8 +34,6 @@ export default function OptionRegistration() {
         },
       ];
 
-      dispatch(updateProductRegisterForm({ section: "options", data: data }));
-
       return data;
     });
   };
@@ -43,8 +42,6 @@ export default function OptionRegistration() {
     if (options.length > 1) {
       setOptions((prev) => {
         const data = prev.filter((_, i) => i !== index);
-
-        dispatch(updateProductRegisterForm({ section: "options", data: data }));
 
         return data;
       });
@@ -57,7 +54,7 @@ export default function OptionRegistration() {
         // 수정한 옵션의 값만 바뀌도록
         i === index ? { ...option, [field]: value } : option
       );
-      dispatch(updateProductRegisterForm({ section: "options", data: data }));
+
       return data;
     });
   };
@@ -76,9 +73,15 @@ export default function OptionRegistration() {
       </div>
 
       {isOpen && (
-        <div>
+        <div className="px-3 py-3">
+          <button
+            onClick={addOptionHandler}
+            className="bg-green-50 text-green-700 hover:bg-green-100 px-3 py-1 rounded-md border border-green-200 cursor-pointer transition shadow-sm"
+          >
+            옵션 추가
+          </button>
           {/* 테이블 영역 */}
-          <div className="overflow-x-auto mt-6 mb-6 border border-gray-300 rounded-lg shadow-md">
+          <div className="overflow-x-auto mt-3 mb-6 border border-gray-300 rounded-lg shadow-md">
             <table className="min-w-full border-collapse text-sm text-center">
               <thead className="bg-gray-100 border-b border-gray-300">
                 <tr className="text-gray-700 font-semibold text-sm divide-x divide-gray-300">

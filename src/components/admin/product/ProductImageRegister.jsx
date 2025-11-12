@@ -1,17 +1,12 @@
 import { X, Plus, ChevronUp, ChevronDown } from "lucide-react";
-import React, { useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { updateProductRegisterForm } from "../../../redux/slices/features/admin/product/productRegisterSlice";
+import React, { useEffect, useRef, useState } from "react";
 
-// 초기 이미지 구조
 const initialImages = {
   thumbnailImage: null,
   galleryImages: [],
 };
 
-export default function ProductImageRegister() {
-  const dispatch = useDispatch();
-  const { imageData } = useSelector((state) => state.productRegisterSlice);
+export default function ProductImageRegister({ onChangeForm }) {
   const thumbnailRef = useRef(null);
   const galleryRef = useRef(null);
   const [isOpen, setIsOpen] = useState(true);
@@ -19,21 +14,16 @@ export default function ProductImageRegister() {
   // 선택된 미리보기 이미지의 인덱스 (미리보기 상세 정보를 보여주기 위함)
   const [selectedPreviewIndex, setSelectedPreviewIndex] = useState(0);
 
+  useEffect(() => {
+    onChangeForm({ ...images });
+  }, [images]);
+
   const thumbnailImgChangeHandler = (e) => {
     const file = e.target.files?.[0];
     if (file) {
       setImages((prev) => ({ ...prev, thumbnailImage: file }));
       // 대표 이미지가 선택되면 자동으로 미리보기 상세 정보 표시 (인덱스 0)
       setSelectedPreviewIndex(0);
-      //리덕스 상태관리
-      dispatch(
-        updateProductRegisterForm({
-          section: "images",
-          data: {
-            thumbnailImage: file,
-          },
-        })
-      );
     }
   };
 
@@ -48,16 +38,6 @@ export default function ProductImageRegister() {
             ...prev,
             galleryImages: [...prev.galleryImages, ...files],
           };
-
-          //리덕스 상태관리
-          const galleryImageData = [...prev.galleryImages, ...files];
-          dispatch(
-            updateProductRegisterForm({
-              section: "images",
-              data: { galleryImages: galleryImageData },
-            })
-          );
-
           return temp;
         });
       }
@@ -72,9 +52,6 @@ export default function ProductImageRegister() {
       // 대표 이미지 삭제
       setImages((prev) => {
         const data = { ...prev, thumbnailImage: null };
-
-        //리덕스 상태관리
-        dispatch(updateProductRegisterForm({ section: "images", data: data }));
         return data;
       });
     } else {
@@ -84,7 +61,6 @@ export default function ProductImageRegister() {
           ...prev,
           galleryImages: prev.galleryImages.filter((_, i) => i !== index - 1),
         };
-        dispatch(updateProductRegisterForm({ section: "images", data: data }));
         return data;
       });
     }
