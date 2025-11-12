@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ChevronDown, X, Bell } from "lucide-react";
 
 const ProductDetailOptions = ({ product, selectedItems, setSelectedItems }) => {
@@ -10,7 +10,6 @@ const ProductDetailOptions = ({ product, selectedItems, setSelectedItems }) => {
   const options = product.options || [];
 
   const handleSelect = (option) => {
-    console.log("selectedItems", selectedItems);
     setSelectedItems((prev) => {
       // console.log("prev", prev);
       // 이미 같은 옵션이 들어있다면 그대로 반환 (추가 X)
@@ -40,6 +39,10 @@ const ProductDetailOptions = ({ product, selectedItems, setSelectedItems }) => {
   const handleRemoveOption = (option) => {
     setSelectedItems((prev) => prev.filter((i) => i.id !== option.id));
   };
+
+  useEffect(() => {
+    console.log("selectedItems 변경", selectedItems);
+  }, [selectedItems]);
 
   return (
     <div className="w-full space-y-4">

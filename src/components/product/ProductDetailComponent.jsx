@@ -103,10 +103,11 @@ export default function ProductDetailComponent() {
     )
       return alert("옵션을 선택해주세요.");
 
-    selectedItems.map((option) =>
+    selectedItems.forEach((option) =>
       dispatch(
         addItem({
-          id: option.id,
+          id: product.id,
+          option_id: option.id,
           name: product.name + " - " + option.option_name,
           brand: product.brand,
           price: option.price,

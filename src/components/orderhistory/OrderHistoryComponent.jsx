@@ -23,6 +23,9 @@ export default function OrderHistoryComponent() {
   const [exchangeModal, setExchangeModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState({});
 
+  // 페이지네이션 상태
+  const [currentPage, setCurrentPage] = useState(1);
+
   const statusClass = (s) =>
     s === "배송중"
       ? "text-blue-600"
@@ -236,6 +239,53 @@ export default function OrderHistoryComponent() {
               ))}
           </tbody>
         </table>
+      </div>
+
+      {/* 페이지네이션 UI */}
+      <div className="flex justify-center items-center gap-2 mt-8">
+        <button
+          onClick={() => setCurrentPage(1)}
+          disabled={currentPage === 1}
+          className="px-3 py-1 border border-gray-300 text-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          &lt;&lt;
+        </button>
+        <button
+          onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
+          disabled={currentPage === 1}
+          className="px-3 py-1 border border-gray-300 text-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          &lt;
+        </button>
+
+        {[1, 2, 3, 4, 5].map((page) => (
+          <button
+            key={page}
+            onClick={() => setCurrentPage(page)}
+            className={`px-3 py-1 text-sm ${
+              currentPage === page
+                ? "bg-black text-white"
+                : "border border-gray-300 hover:bg-gray-50"
+            }`}
+          >
+            {page}
+          </button>
+        ))}
+
+        <button
+          onClick={() => setCurrentPage((prev) => prev + 1)}
+          disabled={currentPage === 5}
+          className="px-3 py-1 border border-gray-300 text-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          &gt;
+        </button>
+        <button
+          onClick={() => setCurrentPage(5)}
+          disabled={currentPage === 5}
+          className="px-3 py-1 border border-gray-300 text-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          &gt;&gt;
+        </button>
       </div>
 
       {/* 모달들 */}

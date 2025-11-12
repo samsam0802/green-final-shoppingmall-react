@@ -1,5 +1,5 @@
 // src/pages/product/ProductListComponent.jsx
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import products from "../../data/products";
 import { CATEGORY_DATA } from "../../data/categories";
@@ -71,6 +71,12 @@ const ProductListComponent = () => {
   );
 
   const sideCategory = CATEGORY_DATA.find((c) => c.main === decodedMain);
+
+  // URL 파라미터(카테고리)가 변경될 때마다 currentPage를 1로 리셋
+  useEffect(() => {
+    // main, sub, deep 중 하나라도 변경되면 실행됩니다.
+    setCurrentPage(1);
+  }, [main, sub, deep]);
 
   return (
     <div className="max-w-7xl mx-auto px-4 md:px-8 py-8 flex flex-col lg:flex-row gap-8">

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import NavBar from "../../layouts/mainpage/NavBar";
-import ProductSearchBar from "../../components/product/ProductSearchBar";
+import ProductSearchBar from "../../components/search/ProductSearchBar";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/slices/features/user/userSlice";
 
@@ -67,26 +67,6 @@ export default function Header() {
           <div className="absolute right-6 top-1/2 -translate-y-1/2 flex flex-col items-end gap-1">
             {/* 위쪽: 로그인/회원가입/장바구니/... */}
             <div className="flex items-center gap-2.5 text-[12px] text-black">
-              {/* 검색 아이콘 */}
-              <button
-                className="w-12 h-12 rounded-full border border-white/35 flex items-center justify-center hover:bg-white/10 transition-colors cursor-pointer"
-                onClick={() => setSearchOpen(!searchOpen)}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-6 h-6"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.7"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <circle cx="11" cy="11" r="5" />
-                  <line x1="16.5" y1="16.5" x2="21" y2="21" />
-                </svg>
-              </button>
-
               {isLoggedIn ? (
                 <>
                   <button
@@ -164,7 +144,7 @@ export default function Header() {
         </div>
       </div>
 
-      <ProductSearchBar isOpen={searchOpen} />
+      <ProductSearchBar />
       <NavBar />
     </header>
   );
