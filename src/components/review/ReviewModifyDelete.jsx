@@ -7,7 +7,7 @@ import {
   removeImage,
 } from "../../redux/slices/features/review/reviewSlice";
 
-const ReviewModifyDelete = (props) => {
+const ReviewModifyDelete = ({ closeModal }) => {
   const [currentRating, setCurrentRating] = useState(4);
   const uploadRef = useRef();
   const dispatch = useDispatch();
@@ -15,22 +15,23 @@ const ReviewModifyDelete = (props) => {
 
   //리뷰 수정(업데이트) 핸들러
   const reviewUpdatedHandler = (idx, newContent, newRating) => {
-    // dispatch(
-    //   modifyReview({
-    //     idx,
-    //     updatedReview: { content: newContent, rating: newRating },
-    //   })
-    // );
+    dispatch(
+      modifyReview({
+        idx,
+        updatedReview: { content: newContent, rating: newRating },
+      })
+    );
     alert("리뷰가 수정되었습니다.");
+    closeModal();
   };
 
   //리뷰 삭제 핸들러
   const reviewDeleteHandler = (idx) => {
     if (confirm("정말 삭제하시겠습니까?")) {
-      // dispatch(deleteReview(idx));
+      dispatch(deleteReview(idx));
       alert("리뷰가 삭제되었습니다.");
-      props.closeModal();
     }
+    closeModal();
   };
 
   //사진 첨부 핸들러
@@ -60,7 +61,7 @@ const ReviewModifyDelete = (props) => {
           리뷰 수정
           <button
             className="text-gray-400 text-3xl cursor-pointer"
-            onClick={props.closeModal}
+            onClick={closeModal}
           >
             ×
           </button>
@@ -130,14 +131,16 @@ const ReviewModifyDelete = (props) => {
           <div className="flex space-x-3">
             <button
               className="px-4 py-2 text-sm font-semibold text-red-600 border border-red-400 bg-red-50 rounded-lg cursor-pointer"
-              onClick={reviewDeleteHandler}
+              onClick={() => reviewDeleteHandler(0)}
             >
               삭제하기
             </button>
             <button
               className="px-5 py-2 text-sm font-semibold text-white rounded-lg cursor-pointer"
               style={{ backgroundColor: "#111111" }}
-              onClick={reviewUpdatedHandler}
+              onClick={() =>
+                reviewUpdatedHandler(0, "테스트 내용", currentRating)
+              }
             >
               수정하기
             </button>

@@ -44,7 +44,6 @@ export default function MainPage() {
     spaceBetween: 16,
     speed: 600,
     loop: true,
-    loopedSlides: 7,
     breakpoints: {
       1280: { slidesPerView: 5 },
       1024: { slidesPerView: 4 },
