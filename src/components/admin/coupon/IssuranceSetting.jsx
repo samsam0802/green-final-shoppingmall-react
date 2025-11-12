@@ -1,180 +1,161 @@
 import React, { useEffect, useState } from "react";
 import { ChevronUp, ChevronDown } from "lucide-react";
-import { useDispatch } from "react-redux";
-import { updateCouponRegisterForm } from "../../../redux/slices/features/admin/coupon/couponRegisterSlice";
 
-export default function IssuranceSetting() {
-  const dispatch = useDispatch();
+export default function IssuanceSetting({ onChangeForm }) {
   const [isOpen, setIsOpen] = useState(true);
-
-  //issuranceType : {MANUAL,AUTO,CODE}
-  //autoIssueTrigger: {NEWUSER, BIRTHDAY}
-  const [issuranceSetting, setIssuranceSetting] = useState({
-    issuranceType: "MANUAL",
+  const [issuanceSetting, setIssuanceSetting] = useState({
+    issuanceType: "MANUAL",
     autoIssueTrigger: "NEWUSER",
     couponCode: "",
   });
 
   useEffect(() => {
-    dispatch(
-      updateCouponRegisterForm({
-        section: "issueSetting",
-        data: issuranceSetting,
-      })
-    );
-  }, [issuranceSetting, dispatch]);
+    onChangeForm?.({ ...issuanceSetting });
+  }, [issuanceSetting]);
 
-  const onIssuranceTypeChangeHandler = (e) => {
+  const onIssuanceTypeChangeHandler = (e) => {
     const { name, value } = e.target;
 
-    setIssuranceSetting((prev) => {
-      let data;
+    setIssuanceSetting((prev) => {
       if (value === "MANUAL") {
-        data = { ...prev, autoIssueTrigger: "", couponCode: "", [name]: value };
+        return { ...prev, autoIssueTrigger: "", couponCode: "", [name]: value };
       } else if (value === "AUTO") {
-        data = {
+        return {
           ...prev,
           autoIssueTrigger: "NEWUSER",
           couponCode: "",
           [name]: value,
         };
       } else if (value === "CODE") {
-        data = { ...prev, autoIssueTrigger: "", [name]: value };
+        return { ...prev, autoIssueTrigger: "", [name]: value };
       }
-
-      console.log(data);
-      return data;
+      return prev;
     });
   };
 
-  const onIssueTriggerChangeHandler = (e) => {
+  const onChangeHandler = (e) => {
     const { name, value } = e.target;
-
-    setIssuranceSetting((prev) => {
-      const data = { ...prev, [name]: value };
-      console.log(data);
-      return data;
-    });
-  };
-
-  const onCouponCodeChangeHandler = (e) => {
-    const { name, value } = e.target;
-
-    setIssuranceSetting((prev) => {
-      const data = { ...prev, [name]: value };
-      console.log(data);
-      return data;
-    });
+    setIssuanceSetting((prev) => ({ ...prev, [name]: value }));
   };
 
   return (
-    <div className="border rounded-lg mb-4">
+    <div className="w-full bg-white p-6 text-sm font-['Inter']">
       <div
-        className="flex items-center justify-between p-4 bg-gray-50 border-b cursor-pointer"
         onClick={() => setIsOpen(!isOpen)}
+        className="flex justify-between items-center p-3 border-b"
       >
-        <h2 className="font-semibold">발급 설정</h2>
-        {isOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+        <h2 className="text-lg font-semibold text-gray-800">발급 설정</h2>
+        <button className="text-gray-600 hover:text-gray-900 transition-colors">
+          {isOpen ? <ChevronUp size={24} /> : <ChevronDown size={24} />}
+        </button>
       </div>
 
       {isOpen && (
-        <div className="divide-y">
-          {/* 발급 방식 */}
-          <div className="flex">
-            <div className="w-48 p-4 bg-gray-50 flex items-center">
-              <span className="text-red-500 mr-1">*</span>
-              <span className="text-sm">발급 방식</span>
+        <div>
+          <div className="border border-gray-300 mb-6 mt-6 rounded-lg overflow-hidden shadow-lg">
+            {/* 발급 방식 */}
+            <div
+              className={`flex ${
+                issuanceSetting.issuanceType !== "MANUAL"
+                  ? "border-b border-gray-300"
+                  : ""
+              } items-stretch`}
+            >
+              <div className="w-40 bg-gray-50 border-r border-gray-300 text-gray-700 font-semibold flex items-center justify-center p-2">
+                발급 방식
+                <span className="text-red-500 ml-1">*</span>
+              </div>
+              <div className="flex items-center flex-grow p-2 gap-6">
+                <label className="flex items-center cursor-pointer">
+                  <input
+                    type="radio"
+                    name="issuanceType"
+                    value="MANUAL"
+                    checked={issuanceSetting.issuanceType === "MANUAL"}
+                    onChange={onIssuanceTypeChangeHandler}
+                    className="mr-2 accent-blue-600 cursor-pointer"
+                  />
+                  <span>관리자 수동 발급</span>
+                </label>
+                <label className="flex items-center cursor-pointer">
+                  <input
+                    type="radio"
+                    name="issuanceType"
+                    value="AUTO"
+                    checked={issuanceSetting.issuranceType === "AUTO"}
+                    onChange={onIssuanceTypeChangeHandler}
+                    className="mr-2 accent-blue-600 cursor-pointer"
+                  />
+                  <span>특정 조건 자동 발급</span>
+                </label>
+                <label className="flex items-center cursor-pointer">
+                  <input
+                    type="radio"
+                    name="issuranceType"
+                    value="CODE"
+                    checked={issuanceSetting.issuanceType === "CODE"}
+                    onChange={onIssuanceTypeChangeHandler}
+                    className="mr-2 accent-blue-600 cursor-pointer"
+                  />
+                  <span>쿠폰 코드 입력</span>
+                </label>
+              </div>
             </div>
-            <div className="flex-1 p-4 flex items-center gap-6">
-              <label className="flex items-center gap-2">
-                <input
-                  type="radio"
-                  name="issuranceType"
-                  value="MANUAL"
-                  checked={issuranceSetting.issuranceType === "MANUAL"}
-                  onChange={onIssuranceTypeChangeHandler}
-                  className="w-4 h-4"
-                />
-                <span className="text-sm">관리자 수동 발급</span>
-              </label>
-              <label className="flex items-center gap-2">
-                <input
-                  type="radio"
-                  name="issuranceType"
-                  value="AUTO"
-                  checked={issuranceSetting.issuranceType === "AUTO"}
-                  onChange={onIssuranceTypeChangeHandler}
-                  className="w-4 h-4"
-                />
-                <span className="text-sm">특정 조건 자동 발급</span>
-              </label>
-              <label className="flex items-center gap-2">
-                <input
-                  type="radio"
-                  name="issuranceType"
-                  value="CODE"
-                  checked={issuranceSetting.issuranceType === "CODE"}
-                  onChange={onIssuranceTypeChangeHandler}
-                  className="w-4 h-4"
-                />
-                <span className="text-sm">쿠폰 코드 입력</span>
-              </label>
-            </div>
+
+            {/* 특정 조건 자동 발급 설정 */}
+            {issuanceSetting.issuanceType === "AUTO" && (
+              <div className="flex items-stretch">
+                <div className="w-40 bg-gray-50 border-r border-gray-300 text-gray-700 font-semibold flex items-center justify-center p-2">
+                  자동 발급 조건
+                  <span className="text-red-500 ml-1">*</span>
+                </div>
+                <div className="flex items-center flex-grow p-2 gap-6">
+                  <label className="flex items-center cursor-pointer">
+                    <input
+                      type="radio"
+                      name="autoIssueTrigger"
+                      value="NEWUSER"
+                      onChange={onChangeHandler}
+                      checked={issuanceSetting.autoIssueTrigger === "NEWUSER"}
+                      className="mr-2 accent-blue-600 cursor-pointer"
+                    />
+                    <span>회원가입 완료시</span>
+                  </label>
+                  <label className="flex items-center cursor-pointer">
+                    <input
+                      type="radio"
+                      name="autoIssueTrigger"
+                      value="BIRTHDAY"
+                      onChange={onChangeHandler}
+                      checked={issuanceSetting.autoIssueTrigger === "BIRTHDAY"}
+                      className="mr-2 accent-blue-600 cursor-pointer"
+                    />
+                    <span>생일</span>
+                  </label>
+                </div>
+              </div>
+            )}
+
+            {/* 쿠폰 코드 입력 */}
+            {issuanceSetting.issuanceType === "CODE" && (
+              <div className="flex items-stretch">
+                <div className="w-40 bg-gray-50 border-r border-gray-300 text-gray-700 font-semibold flex items-center justify-center p-2">
+                  쿠폰 코드
+                  <span className="text-red-500 ml-1">*</span>
+                </div>
+                <div className="flex items-center flex-grow p-2 gap-2">
+                  <input
+                    type="text"
+                    name="couponCode"
+                    value={issuanceSetting.couponCode}
+                    onChange={onChangeHandler}
+                    className="border border-gray-300 p-1 w-full max-w-lg rounded-md"
+                    placeholder="쿠폰 코드를 입력하세요"
+                  />
+                </div>
+              </div>
+            )}
           </div>
-
-          {/* 특정 조건 자동 발급 설정 - 조건부 표시 */}
-          {issuranceSetting.issuranceType === "AUTO" && (
-            <div className="flex">
-              <div className="w-48 p-4 bg-gray-50 flex items-center">
-                <span className="text-red-500 mr-1">*</span>
-                <span className="text-sm">특정 조건 자동 발급 설정</span>
-              </div>
-              <div className="flex-1 p-4 flex items-center gap-6">
-                <label className="flex items-center gap-2">
-                  <input
-                    type="radio"
-                    name="autoIssueTrigger"
-                    value="NEWUSER"
-                    onChange={onIssueTriggerChangeHandler}
-                    checked={issuranceSetting.autoIssueTrigger === "NEWUSER"}
-                    className="w-4 h-4"
-                  />
-                  <span className="text-sm">회원가입 완료시</span>
-                </label>
-                <label className="flex items-center gap-2">
-                  <input
-                    type="radio"
-                    name="autoIssueTrigger"
-                    value="BIRTHDAY"
-                    onChange={onIssueTriggerChangeHandler}
-                    checked={issuranceSetting.autoIssueTrigger === "BIRTHDAY"}
-                    className="w-4 h-4"
-                  />
-                  <span className="text-sm">생일</span>
-                </label>
-              </div>
-            </div>
-          )}
-
-          {/* 쿠폰 코드 입력  설정 - 조건부 표시 */}
-          {issuranceSetting.issuranceType === "CODE" && (
-            <div className="flex">
-              <div className="w-48 p-4 bg-gray-50 flex items-center">
-                <span className="text-red-500 mr-1">*</span>
-                <span className="text-sm">쿠폰 코드 입력</span>
-              </div>
-
-              <div className="flex-1 p-4 flex items-center gap-6">
-                <input
-                  type="text"
-                  name="couponCode"
-                  value={issuranceSetting.couponCode}
-                  onChange={onCouponCodeChangeHandler}
-                  className="w-100 px-3 py-2 border rounded bg-gray-100"
-                />
-              </div>
-            </div>
-          )}
         </div>
       )}
     </div>
