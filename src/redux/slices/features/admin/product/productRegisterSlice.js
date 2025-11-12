@@ -1,39 +1,66 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
-// export const postProductRegisterAsync = createAsyncThunk(
-//   "postProductRegisterAsync",
-//   (param) => {
-//     return postProductRegister(param);
-//   }
-// );
+export const uploadImagesAndRegisterProduct = createAsyncThunk(
+  "productRegisterSlice/uploadImagesAndRegisterProduct",
+
+  async (fileObjects, { rejectWithValue }) => {
+    try {
+      const formData = new FormData();
+      formData.append("images", fileObjects);
+
+      // S3 업로드 API 호출
+      const res = await axios.post("/api/s3/upload", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      const s3ImageUrls = res.data.imageUrls;
+
+      return s3ImageUrls;
+    } catch (error) {
+      console.log("error 발생 : ", error);
+    }
+  }
+);
 
 const productRegisterSlice = createSlice({
   name: "productRegisterSlice",
   initialState: {
-    category: {},
-    brand: {},
-    basicInfo: {},
-    saleInfo: {},
-    images: {},
-    delivery: {},
-    options: [],
+    formData: {
+      category: {},
+      brand: {},
+      basicInfo: {},
+      saleInfo: {},
+      mainImages: [],
+      descriptionImages: [],
+      delivery: {},
+      options: [],
+    },
+
+    status: "idle",
+    error: null,
   },
   reducers: {
     updateProductRegisterForm: (state, action) => {
-      const { section, data } = action.payload;
-      // 기존 state[section]이 객체이고, 들어오는 data도 객체일 경우 병합
-      if (
-        typeof state[section] === "object" &&
-        !Array.isArray(state[section]) &&
-        typeof data === "object"
-      ) {
-        state[section] = { ...state[section], ...data };
-      } else {
-        // 배열이나 기본 타입은 그냥 대체 (기존 로직 유지)
-        state[section] = data;
-      }
-      console.log(state);
+      state.formData = action.payload;
     },
+  },
+  // 비동기 Thunk 상태 처리
+  extraReducers: (builder) => {
+    builder
+      .addCase(uploadImagesAndRegisterProduct.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.images = action.payload;
+      })
+      .addCase(uploadImagesAndRegisterProduct.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(uploadImagesAndRegisterProduct.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+      });
   },
 });
 

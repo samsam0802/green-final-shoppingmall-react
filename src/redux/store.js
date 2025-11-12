@@ -11,7 +11,6 @@ import reviewSlice from "./slices/features/review/reviewSlice";
 
 export default configureStore({
   reducer: {
-    productRegisterSlice: productRegisterSlice,
     couponRegisterSlice: couponRegisterSlice,
     couponSearchSlice: couponSearchSlice,
     sendMessageSlice: sendMessageSlice,
