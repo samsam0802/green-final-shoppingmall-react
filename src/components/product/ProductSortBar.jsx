@@ -2,7 +2,7 @@ import React from "react";
 import { SlidersHorizontal } from "lucide-react";
 
 const ProductSortBar = ({ sort, setSort }) => {
-  const options = ["신상품순", "판매순", "낮은 가격순", "높은 가격순"];
+  const options = ["최근등록순", "판매순", "낮은 가격순", "높은 가격순"];
 
   return (
     <div className="flex flex-col md:flex-row md:items-center gap-3">

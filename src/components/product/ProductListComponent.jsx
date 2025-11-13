@@ -221,15 +221,13 @@ const ProductListComponent = () => {
         )}
 
         {/* ✅ 페이지네이션 */}
-        {totalPages > 1 && (
-          <div className="mt-12">
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              setCurrentPage={setCurrentPage}
-            />
-          </div>
-        )}
+        <div className="mt-12">
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            setCurrentPage={setCurrentPage}
+          />
+        </div>
       </div>
     </div>
   );

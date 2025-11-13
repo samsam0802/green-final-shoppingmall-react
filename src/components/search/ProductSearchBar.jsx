@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 // FiSearch 아이콘을 사용하지 않는 대신 인라인 SVG를 사용하므로 이 import는 제거할 수 있습니다.
 // import { FiSearch } from "react-icons/fi";
 import products from "../../data/products";
+import SearchDropdown from "./SearchDropdown";
+import { useNavigate } from "react-router-dom";
 
 const ProductSearchBar = () => {
   const [query, setQuery] = useState("");
@@ -9,28 +11,61 @@ const ProductSearchBar = () => {
 
   const [isFocused, setIsFocused] = useState(false);
 
+  const [recentSearches, setRecentSearches] = useState(() => {
+    return JSON.parse(localStorage.getItem("recentSearches")) || [];
+  });
+
   const wrapperRef = useRef();
 
-  // const handleSearch = (e) => {
-  //   const keyword = e.target.value;
+  const navigate = useNavigate();
 
-  //   console.log("keyword", keyword);
-  //   setQuery(keyword);
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (wrapperRef.current && !wrapperRef.current.contains(e.target))
+        setIsFocused(false);
+    };
 
-  //   // name 또는 brand에서 검색어 포함 여부 확인 (대소문자 무시)
-  //   const filtered = products.filter(
-  //     (item) =>
-  //       item.brand.toLowerCase().includes(keyword.toLowerCase()) ||
-  //       item.name.toLowerCase().includes(keyword.toLowerCase())
-  //   );
-  //   console.log("filtered", filtered);
+    document.addEventListener("mousedown", handleClickOutside);
 
-  //   setResults(filtered);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
-  //   if (keyword === "") {
-  //     setResults([]);
-  //   }
-  // };
+  const handleUpdate = (wordToRemove) => {
+    const updated = recentSearches.filter((w) => w !== wordToRemove);
+    setRecentSearches(updated);
+    localStorage.setItem("recentSearches", JSON.stringify(updated));
+  };
+
+  const handleSearch = () => {
+    navigate(`/search?keyword=${query}`);
+
+    // 기존 검색어 배열을 불러오기
+    const existingSearches =
+      JSON.parse(localStorage.getItem("recentSearches")) || [];
+
+    // 검색어가 비어있거나 기존 검색어 배열에 있다면 저장하지 않음
+    if (!query.trim() || existingSearches.includes(query.trim())) return;
+
+    // 새로운 검색어 배열을 생성
+    const newSearches = [...existingSearches, query.trim()];
+
+    // state 저장
+    setRecentSearches(newSearches);
+
+    // 로컬스토리지에 검색어 배열을 JSON 문자열로 변환하여 recentSearches 키 값에 저장
+    localStorage.setItem("recentSearches", JSON.stringify(newSearches));
+  };
+
+  const handleKeyDown = (e) => {
+    // 키가 Enter인지 확인
+    if (e.key === "Enter") {
+      // 기본 폼 제출 동작(페이지 새로고침) 방지
+      e.preventDefault();
+      handleSearch();
+      //검색 후 드롭다운 닫기
+      setIsFocused(false);
+    }
+  };
 
   return (
     // 1. 전체 컨테이너에 relative 유지
@@ -52,6 +87,8 @@ const ProductSearchBar = () => {
         "
         onFocus={() => setIsFocused(true)}
         onChange={(e) => setQuery(e.target.value)}
+        onClick={() => setIsFocused(true)}
+        onKeyDown={(e) => handleKeyDown(e)}
       />
       {results.length > 0 && (
         <ul
@@ -84,6 +121,7 @@ const ProductSearchBar = () => {
           text-gray-400 hover:text-black 
           cursor-pointer
         "
+        onClick={() => handleSearch()}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -100,7 +138,13 @@ const ProductSearchBar = () => {
         </svg>
       </button>
 
-      {isFocused && <SearchDropdown />}
+      {isFocused && (
+        <SearchDropdown
+          recentSearches={recentSearches}
+          setRecentSearches={setRecentSearches}
+          onRemove={handleUpdate}
+        />
+      )}
     </div>
   );
 };
