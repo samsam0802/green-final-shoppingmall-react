@@ -1,6 +1,6 @@
 // src/pages/mypage/MyPageWithdrawPage.jsx
 import React from "react";
-import WithdrawForm from "../../components/user/mypage/WithdrawForm";
+import UserWithdrawForm from "../../components/user/mypage/UserWithdrawForm";
 
 export default function MyPageWithdrawPage() {
   return (
@@ -9,7 +9,7 @@ export default function MyPageWithdrawPage() {
       <p className="text-sm text-zinc-500 mb-6">
         탈퇴 시 일부 정보는 삭제되거나 조회가 제한될 수 있습니다.
       </p>
-      <WithdrawForm />
+      <UserWithdrawForm />
     </div>
   );
 }

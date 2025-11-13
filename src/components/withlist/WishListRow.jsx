@@ -1,89 +1,106 @@
-// src/components/user/mypage/wishlist/WishListRow.jsx
 import React from "react";
+import { Heart, ShoppingCart, Trash2, Check } from "lucide-react";
 
-/**
- * item 필드 예시:
- * { id, name, subtitle, seller, price, originalPrice, thumb }
- * - originalPrice 없으면 회색 취소선 가격은 숨김
- * - subtitle 없으면 한 줄만 노출
- */
-export default function WishListRow({ checked, onCheck, onRemove, item }) {
-  const { name, subtitle, seller, price, originalPrice, thumb } = item;
+export default function WishListRow({
+  checked,
+  onCheck,
+  onRemove,
+  onAddToCart,
+  item,
+}) {
+  const { name, subtitle, price, originalPrice, thumb } = item;
+
+  // 할인율
+  const discountRate = originalPrice
+    ? Math.round(((originalPrice - price) / originalPrice) * 100)
+    : 0;
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-[48px_minmax(0,1fr)_140px_110px] items-center">
-      {/* 체크박스 (md 이상 표 헤더 정렬) */}
-      <div className="hidden md:flex items-center justify-center">
-        <input
-          type="checkbox"
-          className="size-4"
-          checked={checked}
-          onChange={onCheck}
-        />
-      </div>
+    <div className="group bg-white rounded-2xl border border-gray-200 p-5 hover:shadow-lg hover:border-gray-300 transition-all duration-300">
+      <div className="flex gap-4">
+        {/* 체크박스 */}
+        <div className="flex items-start pt-1">
+          <button
+            type="button"
+            onClick={onCheck}
+            className={`w-5 h-5 rounded-md border-2 flex items-center justify-center transition-all ${
+              checked
+                ? "bg-blue-600 border-blue-600"
+                : "border-gray-300 hover:border-blue-400"
+            }`}
+          >
+            {checked && <Check className="w-3.5 h-3.5 text-white" />}
+          </button>
+        </div>
 
-      {/* 상품영역 */}
-      <div className="px-4 py-5 flex items-start gap-3">
-        {/* 모바일 체크박스 */}
-        <input
-          type="checkbox"
-          className="size-4 md:hidden mt-1"
-          checked={checked}
-          onChange={onCheck}
-        />
-
-        {/* 썸네일 자리 */}
-        <div className="w-20 h-20 rounded-lg bg-zinc-200 shrink-0 overflow-hidden">
+        {/* 이미지 */}
+        <div className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-xl bg-gradient-to-br from-gray-100 to-gray-200 shrink-0 overflow-hidden shadow-sm group-hover:shadow-md transition-shadow">
           {thumb ? (
             <img src={thumb} alt="" className="w-full h-full object-cover" />
-          ) : null}
-        </div>
-
-        <div className="min-w-0">
-          {/* 브랜드/상품명 */}
-          <div className="text-sm font-semibold text-zinc-900 truncate">
-            {name}
-          </div>
-          {/* 설명(서브텍스트) */}
-          {subtitle ? (
-            <div className="mt-1 text-sm text-zinc-600 break-keep">
-              {subtitle}
+          ) : (
+            <div className="w-full h-full flex items-center justify-center">
+              <Heart className="w-8 h-8 text-gray-300" />
             </div>
-          ) : null}
+          )}
+          {discountRate > 0 && (
+            <div className="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-md shadow">
+              {discountRate}%
+            </div>
+          )}
         </div>
-      </div>
 
-      {/* 가격 */}
-      <div className="px-4 md:text-right md:pr-4 -mt-2 md:mt-0 pb-4 md:pb-0">
-        {originalPrice ? (
-          <div className="text-sm text-zinc-400 line-through tabular-nums">
-            ₩{num(originalPrice)}
+        {/* 상품 정보 */}
+        <div className="flex-1 min-w-0">
+          <div className="flex flex-col h-full">
+            <div className="flex-1">
+              <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-1 group-hover:text-blue-600 transition-colors">
+                {name}
+              </h3>
+              {subtitle && (
+                <p className="text-sm text-gray-600 line-clamp-2 leading-relaxed">
+                  {subtitle}
+                </p>
+              )}
+            </div>
+
+            {/* 가격 정보 */}
+            <div className="mt-3 flex items-end justify-between">
+              <div>
+                {originalPrice && (
+                  <div className="text-sm text-gray-400 line-through mb-1">
+                    ₩{Number(originalPrice).toLocaleString()}
+                  </div>
+                )}
+                <div className="flex items-baseline gap-1">
+                  <span className="text-2xl font-bold text-gray-900">
+                    ₩{Number(price).toLocaleString()}
+                  </span>
+                  <span className="text-gray-400 text-sm">~</span>
+                </div>
+              </div>
+
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={onRemove}
+                  className="p-2 rounded-lg border border-gray-300 text-gray-600 hover:bg-red-50 hover:border-red-300 hover:text-red-600 transition-all"
+                  title="삭제"
+                >
+                  <Trash2 className="w-4 h-4" />
+                </button>
+                <button
+                  type="button"
+                  onClick={onAddToCart}
+                  className="flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-all shadow-sm hover:shadow-md font-medium text-sm"
+                >
+                  <ShoppingCart className="w-4 h-4" />
+                  <span className="hidden sm:inline">담기</span>
+                </button>
+              </div>
+            </div>
           </div>
-        ) : null}
-        <div className="text-[15px] md:text-base font-bold text-red-500 tabular-nums">
-          ₩{num(price)}{" "}
-          <span className="text-zinc-400 font-normal align-baseline">~</span>
         </div>
-      </div>
-
-      {/* 관리(삭제) */}
-      <div className="px-4 pb-4 md:pb-0 flex md:block justify-end">
-        <button
-          type="button"
-          onClick={onRemove}
-          className="inline-flex items-center justify-center rounded-md border border-zinc-300 px-4 h-9 text-sm hover:bg-zinc-50"
-        >
-          삭제
-        </button>
       </div>
     </div>
   );
-}
-
-function num(n) {
-  try {
-    return Number(n ?? 0).toLocaleString();
-  } catch {
-    return "0";
-  }
 }

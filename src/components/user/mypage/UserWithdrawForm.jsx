@@ -1,7 +1,6 @@
-// src/components/mypage/WithdrawForm.jsx
 import React, { useState } from "react";
 
-export default function WithdrawForm() {
+export default function UserWithdrawForm() {
   const [form, setForm] = useState({
     reason: "서비스가 마음에 들지 않음",
     password: "",

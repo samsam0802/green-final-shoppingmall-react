@@ -32,10 +32,12 @@ export default function NoticeEditPage() {
     content: "기존 내용입니다",
   };
 
-  const handleSave = (FormData) => {
+  const handleSave = (formData) => {
     console.log("수정 데이터:", { id, ...formData });
     alert("공지사항이 수정되었습니다.");
     navigate("/helpcenter");
+  }
+  
     return (
       <div className="max-w-4xl mx-auto p-6">
         <div className="mb-6">
