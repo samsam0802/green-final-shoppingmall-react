@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   changeQty,
   removeItem,
+  clearCart,
 } from "../../redux/slices/features/cart/cartSlice";
 import { ShoppingCart, Trash2, Plus, Minus } from "lucide-react";
 
@@ -64,11 +65,13 @@ const CartComponent = () => {
   const handleOrderSelected = () => {
     if (selectedCartItems.length === 0) return alert("상품을 선택해주세요");
     navigate("/order", { state: { items: selectedCartItems } });
+    dispatch(clearCart());
   };
 
   // ✅ 전체 주문 시 전체 장바구니 전달
   const handleOrderAll = () => {
     navigate("/order", { state: { items: cart } });
+    dispatch(clearCart());
   };
 
   // 빈 장바구니 UI

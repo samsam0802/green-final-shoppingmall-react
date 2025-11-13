@@ -25,6 +25,8 @@ const ProductQuestionPage = lazy(() =>
   import("../components/productquestion/ProductQuestion")
 );
 
+const SearchResultPage = lazy(() => import("../pages/search/SearchResultPage"));
+
 const Loading = <div>Loading...</div>;
 
 const root = createBrowserRouter([
@@ -152,6 +154,14 @@ const root = createBrowserRouter([
     element: (
       <Suspense fallback={Loading}>
         <ProductQuestionPage />
+      </Suspense>
+    ),
+  },
+  {
+    path: "/search",
+    element: (
+      <Suspense fallback={Loading}>
+        <SearchResultPage />
       </Suspense>
     ),
   },
