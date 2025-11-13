@@ -1,5 +1,4 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { updateMessage } from "../../../redux/slices/features/admin/message/sendMessageSlice";
 
 /**
@@ -9,12 +8,10 @@ import { updateMessage } from "../../../redux/slices/features/admin/message/send
  * @param {function} onClose - 모달을 닫는 함수
  */
 const MessageModal = ({ selectedUsers, productId, onClose }) => {
-  const dispatch = useDispatch();
-  const reduxState = useSelector((state) => state.sendMessageSlice);
-
   // 1. 상태 관리
   const [messageForm, setMessageForm] = useState({
     sendType: "SMS",
+    messageTitle: "",
     messageContent: "",
   });
   const [isSending, setIsSending] = useState(false);
@@ -22,22 +19,11 @@ const MessageModal = ({ selectedUsers, productId, onClose }) => {
 
   const selectedCount = selectedUsers.length;
 
-  // 로그 확인
-  console.log("reduxState : ", reduxState);
-
-  useEffect(() => {
-    dispatch(
-      updateMessage({
-        data: messageForm,
-      })
-    );
-  }, [messageForm, dispatch]);
-
   // 2. 메시지 입력 핸들러
   const handleMessageChange = (e) => {
-    const { value } = e.target;
+    const { name, value } = e.target;
     setMessageForm((prev) => {
-      const form = { ...prev, messageContent: value };
+      const form = { ...prev, [name]: value };
       console.log(form);
       return form;
     });
@@ -47,7 +33,7 @@ const MessageModal = ({ selectedUsers, productId, onClose }) => {
   const sendTypeChangeHandler = (e) => {
     const { name, value } = e.target;
     setMessageForm((prev) => {
-      const form = { [name]: value, messageContent: "" };
+      const form = { [name]: value, messageContent: "", messageTitle: "" };
       console.log(form);
       return form;
     });
@@ -139,6 +125,28 @@ const MessageModal = ({ selectedUsers, productId, onClose }) => {
         {/* 메시지 입력 */}
         <div className="mb-6">
           <label
+            htmlFor="emailSubject"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+            {messageForm.sendType === "SMS" ? "SMS 메시지 제목" : "이메일 제목"}
+          </label>
+          <input
+            id="emailSubject"
+            className={`w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out`}
+            name="messageTitle"
+            value={messageForm.messageTitle}
+            onChange={handleMessageChange}
+            placeholder={
+              messageForm.sendType === "SMS"
+                ? "SMS 제목을 입력하세요."
+                : "이메일 제목을 입력하세요."
+            }
+          />
+        </div>
+
+        {/* 메시지 내용 입력 */}
+        <div className="mb-6">
+          <label
             htmlFor="messageInput"
             className="block text-sm font-medium text-gray-700 mb-1"
           >
@@ -151,6 +159,7 @@ const MessageModal = ({ selectedUsers, productId, onClose }) => {
             className={`w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out ${
               messageForm.sendType === "EMAIL" ? "min-h-48" : "min-h-24"
             }`}
+            name="messageContent"
             value={messageForm.messageContent}
             onChange={handleMessageChange}
             placeholder={
