@@ -1,10 +1,6 @@
 import { lazy, Suspense } from "react";
 import { Navigate, useLocation } from "react-router-dom";
-
-const useAuth = () => ({
-  isAdmin: localStorage.getItem("currentUser")?.includes('"user_Role":"admin"'),
-  isLoggedIn: !!localStorage.getItem("currentUser"),
-});
+import { useAuth } from "../hooks/useAuth";
 
 // 관리자 권한 보호 컴포넌트
 function AdminRoute({ children }) {
@@ -14,7 +10,7 @@ function AdminRoute({ children }) {
   // 1. 로그인 여부 확인
   if (!isLoggedIn) {
     console.warn("AdminRoute: 로그인이 필요합니다.");
-    return <Navigate to="/login" state={{ from: location }} replace />;
+    return <Navigate to="/loginpage" state={{ from: location }} replace />;
   }
 
   // 2. 관리자 권한 확인
@@ -42,7 +38,7 @@ const NoticeEditPage = lazy(() =>
 const helpRouter = () => {
   return [
     {
-      index: true, // 기본 경로 (/helpcenter)
+      index: true,
       element: (
         <Suspense fallback={Loading}>
           <HelpNoticePage />
@@ -78,7 +74,7 @@ const helpRouter = () => {
       ),
     },
     {
-      path: "notice/edit/:id",
+      path: "notice/edit",
       element: (
         // AdminRoute로 래핑하여 권한 보호
         <AdminRoute>

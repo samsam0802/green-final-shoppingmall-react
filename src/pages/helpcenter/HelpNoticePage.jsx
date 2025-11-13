@@ -1,7 +1,5 @@
 import React, { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { updateUserRole } from "../../redux/slices/features/user/userSlice";
 import { useAuth } from "../../hooks/useAuth";
 
 const noticeDummy = [
@@ -30,8 +28,7 @@ const tabs = ["전체", "일반", "배송공지", "고객센터"];
 
 export default function HelpNoticePage() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { currentUser, isAdmin } = useAuth();
+  const { isAdmin } = useAuth();
   const [activeTab, setActiveTab] = useState("전체");
   const [keyword, setKeyword] = useState("");
 
@@ -56,49 +53,22 @@ export default function HelpNoticePage() {
         {isAdmin && (
           <button
             onClick={() => navigate("/helpcenter/notice/write")}
-            className="px-4 py-2 bg-indigo-600 text-white font-medium rounded-lg text-sm hover:bg-indigo-700 transition shadow-md"
+            className="px-4 py-2 bg-indigo-600 text-white font-medium rounded-lg text-sm hover:bg-indigo-700 transition shadow-md cursor-pointer"
           >
             + 공지사항 작성
           </button>
         )}
       </div>
 
-      {/* 개발자 테스트 UI 이후 서버와 연결 후에는 권한 확인을 서버에서 데이터를 받아서 확인할 예정~*/}
-      {currentUser && (
-        <div className="mb-6 p-4 bg-yellow-100 border border-yellow-300 rounded-xl shadow-inner">
-          <p className="text-sm text-yellow-900 font-semibold mb-3">
-            🧪 개발자 테스트 | 현재 권한: {currentUser.user_Role || "user"}
-          </p>
-          <div className="flex gap-3">
-            <button
-              onClick={() => {
-                dispatch(updateUserRole({ role: "admin" }));
-              }}
-              className="px-4 py-2 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
-            >
-              관리자로 전환
-            </button>
-            <button
-              onClick={() => {
-                dispatch(updateUserRole({ role: "user" }));
-              }}
-              className="px-4 py-2 text-sm bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition"
-            >
-              일반회원으로 전환
-            </button>
-          </div>
-        </div>
-      )}
-
       {/* 탭 */}
-      <div className="flex gap-6 text-sm mb-6 border-b border-gray-200">
+      <div className="flex gap-6 text-sm mb-6 border-b border-gray-200 ">
         {tabs.map((tab) => {
           const on = tab === activeTab;
           return (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`pb-3 -mb-[1px] border-b-2 transition duration-300 ${
+              className={`pb-3 -mb-[1px] border-b-2 transition duration-300 cursor-pointer ${
                 on
                   ? "border-indigo-600 text-indigo-600 font-bold"
                   : "border-transparent text-gray-500 hover:text-gray-700"
@@ -109,7 +79,6 @@ export default function HelpNoticePage() {
           );
         })}
       </div>
-
       <div className="mb-8 flex gap-3">
         <input
           type="text"
@@ -118,15 +87,13 @@ export default function HelpNoticePage() {
           className="flex-1 border border-gray-300 rounded-xl px-4 py-2.5 text-base focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
           placeholder="공지사항 제목 또는 분류를 검색해 주세요."
         />
-        <button className="px-6 bg-indigo-600 text-white rounded-xl text-base font-semibold hover:bg-indigo-700 transition shadow-md">
+        <button className="px-6 bg-indigo-600 text-white rounded-xl text-base font-semibold hover:bg-indigo-700 transition shadow-md cursor-pointer">
           검색
         </button>
       </div>
-
       <p className="text-sm text-gray-600 mb-4">
         총 {filtered.length}건의 공지사항이 있습니다.
       </p>
-
       {/* 리스트 */}
       <div className="border-t border-gray-300">
         {/* 헤더 */}
@@ -151,14 +118,16 @@ export default function HelpNoticePage() {
               isAdmin
                 ? "grid-cols-[80px_1fr_120px_150px]"
                 : "grid-cols-[80px_1fr_120px]"
-            } items-center py-4 border-b border-gray-100 text-base hover:bg-indigo-50 transition duration-150 cursor-pointer`}
+            } items-center py-4 border-b border-gray-100 text-base hover:bg-indigo-50 transition duration-150`}
           >
             <div className="pl-4 text-gray-500 text-sm">{idx + 1}</div>
             <div className="flex items-center gap-3">
               <span className="text-xs px-2 py-1 rounded-full bg-indigo-100 text-indigo-700 font-medium">
                 {notice.type}
               </span>
-              <span className="text-gray-800 font-medium">{notice.title}</span>
+              <span className="text-gray-800 font-medium cursor-pointer ">
+                {notice.title}
+              </span>
             </div>
             <div className="text-right pr-4 text-sm text-gray-500">
               {notice.date}
@@ -171,7 +140,7 @@ export default function HelpNoticePage() {
                     e.stopPropagation(); // 부모 클릭 이벤트 방지
                     navigate(`/helpcenter/notice/edit/${notice.id}`);
                   }}
-                  className="px-3 py-1 text-xs border border-gray-300 rounded-lg hover:bg-gray-100 transition"
+                  className="px-3 py-1 text-xs border border-gray-300 rounded-lg hover:bg-gray-100 transition cursor-pointer"
                 >
                   수정
                 </button>
@@ -182,7 +151,7 @@ export default function HelpNoticePage() {
                       `⚠️ Notice ID ${notice.id} 삭제 시도: API 호출 필요`
                     );
                   }}
-                  className="px-3 py-1 text-xs border border-red-400 text-red-600 rounded-lg hover:bg-red-50 transition"
+                  className="px-3 py-1 text-xs border border-red-400 text-red-600 rounded-lg hover:bg-red-50 transition cursor-pointer"
                 >
                   삭제
                 </button>
@@ -191,7 +160,6 @@ export default function HelpNoticePage() {
           </div>
         ))}
       </div>
-
       <div className="mt-6 flex justify-center gap-2 text-sm">
         <button
           type="button"

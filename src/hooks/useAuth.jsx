@@ -1,4 +1,3 @@
-// src/hooks/useAuth.js
 import { useSelector } from "react-redux";
 
 export const useAuth = () => {

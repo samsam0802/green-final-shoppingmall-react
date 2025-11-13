@@ -1,18 +1,16 @@
-// src/components/user/mypage/wishlist/WishListContainer.jsx
 import React, { useMemo, useState } from "react";
 import WishListToolbar from "./WishListToolbar";
 import WishListGrid from "./WishListGrid";
 import WishListEmpty from "./WishListEmpty";
+import { Heart } from "lucide-react";
 
-/** 뼈대 컨테이너: 상태/행동 담당 */
 export default function WishListContainer() {
-  // TODO: 서버 연동 후 교체
+  // 더미 데이터 (백엔드 연동 시 API로 교체)
   const [items, setItems] = useState([
     {
       id: 1,
       name: "밀잇",
       subtitle: "밀잇 식단관리 단백질쉐이크 40g 7종 택1",
-      seller: "판매자",
       originalPrice: 5900,
       price: 3900,
       thumb: "", // 이미지 있으면 URL
@@ -22,7 +20,6 @@ export default function WishListContainer() {
       name: "메디힐",
       subtitle:
         "[매] 메디힐 램핑 세럼 마스크 6종 택1 (마데카소사이드, PDRN, 콜라겐, 비타민C, 히알루론산, 티트)",
-      seller: "판매자",
       originalPrice: 3000,
       price: 1440,
       thumb: "",
@@ -31,12 +28,12 @@ export default function WishListContainer() {
       id: 3,
       name: "보다나",
       subtitle: "[브러쉬 무선 고데기] 보다나 이지업 헤어 스타일러 파우더핑크",
-      seller: "판매자",
       originalPrice: 109000,
       price: 89900,
       thumb: "",
     },
   ]);
+
   const [selected, setSelected] = useState(new Set());
 
   const allChecked = useMemo(
@@ -47,6 +44,7 @@ export default function WishListContainer() {
   const toggleAll = () => {
     setSelected(allChecked ? new Set() : new Set(items.map((i) => i.id)));
   };
+
   const toggleOne = (id) => {
     setSelected((prev) => {
       const next = new Set(prev);
@@ -57,74 +55,135 @@ export default function WishListContainer() {
 
   const removeSelected = () => {
     if (selected.size === 0) return;
-    // TODO: 선택삭제 API 호출 후 성공 시 상태 반영
+
+    // TODO: 백엔드 API 연동
+    // const response = await fetch('/api/wishlist/delete-multiple', {
+    //   method: 'DELETE',
+    //   body: JSON.stringify({ ids: Array.from(selected) })
+    // });
+
+    // 임시: state에서만 제거
     setItems((prev) => prev.filter((it) => !selected.has(it.id)));
     setSelected(new Set());
+    alert("선택한 상품이 찜목록에서 삭제되었습니다.");
   };
 
   const removeOne = (id) => {
-    // TODO: 단건 삭제 API
+    // TODO: 백엔드 API 연동
+    // await fetch(`/api/wishlist/${id}`, { method: 'DELETE' });
+
+    // 임시: state에서만 제거
     setItems((prev) => prev.filter((it) => it.id !== id));
     setSelected((prev) => {
       const next = new Set(prev);
       next.delete(id);
       return next;
     });
+    alert("상품이 찜목록에서 삭제되었습니다.");
+  };
+
+  // 개별 상품 장바구니 추가 로직
+  const handleAddToCart = (item) => {
+    // TODO: 팀원의 장바구니 컴포넌트/API와 연동
+    // 예시:
+    // await fetch('/api/cart/add', {
+    //   method: 'POST',
+    //   body: JSON.stringify({ productId: item.id, quantity: 1 })
+    // });
+
+    alert(`"${item.name}" 상품을 장바구니에 담는 기능은 개발 중입니다.`);
+  };
+
+  // 선택 상품 일괄 장바구니 추가 로직
+  const addSelectedToCart = () => {
+    if (selected.size === 0) {
+      alert("선택된 상품이 없습니다.");
+      return;
+    }
+
+    // TODO: 장바구니 컴포넌트/API와 연동
+    // const selectedItems = items.filter((item) => selected.has(item.id));
+    // await fetch('/api/cart/add-multiple', {
+    //   method: 'POST',
+    //   body: JSON.stringify({ items: selectedItems })
+    // });
+
+    const selectedCount = selected.size;
+    setSelected(new Set()); // 선택 해제
+    alert(`${selectedCount}개 상품을 장바구니에 담는 기능은 개발 중입니다.`);
   };
 
   if (items.length === 0) return <WishListEmpty />;
 
   return (
-    <div className="space-y-4">
-      <WishListToolbar
-        allChecked={allChecked}
-        selectedCount={selected.size}
-        totalCount={items.length}
-        onToggleAll={toggleAll}
-        onRemoveSelected={removeSelected}
-      />
+    <div className="max-w-4xl mx-auto p-4 sm:p-6 bg-gray-50 min-h-screen">
+      {/* 헤더 */}
+      <div className="mb-6">
+        <div className="flex items-center gap-3 mb-2">
+          <Heart className="w-7 h-7 text-red-500 fill-red-500" />
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
+            찜목록
+          </h1>
+        </div>
+        <p className="text-gray-600 text-sm sm:text-base">
+          관심상품을 모아둔 목록입니다.
+        </p>
+      </div>
+
+      <div className="mb-4">
+        <WishListToolbar
+          allChecked={allChecked}
+          selectedCount={selected.size}
+          totalCount={items.length}
+          onToggleAll={toggleAll}
+          onRemoveSelected={removeSelected}
+          onAddSelectedToCart={addSelectedToCart}
+        />
+      </div>
+
       <WishListGrid
         items={items}
         selected={selected}
         onToggleOne={toggleOne}
         onRemoveOne={removeOne}
+        onAddToCart={handleAddToCart}
       />
 
-      <div className="mt-6 flex justify-center gap-2 text-sm">
+      <div className="mt-8 flex justify-center gap-2">
         <button
           type="button"
-          className="w-8 h-8 flex items-center justify-center rounded-full border border-gray-200 text-gray-400 cursor-not-allowed"
+          className="w-9 h-9 flex items-center justify-center rounded-lg border border-gray-300 text-gray-400 bg-white"
           disabled
         >
           «
         </button>
         <button
           type="button"
-          className="w-8 h-8 flex items-center justify-center rounded-full border border-gray-200 text-gray-400 cursor-not-allowed"
+          className="w-9 h-9 flex items-center justify-center rounded-lg border border-gray-300 text-gray-400 bg-white"
           disabled
         >
           ‹
         </button>
 
-        <button className="w-8 h-8 flex items-center justify-center rounded-full bg-black text-white">
+        <button className="w-9 h-9 flex items-center justify-center rounded-lg bg-blue-600 text-white font-medium shadow-sm">
           1
         </button>
-        <button className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100">
+        <button className="w-9 h-9 flex items-center justify-center rounded-lg border border-gray-300 hover:bg-gray-50 bg-white transition-colors">
           2
         </button>
-        <button className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100">
+        <button className="w-9 h-9 flex items-center justify-center rounded-lg border border-gray-300 hover:bg-gray-50 bg-white transition-colors">
           3
         </button>
 
         <button
           type="button"
-          className="w-8 h-8 flex items-center justify-center rounded-full border border-gray-200 hover:bg-gray-50"
+          className="w-9 h-9 flex items-center justify-center rounded-lg border border-gray-300 hover:bg-gray-50 bg-white transition-colors"
         >
           ›
         </button>
         <button
           type="button"
-          className="w-8 h-8 flex items-center justify-center rounded-full border border-gray-200 hover:bg-gray-50"
+          className="w-9 h-9 flex items-center justify-center rounded-lg border border-gray-300 hover:bg-gray-50 bg-white transition-colors"
         >
           »
         </button>

@@ -2,7 +2,8 @@ import React, { useState } from "react";
 
 const noticeTypes = ["일반", "배송공지", "고객센터"];
 
-export default function NoticeForm({ mode, initialData, onSave, onCancel }) {
+// prettier-ignore
+export default function NoticeForm({ mode, initialData, onSave, onCancel }) { // EditPage props
   const [formData, setFormData] = useState(
     initialData || {
       title: "",

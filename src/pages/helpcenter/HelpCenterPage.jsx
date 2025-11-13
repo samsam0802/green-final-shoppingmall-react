@@ -2,6 +2,7 @@
 import React from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import Header from "../../layouts/mainpage/Header";
+import DevToolTest from "../../components/helpcenter/DevToolTest";
 
 export default function HelpCenterPage() {
   return (
@@ -71,6 +72,7 @@ export default function HelpCenterPage() {
         {/* 오른쪽 컨텐츠 자리 */}
         <div className="flex-1">
           <Outlet />
+          <DevToolTest />
         </div>
       </div>
     </div>

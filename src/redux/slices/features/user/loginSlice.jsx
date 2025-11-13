@@ -55,19 +55,16 @@ export const loginSlice = {
   },
 
   updateUserRole: (state, action) => {
-    const { role } = action.payload; // "admin" or "user"
-
+    const { user_Role } = action.payload; // 여기의 payload는 => "admin" 또는 "user" 임
     if (state.user) {
-      state.user.user_Role = role;
-
-      // localStorage도 동기화
+      state.user.user_Role = user_Role;
       const currentUser = JSON.parse(localStorage.getItem("currentUser"));
       if (currentUser) {
-        currentUser.user_Role = role;
+        currentUser.user_Role = user_Role;
         localStorage.setItem("currentUser", JSON.stringify(currentUser));
       }
 
-      console.log(`✅ LoginSlice: 권한 변경 완료 -> ${role}`);
+      console.log(`✅ LoginSlice: 권한 변경 완료 -> ${user_Role}`);
     }
   },
 };
