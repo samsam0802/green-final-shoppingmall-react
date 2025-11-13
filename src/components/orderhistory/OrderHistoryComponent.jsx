@@ -26,6 +26,25 @@ export default function OrderHistoryComponent() {
   // 페이지네이션 상태
   const [currentPage, setCurrentPage] = useState(1);
 
+  // 오늘 날짜 가져오기
+  const today = new Date();
+
+  //오늘 날짜의 연, 월, 일 저장
+  const todayYear = today.getFullYear();
+  // 0부터 시작하므로 +1 해줘야함
+  const todayMonth = today.getMonth() + 1;
+  const todayDay = today.getDate();
+
+  // 시작 날짜 상태
+  const [startYear, setStartYear] = useState(todayYear);
+  const [startMonth, setStartMonth] = useState(todayMonth - 1);
+  const [startDay, setStartDay] = useState(todayDay);
+
+  // 종료 날짜 상태
+  const [endYear, setEndYear] = useState(todayYear);
+  const [endMonth, setEndMonth] = useState(todayMonth);
+  const [endDay, setEndDay] = useState(todayDay);
+
   const statusClass = (s) =>
     s === "배송중"
       ? "text-blue-600"
@@ -49,6 +68,8 @@ export default function OrderHistoryComponent() {
 
     setCountStatus(newCountState);
   }, [sampleOrders]);
+
+  const handleSelectPeriod = () => {};
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 text-[#333]">
@@ -84,7 +105,10 @@ export default function OrderHistoryComponent() {
           {["1개월", "3개월", "6개월", "12개월"].map((m) => (
             <button
               key={m}
-              onClick={() => setSelectedPeriod(m)}
+              onClick={() => {
+                setSelectedPeriod(m);
+                handleSelectPeriod();
+              }}
               className={`px-5 py-2 text-sm transition-all ${
                 selectedPeriod === m
                   ? "bg-black text-white"
@@ -97,6 +121,105 @@ export default function OrderHistoryComponent() {
         </div>
         <p className="text-xs text-gray-400">
           ※ 최근 1년 내 구매내역만 조회 가능합니다.
+        </p>
+      </div>
+
+      {/* 날짜 직접 입력 */}
+      <div className="bg-white border border-gray-200 p-6 mb-6">
+        <p className="text-xs text-gray-600 mb-3 uppercase tracking-wide">
+          DATE RANGE
+        </p>
+        <div className="flex items-center gap-3">
+          {/* 시작 날짜 */}
+          <div className="flex items-center gap-2">
+            <select
+              className="px-3 py-2 border border-gray-300 text-sm bg-white hover:border-gray-400"
+              value={startYear}
+              onChange={(e) => setStartYear(e.target.value)}
+            >
+              <option>2025</option>
+              <option>2024</option>
+              <option>2023</option>
+            </select>
+            <span className="text-sm text-gray-500">년</span>
+
+            <select
+              className="px-3 py-2 border border-gray-300 text-sm bg-white hover:border-gray-400"
+              value={startMonth}
+              onChange={(e) => setStartMonth(e.target.value)}
+            >
+              {Array.from({ length: 12 }, (_, i) => (
+                <option key={i + 1} value={i + 1}>
+                  {i + 1}
+                </option>
+              ))}
+            </select>
+            <span className="text-sm text-gray-500">월</span>
+
+            <select
+              className="px-3 py-2 border border-gray-300 text-sm bg-white hover:border-gray-400"
+              value={startDay}
+              onChange={(e) => setStartDay(e.target.value)}
+            >
+              {Array.from({ length: 31 }, (_, i) => (
+                <option key={i + 1} value={i + 1}>
+                  {i + 1}
+                </option>
+              ))}
+            </select>
+            <span className="text-sm text-gray-500">일</span>
+          </div>
+          {/* 구분선 */}
+          <span className="text-gray-400">~</span>
+
+          {/* 종료 날짜 */}
+          <div className="flex items-center gap-2">
+            <select
+              className="px-3 py-2 border border-gray-300 text-sm bg-white hover:border-gray-400"
+              value={endYear}
+              onChange={(e) => setEndYear(e.target.value)}
+            >
+              <option>2025</option>
+              <option>2024</option>
+              <option>2023</option>
+            </select>
+            <span className="text-sm text-gray-500">년</span>
+
+            <select
+              className="px-3 py-2 border border-gray-300 text-sm bg-white hover:border-gray-400"
+              value={endMonth}
+              onChange={(e) => setEndMonth(e.target.value)}
+            >
+              {Array.from({ length: 12 }, (_, i) => (
+                <option key={i + 1} value={i + 1}>
+                  {i + 1}
+                </option>
+              ))}
+            </select>
+            <span className="text-sm text-gray-500">월</span>
+
+            <select
+              className="px-3 py-2 border border-gray-300 text-sm bg-white hover:border-gray-400"
+              value={endDay}
+              onChange={(e) => setEndDay(e.target.value)}
+            >
+              {Array.from({ length: 31 }, (_, i) => (
+                <option key={i + 1} value={i + 1}>
+                  {i + 1}
+                </option>
+              ))}
+            </select>
+            <span className="text-sm text-gray-500">일</span>
+          </div>
+
+          {/* 조회 버튼 */}
+          <button className="ml-4 px-6 py-2 bg-black text-white text-sm hover:bg-gray-800 transition-colors">
+            조회
+          </button>
+        </div>
+        <p className="text-xs text-gray-400 mt-3">
+          ※ 2017년 4월 1일 이후 내역만 조회가 가능하며, 이전의 주문내역은
+          달빛나라 촉촉마을 조인내역에서 확인하실 수 있습니다.
         </p>
       </div>
 
