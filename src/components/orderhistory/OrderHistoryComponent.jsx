@@ -69,7 +69,33 @@ export default function OrderHistoryComponent() {
     setCountStatus(newCountState);
   }, [sampleOrders]);
 
-  const handleSelectPeriod = () => {};
+  const handleSelectPeriod = (month) => {
+    const now = new Date();
+    const past = new Date();
+
+    past.setMonth(past.getMonth() - month);
+
+    setStartYear(past.getFullYear());
+    setStartMonth(past.getMonth() + 1);
+    setStartDay(past.getDate());
+
+    setSelectedPeriod(`${month}개월`);
+  };
+
+  const handleSearch = () => {
+    const start = `${startYear}-${String(startMonth).padStart(2, "0")}-${String(
+      startDay
+    ).padStart(2, "0")}`;
+
+    const end = `${endYear}-${String(endMonth).padStart(2, "0")}-${String(
+      endDay
+    ).padStart(2, "0")}`;
+
+    console.log("조회 요청 날짜:", start, "~", end);
+
+    // 나중에는 여기에서 axios로 백엔드 호출
+    // axios.get('/api/orders', {params: {startDate: start, endDate: end}})
+  };
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 text-[#333]">
@@ -102,20 +128,17 @@ export default function OrderHistoryComponent() {
           PURCHASE PERIOD
         </p>
         <div className="flex gap-2 mb-4">
-          {["1개월", "3개월", "6개월", "12개월"].map((m) => (
+          {[1, 3, 6, 12].map((m) => (
             <button
               key={m}
-              onClick={() => {
-                setSelectedPeriod(m);
-                handleSelectPeriod();
-              }}
+              onClick={() => handleSelectPeriod(m)}
               className={`px-5 py-2 text-sm transition-all ${
-                selectedPeriod === m
+                selectedPeriod === `${m}개월`
                   ? "bg-black text-white"
                   : "bg-white text-gray-700 border border-gray-300 hover:border-gray-400"
               }`}
             >
-              {m}
+              {`${m}개월`}
             </button>
           ))}
         </div>
@@ -213,7 +236,10 @@ export default function OrderHistoryComponent() {
           </div>
 
           {/* 조회 버튼 */}
-          <button className="ml-4 px-6 py-2 bg-black text-white text-sm hover:bg-gray-800 transition-colors">
+          <button
+            className="ml-4 px-6 py-2 bg-black text-white text-sm hover:bg-gray-800 transition-colors"
+            onClick={() => handleSearch()}
+          >
             조회
           </button>
         </div>

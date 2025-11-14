@@ -5,7 +5,7 @@ import products from "../../data/products";
 import { CATEGORY_DATA } from "../../data/categories";
 import { ChevronRight } from "lucide-react";
 
-import ProductCard from "../../components/product/ProductCard";
+import ProductCard from "./ProductCard";
 import ProductSortBar from "./ProductSortBar";
 import ProductFilterBar from "../filter/ProductFilterBar";
 import Pagination from "./Pagination";

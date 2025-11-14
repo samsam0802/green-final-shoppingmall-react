@@ -11,8 +11,8 @@ const CategoryMegaMenu = ({ isOpen }) => {
 
   const goMain = (main) => navigate(`/category/${slug(main)}`);
   const goSub = (main, sub) => navigate(`/category/${slug(main)}/${slug(sub)}`);
-  const goDeep = (main, sub, deep) =>
-    navigate(`/category/${slug(main)}/${slug(sub)}/${slug(deep)}`);
+  // const goDeep = (main, sub, deep) =>
+  //   navigate(`/category/${slug(main)}/${slug(sub)}/${slug(deep)}`);
 
   return (
     <div className="absolute left-0 w-full bg-white border-t border-gray-200 shadow-xl z-50">
