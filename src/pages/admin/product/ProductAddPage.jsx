@@ -6,19 +6,43 @@ import ProductSaleInfo from "../../../components/admin/product/ProductSaleInfo";
 import ProductImageRegister from "../../../components/admin/product/ProductImageRegister";
 import DeliveryCharge from "../../../components/admin/product/DeliveryCharge";
 import OptionRegistration from "../../../components/admin/product/OptionRegistration";
+import { registerProduct } from "../../../api/admin/product/productApi";
 
 const initForm = {
   category: {},
   brand: {},
-  basicInfo: {},
-  saleInfo: {},
+  basicInfo: {
+    productName: "",
+    keywords: "",
+    productDescription: "",
+  },
+  saleInfo: {
+    saleStatus: "ON_SALE",
+    needRestockNoti: false,
+    exposureStatus: "EXPOSURE",
+    isCancelable: true,
+    useRestockNoti: false,
+  },
   mainImages: {
     thumbnailImage: null,
     galleryImages: [],
   },
   descriptionImages: [],
-  delivery: {},
-  options: [],
+  delivery: {
+    deliveryType: "PAID",
+    deliveryFee: 3000,
+  },
+  options: [
+    {
+      optionName: "",
+      purchasePrice: "",
+      sellingPrice: "",
+      currentStock: "",
+      initialStock: "",
+      safetyStock: "",
+      image: null,
+    },
+  ],
 };
 
 const ProductAddPage = () => {
@@ -30,14 +54,20 @@ const ProductAddPage = () => {
     console.log(productForm);
   }, [productForm]);
 
-  const submitHandler = async () => {
-    try {
-      console.log("상품 등록 폼:", productForm);
-      alert("상품이 등록되었습니다.");
-    } catch (error) {
-      console.error("등록 실패:", error);
-      alert("상품 등록에 실패했습니다.");
-    }
+  const submitHandler = () => {
+    const register = async () => {
+      try {
+        const data = await registerProduct(productForm);
+
+        console.log("응답 data :", data);
+
+        alert("상품이 등록되었습니다.");
+      } catch (error) {
+        console.error("등록 실패:", error);
+        alert("상품 등록에 실패했습니다.");
+      }
+    };
+    register();
   };
 
   const onReset = () => {

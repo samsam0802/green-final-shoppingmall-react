@@ -4,9 +4,8 @@ import React, { useEffect, useState } from "react";
 export default function ProductSaleInfo({ onChangeForm }) {
   const [isOpen, setIsOpen] = useState(true);
   const [saleInfo, setSaleInfo] = useState({
-    saleStatus: "onSale",
-    needRestockNoti: false,
-    exposureStatus: "exposure",
+    saleStatus: "ON_SALE",
+    exposureStatus: "EXPOSURE",
     isCancelable: true,
     useRestockNoti: false,
   });
@@ -24,6 +23,18 @@ export default function ProductSaleInfo({ onChangeForm }) {
         [name]: type === "checkbox" ? checked : value,
       };
 
+      return saleInfoData;
+    });
+  };
+
+  const onCancelableHandler = (e) => {
+    const { name, value } = e.target;
+
+    setSaleInfo((prev) => {
+      const saleInfoData = {
+        ...prev,
+        [name]: value === "true" ? true : false,
+      };
       return saleInfoData;
     });
   };
@@ -58,8 +69,8 @@ export default function ProductSaleInfo({ onChangeForm }) {
                       type="radio"
                       name="saleStatus"
                       onChange={onCheckBoxChangeHandler}
-                      value="onSale"
-                      checked={saleInfo.saleStatus === "onSale"}
+                      value="ON_SALE"
+                      checked={saleInfo.saleStatus === "ON_SALE"}
                       className="mr-2 accent-blue-600 cursor-pointer"
                     />
                     <span>판매중</span>
@@ -69,8 +80,8 @@ export default function ProductSaleInfo({ onChangeForm }) {
                       type="radio"
                       name="saleStatus"
                       onChange={onCheckBoxChangeHandler}
-                      value="soldOut"
-                      checked={saleInfo.saleStatus === "soldOut"}
+                      value="SOLD_OUT"
+                      checked={saleInfo.saleStatus === "SOLD_OUT"}
                       className="mr-2 accent-blue-600 cursor-pointer"
                     />
                     <span>품절</span>
@@ -80,8 +91,8 @@ export default function ProductSaleInfo({ onChangeForm }) {
                       type="radio"
                       name="saleStatus"
                       onChange={onCheckBoxChangeHandler}
-                      value="stop"
-                      checked={saleInfo.saleStatus === "stop"}
+                      value="STOP_SALE"
+                      checked={saleInfo.saleStatus === "STOP_SALE"}
                       className="mr-2 accent-blue-600 cursor-pointer"
                     />
                     <span>판매중지</span>
@@ -91,8 +102,8 @@ export default function ProductSaleInfo({ onChangeForm }) {
                       type="radio"
                       name="saleStatus"
                       onChange={onCheckBoxChangeHandler}
-                      value="restock"
-                      checked={saleInfo.saleStatus === "restock"}
+                      value="RESTOCK"
+                      checked={saleInfo.saleStatus === "RESTOCK"}
                       className="mr-2 accent-blue-600 cursor-pointer"
                     />
                     <span>재입고 상품</span>
@@ -124,9 +135,9 @@ export default function ProductSaleInfo({ onChangeForm }) {
                   <input
                     type="radio"
                     name="exposureStatus"
-                    value="exposure"
+                    value="EXPOSURE"
                     onChange={onCheckBoxChangeHandler}
-                    checked={saleInfo.exposureStatus === "exposure"}
+                    checked={saleInfo.exposureStatus === "EXPOSURE"}
                     className="mr-2 accent-blue-600 cursor-pointer"
                   />
                   <span>노출</span>
@@ -135,9 +146,9 @@ export default function ProductSaleInfo({ onChangeForm }) {
                   <input
                     type="radio"
                     name="exposureStatus"
-                    value="hidden"
+                    value="HIDDEN"
                     onChange={onCheckBoxChangeHandler}
-                    checked={saleInfo.exposureStatus === "hidden"}
+                    checked={saleInfo.exposureStatus === "HIDDEN"}
                     className="mr-2 accent-blue-600 cursor-pointer"
                   />
                   <span>미노출</span>
@@ -146,9 +157,9 @@ export default function ProductSaleInfo({ onChangeForm }) {
                   <input
                     type="radio"
                     name="exposureStatus"
-                    value="scheduled"
+                    value="SCHEDULED"
                     onChange={onCheckBoxChangeHandler}
-                    checked={saleInfo.exposureStatus === "scheduled"}
+                    checked={saleInfo.exposureStatus === "SCHEDULED"}
                     className="mr-2 accent-blue-600 cursor-pointer"
                   />
                   <span>노출 예약</span>
@@ -167,9 +178,9 @@ export default function ProductSaleInfo({ onChangeForm }) {
                   <input
                     type="radio"
                     name="isCancelable"
-                    value="possible"
-                    onChange={onCheckBoxChangeHandler}
-                    checked={saleInfo.isCancelable === "possible"}
+                    value="true"
+                    onChange={onCancelableHandler}
+                    checked={saleInfo.isCancelable}
                     className="mr-2 accent-blue-600 cursor-pointer"
                   />
                   <span>가능</span>
@@ -178,9 +189,9 @@ export default function ProductSaleInfo({ onChangeForm }) {
                   <input
                     type="radio"
                     name="isCancelable"
-                    value="impossible"
-                    onChange={onCheckBoxChangeHandler}
-                    checked={saleInfo.isCancelable === "impossible"}
+                    value="false"
+                    onChange={onCancelableHandler}
+                    checked={!saleInfo.isCancelable}
                     className="mr-2 accent-blue-600 cursor-pointer"
                   />
                   <span>불가 (취소/교환/반품 불가)</span>

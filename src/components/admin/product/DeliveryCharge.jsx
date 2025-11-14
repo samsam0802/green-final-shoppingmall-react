@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 export default function DeliveryCharge({ onChangeForm }) {
   const [isOpen, setIsOpen] = useState(true);
   const [deliveryInfo, setDeliveryInfo] = useState({
-    deliveryType: "paid",
+    deliveryType: "PAID",
     deliveryFee: 3000,
   });
 
@@ -61,9 +61,9 @@ export default function DeliveryCharge({ onChangeForm }) {
                   <input
                     type="radio"
                     name="deliveryType"
-                    value="paid"
+                    value="PAID"
                     onChange={onDeliveryTypeChangeHandler}
-                    checked={deliveryInfo.deliveryType === "paid"}
+                    checked={deliveryInfo.deliveryType === "PAID"}
                     className="mr-2 accent-blue-600 cursor-pointer"
                   />
                   <span>유료</span>
@@ -72,9 +72,9 @@ export default function DeliveryCharge({ onChangeForm }) {
                   <input
                     type="radio"
                     name="deliveryType"
-                    value="free"
+                    value="FREE"
                     onChange={onDeliveryTypeChangeHandler}
-                    checked={deliveryInfo.deliveryType === "free"}
+                    checked={deliveryInfo.deliveryType === "FREE"}
                     className="mr-2 accent-blue-600 cursor-pointer"
                   />
                   <span>무료</span>
@@ -95,7 +95,7 @@ export default function DeliveryCharge({ onChangeForm }) {
                     onChange={onDeliveryFeeChangeHandler}
                     value={deliveryInfo.deliveryFee}
                     className="border border-gray-300 rounded-md p-1 w-32"
-                    disabled={deliveryInfo.deliveryType === "free"}
+                    disabled={deliveryInfo.deliveryType === "FREE"}
                   />
                   <span>원</span>
                 </div>
