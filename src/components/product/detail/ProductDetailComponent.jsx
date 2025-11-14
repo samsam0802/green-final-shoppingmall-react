@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import products from "../../data/products";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
-import ProductDetailInfo from "./detail/ProductDetailInfo";
-import ProductDetailOptions from "./detail/ProductDetailOptions";
-import ReviewListComponent from "../review/ReviewListComponent";
+import ProductDetailInfo from "./ProductDetailInfo";
+import ProductDetailOptions from "./ProductDetailOptions";
+import ReviewListComponent from "../../review/ReviewListComponent";
 import { useDispatch } from "react-redux";
-import { addItem } from "../../redux/slices/features/cart/cartSlice";
-import ProductDetailQuantity from "./detail/ProductDetailQuantity";
-import ProductQuestion from "../productquestion/ProductQuestion";
-import ProductPurchaseInfo from "./detail/ProductPurchaseInfo";
+import { addItem } from "../../../redux/slices/features/cart/cartSlice";
+import ProductDetailQuantity from "./ProductDetailQuantity";
+import ProductQuestion from "../../productquestion/ProductQuestion";
+import ProductPurchaseInfo from "./ProductPurchaseInfo";
+import products from "../../../data/products";
 
 export default function ProductDetailComponent() {
   const { id } = useParams();

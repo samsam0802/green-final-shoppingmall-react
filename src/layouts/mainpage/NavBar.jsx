@@ -54,7 +54,7 @@ export default function NavBar() {
 
       {/* 열림/닫힘 애니메이션 */}
       <div className={open ? "block" : "hidden"}>
-        <CategoryMegaMenu isOpen={open} />
+        <CategoryMegaMenu isOpen={open} setOpen={setOpen} />
       </div>
     </nav>
   );
