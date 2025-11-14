@@ -17,7 +17,7 @@ const ProductListComponent = () => {
   const decodedSub = sub ? decodeURIComponent(sub).replace(/-/g, "/") : null;
   const decodedDeep = deep ? decodeURIComponent(deep).replace(/-/g, "/") : null;
 
-  // ✅ 제품 필터링
+  // ✅ 제품 필터링 (기존 로직 유지)
   let categoryProducts = products.filter((p) => p.categoryMain === decodedMain);
 
   if (decodedSub) {
@@ -32,6 +32,7 @@ const ProductListComponent = () => {
     );
   }
 
+  // 콘솔 로그 유지 (디버깅용)
   console.log("decodedMain:", decodedMain);
   console.log("decodedSub:", decodedSub);
   console.log("decodedDeep:", decodedDeep);
@@ -45,21 +46,19 @@ const ProductListComponent = () => {
   );
   console.log("결과:", categoryProducts);
 
-  //브랜드 필터(브랜드별로 상품 조회 가능하게 하는 필터)
+  // 브랜드 필터(브랜드별로 상품 조회 가능하게 하는 필터) (기존 로직 유지)
   const [filters, setFilters] = useState({});
 
-  //정렬 필터에 사용할 state
+  // 정렬 필터에 사용할 state (기존 로직 유지)
   const [sort, setSort] = useState("판매순");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 12;
 
-  // 제품 브랜드들을 brandOptions에 담아서 ProductFilterBar에 전달(브랜드 별로 나오도록 필터 적용)
-  // ✅ 수정 후: Set을 사용하여 중복 브랜드 제거
+  // 제품 브랜드들을 brandOptions에 담아서 ProductFilterBar에 전달 (기존 로직 유지)
   const brandOptions = [...new Set(categoryProducts.map((p) => p.brand))];
-
   console.log("brandOptions:", brandOptions);
 
-  // ✅ 정렬 (원하면 나중에 확장 가능)
+  // ✅ 정렬 (원하면 나중에 확장 가능) (기존 로직 유지)
   const sortedProducts = [...categoryProducts];
 
   // 예시: 정렬 기능은 필요 시 확장 가능
@@ -72,41 +71,48 @@ const ProductListComponent = () => {
 
   const sideCategory = CATEGORY_DATA.find((c) => c.main === decodedMain);
 
-  // URL 파라미터(카테고리)가 변경될 때마다 currentPage를 1로 리셋
+  // URL 파라미터(카테고리)가 변경될 때마다 currentPage를 1로 리셋 (기존 로직 유지)
   useEffect(() => {
     // main, sub, deep 중 하나라도 변경되면 실행됩니다.
     setCurrentPage(1);
   }, [main, sub, deep]);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 md:px-8 py-8 flex flex-col lg:flex-row gap-8">
+    // ✨ 최대 너비 조정 및 반응형 패딩 강화
+    <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex flex-col lg:flex-row gap-8 lg:gap-12">
       {/* ✅ 사이드바 */}
       <aside className="w-full lg:w-64 shrink-0">
-        <div className="sticky top-4 bg-white rounded-2xl border-2 border-gray-200 p-6 shadow-sm">
-          <h2 className="text-xl font-bold text-gray-900 pb-4 border-b-2 border-gray-900">
+        {/* ✨ 사이드바 컨테이너 디자인 개선 */}
+        <div className="sticky top-6 bg-white rounded-xl border border-gray-200 p-6 shadow-md">
+          {/* ✨ 1차 카테고리 제목 디자인 */}
+          <h2 className="text-2xl font-extrabold text-gray-900 pb-4 border-b border-gray-200">
             {decodedMain}
           </h2>
 
-          <ul className="mt-5 space-y-2">
+          {/* ✨ 2차/3차 카테고리 목록 디자인 개선 */}
+          <ul className="mt-5 space-y-1.5">
             {sideCategory?.subs.map((item) => {
               const isActiveSub = decodedSub === item.name;
               return (
                 <li key={item.name}>
+                  {/* ✨ 2차 카테고리 링크 디자인: 활성화 시 블루 배경/텍스트 */}
                   <Link
                     to={`/category/${main}/${encodeURIComponent(
                       item.name.replace(/\//g, "-")
                     )}`}
-                    className={`block px-4 py-2.5 rounded-lg transition-all ${
+                    className={`block px-4 py-2 rounded-lg transition-all text-base ${
                       isActiveSub
-                        ? "bg-gray-900 text-white font-semibold"
-                        : "text-gray-700 hover:bg-gray-100 font-medium"
+                        ? "bg-gray-600 text-white font-bold shadow-sm" // 활성화 상태
+                        : "text-gray-700 hover:bg-gray-100 font-medium" // 기본 상태
                     }`}
                   >
                     {item.name}
                   </Link>
 
+                  {/* 3차 카테고리 목록 */}
                   {isActiveSub && item.children?.length > 0 && (
-                    <ul className="mt-2 space-y-1 ml-4 pl-4 border-l-2 border-gray-300">
+                    // ✨ 3차 목록 디자인: 왼쪽 경계선 색상 변경 및 간격 조정
+                    <ul className="mt-2 space-y-1 ml-4 pl-4 border-l-2 border-gray-200">
                       {item.children.map((child) => (
                         <li key={child}>
                           <Link
@@ -115,10 +121,10 @@ const ProductListComponent = () => {
                             )}/${encodeURIComponent(
                               child.replace(/\//g, "-")
                             )}`}
-                            className={`block px-3 py-2 rounded-lg text-sm transition-all ${
+                            className={`block px-3 py-1.5 rounded-md text-sm transition-all ${
                               decodedDeep === child
-                                ? "bg-gray-100 text-gray-900 font-semibold"
-                                : "text-gray-500 hover:text-gray-900 hover:bg-gray-50"
+                                ? "bg-blue-50 text-gray-700 font-bold" // 활성화 상태
+                                : "text-gray-600 hover:text-gray-600 hover:bg-gray-50" // 기본 상태
                             }`}
                           >
                             {child}
@@ -136,39 +142,48 @@ const ProductListComponent = () => {
 
       {/* ✅ 오른쪽 상품 목록 영역 */}
       <div className="flex-1 min-w-0">
-        {/* 브레드크럼 */}
-        <nav className="flex items-center gap-2 text-sm text-gray-600 mb-6">
-          <span className="font-medium text-gray-900">{decodedMain}</span>
+        {/* ✨ 브레드크럼 디자인 개선 */}
+        <nav className="flex items-center gap-2 text-sm text-gray-500 mb-6 border-b border-gray-100 pb-4">
+          <Link to="/" className="hover:text-gray-700 transition-colors">
+            홈
+          </Link>
+          <ChevronRight className="w-4 h-4 text-gray-300" />
+          <Link
+            to={`/category/${main}`}
+            className="font-medium text-gray-700 hover:text-gray-900 transition-colors"
+          >
+            {decodedMain}
+          </Link>
           {decodedSub && (
             <>
-              <ChevronRight className="w-4 h-4 text-gray-400" />
-              <span className="font-medium text-gray-900">{decodedSub}</span>
+              <ChevronRight className="w-4 h-4 text-gray-300" />
+              <span className="font-bold text-gray-900">{decodedSub}</span>
             </>
           )}
           {decodedDeep && (
             <>
-              <ChevronRight className="w-4 h-4 text-gray-400" />
-              <span className="font-medium text-gray-900">{decodedDeep}</span>
+              <ChevronRight className="w-4 h-4 text-gray-300" />
+              <span className="font-bold text-gray-600">{decodedDeep}</span>
             </>
           )}
         </nav>
 
-        {/* 카테고리 제목 */}
-        <div className="mb-6">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+        {/* ✨ 카테고리 제목 영역 디자인 개선 */}
+        <div className="mb-8">
+          <h1 className="text-4xl font-extrabold text-gray-900 mb-2">
             {decodedDeep || decodedSub || decodedMain}
           </h1>
-          <p className="text-sm text-gray-500">
+          <p className="text-base text-gray-600">
             총{" "}
-            <span className="font-semibold text-gray-900">
+            <span className="font-extrabold text-gray-600">
               {sortedProducts.length}
             </span>
-            개의 상품
+            개의 상품이 있습니다.
           </p>
         </div>
 
-        {/* 🔹 필터 / 정렬 - 수정된 부분 */}
-        <div className="mb-6 p-4 bg-gray-50 rounded-xl border border-gray-200">
+        {/* ✨ 필터 / 정렬 컨테이너 디자인 개선 */}
+        <div className="mb-8 p-4 bg-white rounded-xl border border-gray-200 shadow-sm">
           <div className="flex flex-col gap-4">
             {/* 브랜드 필터 */}
             <ProductFilterBar
@@ -182,23 +197,25 @@ const ProductListComponent = () => {
           </div>
         </div>
 
-        {/* ✅ 상품 그리드 */}
+        {/* ✅ 상품 그리드 (기존 반응형 유지 및 카드 디자인 강화) */}
         {pagedProducts.length > 0 ? (
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+          // ✨ 모바일(2열), 태블릿(3열), 데스크톱(4열)
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6">
             {pagedProducts.map((product) => (
               <div
                 key={product.id}
-                className="group rounded-2xl overflow-hidden bg-white border border-gray-200 hover:border-gray-300 hover:shadow-lg transition-all duration-300"
+                className="group rounded-xl overflow-hidden bg-white border border-gray-200 hover:border-gray-300 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5" // ✨ 호버 효과 강화
               >
                 <ProductCard product={product} />
               </div>
             ))}
           </div>
         ) : (
-          <div className="flex flex-col items-center justify-center py-20 px-4">
+          /* ✨ 상품 없음 메시지 디자인 개선 */
+          <div className="flex flex-col items-center justify-center py-24 bg-gray-50 rounded-xl border border-gray-200">
             <div className="w-20 h-20 mb-4 rounded-full bg-gray-100 flex items-center justify-center">
               <svg
-                className="w-10 h-10 text-gray-400"
+                className="w-10 h-10 text-gray-500"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -211,11 +228,11 @@ const ProductListComponent = () => {
                 />
               </svg>
             </div>
-            <p className="text-gray-600 text-lg font-medium mb-1">
-              등록된 상품이 없습니다
+            <p className="text-gray-700 text-xl font-bold mb-1">
+              앗, 이 카테고리에는 상품이 없어요!
             </p>
-            <p className="text-gray-400 text-sm">
-              다른 카테고리를 선택해보세요
+            <p className="text-gray-500 text-base">
+              다른 카테고리나 필터를 선택하여 다시 찾아보세요.
             </p>
           </div>
         )}
